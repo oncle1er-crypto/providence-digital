@@ -118,3 +118,38 @@
 html { scroll-behavior: smooth; }
 body { overflow-x: hidden; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } }
+
+/* ---- Animations d'apparition au scroll ---- */
+.reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-up { transform: translate3d(0, 28px, 0); }
+.reveal-left { transform: translate3d(-32px, 0, 0); }
+.reveal-right { transform: translate3d(32px, 0, 0); }
+.reveal-zoom { transform: scale(0.94); }
+.reveal-fade { transform: none; }
+.reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Transition de page ---- */
+@keyframes page-enter {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: none; }
+}
+.page-transition { animation: page-enter 520ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ---- Micro-interactions cartes ---- */
+.card-lift { transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms ease; }
+.card-lift:hover { transform: translateY(-6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .page-transition { animation: none !important; }
+  .card-lift:hover { transform: none; }
+}
