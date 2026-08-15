@@ -31,7 +31,8 @@ function ActualitesPage() {
       <main className="pt-20">
         <Section
           eyebrow="Actualités"
-          title="Actualités & événements"
+          as="h1"
+          title="Actualités & événements de La Providence de Don Orione"
           description="Les temps forts de la vie de l'école, en articles, photos et vidéos courtes."
         >
           <NewsCarousel />

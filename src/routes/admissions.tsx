@@ -33,7 +33,8 @@ function Page() {
       <main className="pt-20">
         <Section
           eyebrow="Admissions"
-          title="Inscrire votre enfant"
+          as="h1"
+          title="Admissions : inscrire votre enfant à La Providence de Don Orione"
           description="Les places sont limitées par niveau. Le secrétariat vous informe des disponibilités et des pièces à fournir."
         >
           <ol className="grid gap-6 sm:grid-cols-2">

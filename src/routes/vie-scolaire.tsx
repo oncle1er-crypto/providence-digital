@@ -34,7 +34,8 @@ function Page() {
       <main className="pt-20">
         <Section
           eyebrow="Vie scolaire"
-          title="Le quotidien des élèves"
+          as="h1"
+          title="Vie scolaire : le quotidien des élèves à La Providence"
           description="Une organisation claire et un encadrement attentif, pour apprendre dans de bonnes conditions."
         >
           <div className="grid gap-6 sm:grid-cols-2">
