@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
-import { LevelCards } from "@/components/LevelCards";
+import { SchoolLevels } from "@/components/SchoolLevels";
 import { values } from "@/data/site";
 
 export const Route = createFileRoute("/notre-ecole")({
@@ -31,7 +31,7 @@ function Page() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pt-20">
         <Section
           eyebrow="Notre école"
           title="Un projet éducatif complet"
@@ -48,7 +48,7 @@ function Page() {
         </Section>
 
         <Section eyebrow="Enseignement" title="Nos niveaux">
-          <LevelCards />
+          <SchoolLevels />
         </Section>
       </main>
       <Footer />

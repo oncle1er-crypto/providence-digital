@@ -30,7 +30,7 @@ function Page() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pt-20">
         <Section
           eyebrow="Contact"
           title="Nous écrire ou nous rendre visite"

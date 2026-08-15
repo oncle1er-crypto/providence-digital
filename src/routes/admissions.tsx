@@ -30,7 +30,7 @@ function Page() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pt-20">
         <Section
           eyebrow="Admissions"
           title="Inscrire votre enfant"
