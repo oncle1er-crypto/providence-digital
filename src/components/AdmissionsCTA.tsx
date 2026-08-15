@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
 import type { AdmissionsSetting } from "@/lib/cms";
 
@@ -13,8 +12,6 @@ const fallback: Required<AdmissionsSetting> = {
 
 export function AdmissionsCTA({ content }: { content?: AdmissionsSetting }) {
   const data = { ...fallback, ...content };
-  const buttonClass =
-    "inline-flex w-fit rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-primary focus-visible:outline-none";
 
   return (
     <section className="container-page py-8">
@@ -29,15 +26,12 @@ export function AdmissionsCTA({ content }: { content?: AdmissionsSetting }) {
           </h2>
           <p className="mt-3 max-w-xl text-sm text-primary-foreground/85">{data.message}</p>
         </div>
-        {data.cta_url.startsWith("/") ? (
-          <Link to={data.cta_url} className={buttonClass}>
-            {data.cta_label}
-          </Link>
-        ) : (
-          <a href={data.cta_url} className={buttonClass}>
-            {data.cta_label}
-          </a>
-        )}
+        <a
+          href={data.cta_url}
+          className="inline-flex w-fit rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-primary focus-visible:outline-none"
+        >
+          {data.cta_label}
+        </a>
       </Reveal>
     </section>
   );
