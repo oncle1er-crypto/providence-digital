@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
-import { admissionSteps } from "@/data/site";
+import { admissionSteps, admissionDocs, uniforms } from "@/data/site";
 
 export const Route = createFileRoute("/admissions")({
   head: () => ({
@@ -51,10 +51,46 @@ function Page() {
               to="/contact"
               className="inline-flex rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Contacter le secrétariat
+              Contacter l'administration
             </Link>
           </div>
         </Section>
+
+        <Section eyebrow="Dossiers" title="Pièces à fournir">
+          <div className="grid gap-6 sm:grid-cols-3">
+            {admissionDocs.map((d) => (
+              <div key={d.level} className="rounded-xl border border-border bg-card p-6">
+                <h3 className="font-display text-lg font-semibold">{d.level}</h3>
+                <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
+                  {d.items.map((i) => (
+                    <li key={i} className="flex gap-2">
+                      <span className="mt-2 size-1.5 shrink-0 rounded-full bg-gold" />
+                      {i}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-sm font-semibold">
+            Le test d'entrée est obligatoire. Places limitées pour garantir la qualité.
+          </p>
+        </Section>
+
+        <Section eyebrow="Uniformes" title="Règles d'habillement" className="pb-24">
+          <div className="grid gap-6 sm:grid-cols-3">
+            {uniforms.map((u) => (
+              <div key={u.level} className="rounded-xl border border-border bg-card p-6">
+                <h3 className="font-display text-lg font-semibold">{u.level}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{u.text}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-sm text-muted-foreground">
+            Chaussures fermées, cheveux courts ou bien tressés sans perles, uniforme propre obligatoire.
+          </p>
+        </Section>
+
       </main>
       <Footer />
     </>

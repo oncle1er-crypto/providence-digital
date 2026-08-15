@@ -96,8 +96,9 @@ export function HeroVideoCarousel() {
             onTimeUpdate={(e) => i === index && setTime(e.currentTarget.currentTime)}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/92 via-primary/75 to-primary/45" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-primary/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/55 to-ink/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/35" />
+
       </div>
 
       <div className="container-page flex min-h-[88svh] flex-col justify-center gap-10 py-28">
@@ -106,11 +107,12 @@ export function HeroVideoCarousel() {
             Site officiel • {site_city}
           </span>
           <h1 className="mt-6 font-display text-4xl leading-[1.08] font-semibold text-balance sm:text-5xl lg:text-6xl">
-            Former l'esprit, élever le cœur.
+            Instruire l'esprit, former le cœur.
           </h1>
           <p className="mt-5 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
-            École catholique d'excellence à Bonoua — Maternelle, Primaire, Collège.
+            École catholique à Bonoua-Château — de la maternelle à la terminale.
           </p>
+
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
               to="/admissions"
