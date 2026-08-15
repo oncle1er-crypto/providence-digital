@@ -1,13 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { levels } from "@/data/site";
+import { Reveal } from "@/components/Reveal";
 
 export function SchoolLevels() {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {levels.map((level) => (
-        <article
+      {levels.map((level, i) => (
+        <Reveal
+          as="article"
           key={level.slug}
-          className="group relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-shadow hover:shadow-xl"
+          delay={i * 110}
+          variant="up"
+          className="card-lift group relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm hover:shadow-xl"
         >
           <div className="relative h-64 overflow-hidden sm:h-72">
             <img
@@ -39,7 +43,7 @@ export function SchoolLevels() {
               En savoir plus
             </Link>
           </div>
-        </article>
+        </Reveal>
       ))}
     </div>
   );
