@@ -87,7 +87,7 @@ export function HeroVideoCarousel() {
             ref={(el) => {
               videoRefs.current[i] = el;
             }}
-            className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ${
+            className={`absolute inset-0 size-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
               i === index ? "opacity-100" : "opacity-0"
             }`}
             src={loaded.includes(i) ? slide.src : undefined}
