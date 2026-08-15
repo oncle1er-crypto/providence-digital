@@ -53,6 +53,14 @@ export type VideoSlide = {
   poster: string;
 };
 
+/** URLs des vidéos de démonstration — remplacer par les vidéos définitives. */
+export const VIDEO = {
+  cour: "/__l5e/assets-v1/31272f5c-5d8d-42cf-90aa-d0ffc75905a2/hero-cour.mp4",
+  classe: "/__l5e/assets-v1/ed2dfc4f-433f-4c09-8e34-112b8e6139fa/hero-classe.mp4",
+  sport: "/__l5e/assets-v1/d85cdec2-d227-48bc-8ed9-b5a774e8a267/hero-sport.mp4",
+  groupe: "/__l5e/assets-v1/5361a177-17e0-488f-a49a-7240bb4988e0/hero-groupe.mp4",
+} as const;
+
 /** HERO — 4 clips courts. Vidéos de démonstration, remplaçables. */
 export const heroSlides: VideoSlide[] = [
   {
@@ -60,7 +68,7 @@ export const heroSlides: VideoSlide[] = [
     title: "Élèves dans la cour",
     description: "L'accueil du matin dans la cour de l'école.",
     duration: 8,
-    src: "/__l5e/assets-v1/31272f5c-5d8d-42cf-90aa-d0ffc75905a2/hero-cour.mp4",
+    src: VIDEO.cour,
     poster: posterCour,
   },
   {
@@ -68,7 +76,7 @@ export const heroSlides: VideoSlide[] = [
     title: "En classe",
     description: "Le travail quotidien en salle de classe.",
     duration: 7,
-    src: "/__l5e/assets-v1/ed2dfc4f-433f-4c09-8e34-112b8e6139fa/hero-classe.mp4",
+    src: VIDEO.classe,
     poster: posterClasse,
   },
   {
@@ -76,7 +84,7 @@ export const heroSlides: VideoSlide[] = [
     title: "Sport",
     description: "Activités sportives et esprit d'équipe.",
     duration: 6,
-    src: "/__l5e/assets-v1/d85cdec2-d227-48bc-8ed9-b5a774e8a267/hero-sport.mp4",
+    src: VIDEO.sport,
     poster: posterSport,
   },
   {
@@ -84,7 +92,7 @@ export const heroSlides: VideoSlide[] = [
     title: "Vie de groupe",
     description: "Amitié, entraide et vie communautaire.",
     duration: 8,
-    src: "/__l5e/assets-v1/5361a177-17e0-488f-a49a-7240bb4988e0/hero-groupe.mp4",
+    src: VIDEO.groupe,
     poster: posterGroupe,
   },
 ];
@@ -96,7 +104,7 @@ export const schoolLifeClips: VideoSlide[] = [
     title: "Apprentissage en classe",
     description: "Cours, méthode de travail et accompagnement des élèves.",
     duration: 6,
-    src: heroSlides[1].src,
+    src: VIDEO.classe,
     poster: posterClasse,
   },
   {
@@ -104,7 +112,7 @@ export const schoolLifeClips: VideoSlide[] = [
     title: "Vie spirituelle",
     description: "Temps de prière et formation humaine et chrétienne.",
     duration: 7,
-    src: heroSlides[3].src,
+    src: VIDEO.groupe,
     poster: posterGroupe,
   },
   {
@@ -112,7 +120,7 @@ export const schoolLifeClips: VideoSlide[] = [
     title: "Sports & bien-être",
     description: "Activités physiques, santé et esprit d'équipe.",
     duration: 8,
-    src: heroSlides[2].src,
+    src: VIDEO.sport,
     poster: posterSport,
   },
   {
@@ -120,7 +128,7 @@ export const schoolLifeClips: VideoSlide[] = [
     title: "Arts & culture",
     description: "Expression artistique, chant et activités culturelles.",
     duration: 9,
-    src: heroSlides[0].src,
+    src: VIDEO.cour,
     poster: posterCour,
   },
   {
@@ -128,7 +136,7 @@ export const schoolLifeClips: VideoSlide[] = [
     title: "Vie étudiante",
     description: "Amitiés, projets et engagement au quotidien.",
     duration: 7,
-    src: heroSlides[3].src,
+    src: VIDEO.groupe,
     poster: posterGroupe,
   },
 ];
@@ -232,7 +240,7 @@ export const news: NewsItem[] = [
     title: "Sortie pédagogique",
     excerpt: "Une découverte hors les murs pour apprendre autrement.",
     image: posterCour,
-    video: heroSlides[0].src,
+    video: VIDEO.cour,
   },
   {
     id: "tournoi",
@@ -241,7 +249,7 @@ export const news: NewsItem[] = [
     title: "Tournoi sportif",
     excerpt: "Compétition inter-classes dans un bel esprit d'équipe.",
     image: posterSport,
-    video: heroSlides[2].src,
+    video: VIDEO.sport,
   },
   {
     id: "retraite",

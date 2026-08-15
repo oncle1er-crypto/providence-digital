@@ -13,7 +13,7 @@ export function HeroVideoCarousel() {
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
   const [time, setTime] = useState(0);
-  const [duration, setDuration] = useState(heroSlides[0].duration);
+  const [duration, setDuration] = useState(heroSlides[0]!.duration);
   const [reduced, setReduced] = useState(false);
   const [loaded, setLoaded] = useState<number[]>([0]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -57,12 +57,12 @@ export function HeroVideoCarousel() {
   // Passage automatique si la vidéo ne déclenche pas "ended" (durée courte)
   useEffect(() => {
     if (!playing || reduced) return;
-    const ms = (heroSlides[index].duration || 8) * 1000;
+    const ms = (heroSlides[index]?.duration ?? 8) * 1000;
     const t = window.setTimeout(() => goTo(index + 1), ms);
     return () => window.clearTimeout(t);
   }, [index, playing, reduced, goTo]);
 
-  const current = heroSlides[index];
+  const current = heroSlides[index] ?? heroSlides[0]!;
 
   return (
     <section className="relative isolate min-h-[88svh] overflow-hidden bg-primary text-primary-foreground">
