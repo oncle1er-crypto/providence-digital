@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Pause, Play, Volume2, VolumeX, Maximize2 } from "lucide-react";
+import { motion } from "framer-motion";
 import { heroSlides } from "@/data/site";
 
 
