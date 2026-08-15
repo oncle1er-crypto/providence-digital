@@ -132,11 +132,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <RouteProgress />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <div key={pathname} className="page-transition">
+      <PageTransition routeKey={pathname}>
         <Outlet />
-        <ScrollToTop />
-      </div>
+      </PageTransition>
+      <ScrollToTop />
     </QueryClientProvider>
+
   );
 }
