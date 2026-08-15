@@ -130,7 +130,7 @@ export const VIDEO_POSTER = {
 } as const;
 
 
-/** HERO — 4 clips courts. Vidéos de démonstration, remplaçables. */
+/** HERO — 8 clips : vidéos officielles intercalées avec les clips de démonstration. */
 export const heroSlides: VideoSlide[] = [
   {
     id: "cour",
@@ -141,12 +141,28 @@ export const heroSlides: VideoSlide[] = [
     poster: posterCour,
   },
   {
+    id: "institutionnel",
+    title: "La Providence de Don Orione",
+    description: "Présentation de notre complexe scolaire à Bonoua-Château.",
+    duration: 10,
+    src: VIDEO.institutionnel,
+    poster: VIDEO_POSTER.institutionnel,
+  },
+  {
     id: "classe",
     title: "En classe",
     description: "Le travail quotidien en salle de classe.",
     duration: 7,
     src: VIDEO.classe,
     poster: posterClasse,
+  },
+  {
+    id: "vie-scolaire",
+    title: "Vie scolaire au quotidien",
+    description: "Le rythme de nos journées, entre étude et vie communautaire.",
+    duration: 10,
+    src: VIDEO.vieScolaire,
+    poster: VIDEO_POSTER.vieScolaire,
   },
   {
     id: "sport",
@@ -157,6 +173,14 @@ export const heroSlides: VideoSlide[] = [
     poster: posterSport,
   },
   {
+    id: "excellence",
+    title: "Excellence et réussite",
+    description: "Le travail, l'effort et la réussite de nos élèves.",
+    duration: 10,
+    src: VIDEO.excellence,
+    poster: VIDEO_POSTER.excellence,
+  },
+  {
     id: "groupe",
     title: "Vie de groupe",
     description: "Amitié, entraide et vie communautaire.",
@@ -164,7 +188,16 @@ export const heroSlides: VideoSlide[] = [
     src: VIDEO.groupe,
     poster: posterGroupe,
   },
+  {
+    id: "espaces",
+    title: "Nos espaces",
+    description: "Salles de classe, cour, préau et infrastructures du complexe.",
+    duration: 10,
+    src: VIDEO.espaces,
+    poster: VIDEO_POSTER.espaces,
+  },
 ];
+
 
 /** VIE SCOLAIRE — mini-vidéos (démo, remplaçables). */
 export const schoolLifeClips: VideoSlide[] = [
