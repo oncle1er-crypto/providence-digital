@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Pause, Play, Volume2, VolumeX, Maximize2 } from "lucide-react";
 import { heroSlides } from "@/data/site";
 
+
 function fmt(t: number) {
   const s = Math.max(0, Math.floor(t));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
