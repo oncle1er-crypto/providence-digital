@@ -1,12 +1,16 @@
 import { campusGallery } from "@/data/site";
+import { Reveal } from "@/components/Reveal";
 
 export function CampusGallery() {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {campusGallery.map((item, i) => (
-        <figure
+        <Reveal
+          as="figure"
           key={item.title}
-          className={`group overflow-hidden rounded-3xl border border-border bg-card shadow-sm ${
+          delay={i * 90}
+          variant="zoom"
+          className={`card-lift group overflow-hidden rounded-3xl border border-border bg-card shadow-sm ${
             i === 0 ? "lg:col-span-2" : ""
           }`}
         >
@@ -23,7 +27,7 @@ export function CampusGallery() {
             <h3 className="font-display text-lg font-semibold">{item.title}</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">{item.text}</p>
           </figcaption>
-        </figure>
+        </Reveal>
       ))}
     </div>
   );
