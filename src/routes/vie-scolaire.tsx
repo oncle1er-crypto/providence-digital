@@ -47,14 +47,9 @@ function Page() {
         </Section>
 
         <Section eyebrow="En images" title="Notre établissement en vidéo">
-          <video
-            className="aspect-video w-full rounded-xl border border-border object-cover"
-            src={site.heroVideo}
-            controls
-            playsInline
-            preload="metadata"
-          />
+          <VideoCarousel />
         </Section>
+
       </main>
       <Footer />
     </>
