@@ -32,7 +32,10 @@ export function Header() {
           <span className="hidden min-w-0 font-display text-base leading-tight font-semibold sm:block">
             Complexe Scolaire
             <span className={`block truncate text-xs font-normal tracking-wide ${solid ? "text-muted-foreground" : "text-primary-foreground/75"}`}>
-              La Providence de Don Orione
+              La Providence
+            </span>
+            <span className={`block truncate text-xs font-normal tracking-wide ${solid ? "text-muted-foreground" : "text-primary-foreground/75"}`}>
+              de Don Orione
             </span>
           </span>
         </Link>
