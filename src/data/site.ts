@@ -41,12 +41,12 @@ export const PHOTO = {
 /** Galerie du campus — photos réelles de l'établissement. */
 export const campusGallery = [
   { src: PHOTO.administration, title: "Administration", text: "Le bâtiment administratif et la place du drapeau, à l'entrée du campus." },
-  { src: PHOTO.secondaire, title: "Bâtiment du secondaire", text: "Le bâtiment à étage qui accueille les classes du collège et du lycée." },
+  { src: PHOTO.secondaire, title: "Bâtiment du primaire", text: "Le bâtiment à étage qui accueille les classes du primaire." },
   { src: PHOTO.salleClasse, title: "Salles de classe", text: "Des salles neuves, lumineuses et équipées de mobilier individuel." },
   { src: PHOTO.salleIrmaRicci, title: "Salle Irma Ricci", text: "Les salles du primaire, ouvertes sur le préau et bien ventilées." },
   { src: PHOTO.infirmerie, title: "Infirmerie scolaire", text: "Une infirmerie équipée pour la prise en charge immédiate des élèves." },
   { src: PHOTO.courPreau, title: "Préau & cour", text: "Le préau du primaire et la cour centrale, cœur de la vie de l'école." },
-  { src: PHOTO.campus, title: "Vue du campus", text: "Un site spacieux et verdoyant sur les hauteurs de Bonoua-Château." },
+  { src: PHOTO.campus, title: "Vue du complexe", text: "Un site spacieux et verdoyant sur les hauteurs de Bonoua-Château." },
 ] as const;
 
 
