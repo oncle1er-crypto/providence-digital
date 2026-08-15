@@ -3,7 +3,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { VideoCarousel } from "@/components/VideoCarousel";
 import { Section } from "@/components/Section";
-import { schoolLife, site } from "@/data/site";
+import { schoolLife } from "@/data/site";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/vie-scolaire")({
   head: () => ({
@@ -20,9 +21,9 @@ export const Route = createFileRoute("/vie-scolaire")({
         content: "Encadrement, activités et formation humaine au quotidien.",
       },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "/vie-scolaire" },
+      { property: "og:url", content: absoluteUrl("/vie-scolaire") },
     ],
-    links: [{ rel: "canonical", href: "/vie-scolaire" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/vie-scolaire") }],
   }),
   component: Page,
 });

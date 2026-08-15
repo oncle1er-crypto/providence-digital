@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
 import { admissionSteps, admissionDocs, uniforms } from "@/data/site";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/admissions")({
   head: () => ({
@@ -11,7 +12,7 @@ export const Route = createFileRoute("/admissions")({
       {
         name: "description",
         content:
-          "Procédure d'inscription au Complexe Scolaire La Providence de Don Orione : contact, dossier, entretien et inscription.",
+          "Procédure d'inscription au Complexe Scolaire La Providence de Don Orione : contact, dossier, test d'entrée et inscription.",
       },
       { property: "og:title", content: "Admissions — La Providence de Don Orione" },
       {
@@ -19,9 +20,9 @@ export const Route = createFileRoute("/admissions")({
         content: "Les étapes pour inscrire votre enfant à La Providence de Don Orione.",
       },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "/admissions" },
+      { property: "og:url", content: absoluteUrl("/admissions") },
     ],
-    links: [{ rel: "canonical", href: "/admissions" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/admissions") }],
   }),
   component: Page,
 });
