@@ -3,9 +3,11 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
 import { NewsCarousel } from "@/components/NewsCarousel";
+import { getPublicNews } from "@/lib/cms";
 import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/actualites")({
+  loader: () => getPublicNews(24).catch(() => []),
   head: () => ({
     meta: [
       { title: "Actualités & événements | La Providence de Don Orione" },
@@ -26,6 +28,8 @@ export const Route = createFileRoute("/actualites")({
 });
 
 function ActualitesPage() {
+  const cmsNews = Route.useLoaderData();
+
   return (
     <>
       <Header />
@@ -36,7 +40,7 @@ function ActualitesPage() {
           title="Actualités & événements de La Providence de Don Orione"
           description="Les temps forts de la vie de l'école, en articles, photos et vidéos courtes."
         >
-          <NewsCarousel />
+          <NewsCarousel cmsNews={cmsNews} />
         </Section>
       </main>
       <Footer />
