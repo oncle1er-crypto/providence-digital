@@ -147,7 +147,7 @@ export function HeroVideoCarousel() {
         <div
           ref={controlsRef}
           data-hero-controls
-          className="group relative mt-auto w-full max-w-3xl"
+          className="group relative mt-auto w-full max-w-3xl pt-8"
           onMouseEnter={reveal}
           onMouseLeave={() => {
             if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
