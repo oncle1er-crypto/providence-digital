@@ -10,7 +10,7 @@ const fallback: Required<AdmissionsSetting> = {
   cta_url: "/admissions",
 };
 
-export function AdmissionsCTA({ content }: { content?: AdmissionsSetting }) {
+export function AdmissionsCTA({ content }: { content?: AdmissionsSetting | undefined }) {
   const data = { ...fallback, ...content };
 
   return (
