@@ -173,3 +173,44 @@ body { overflow-x: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .hero-anim { opacity: 1; animation: none !important; }
 }
+
+/* ---- Micro-interactions premium ---- */
+.btn-glow {
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms ease, filter 300ms ease;
+}
+.btn-glow:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 30px -10px color-mix(in oklab, var(--gold) 65%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--gold) 40%, transparent);
+}
+.btn-press:active { transform: scale(0.97); }
+.btn-press { transition: transform 160ms ease; }
+
+.card-lift:hover {
+  box-shadow: 0 24px 50px -28px color-mix(in oklab, var(--primary) 45%, transparent);
+  border-color: color-mix(in oklab, var(--gold) 55%, transparent);
+}
+
+.nav-link { position: relative; }
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -6px;
+  height: 2px; width: 100%;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link:hover::after, .nav-link.is-active::after { transform: scaleX(1); transform-origin: left; }
+
+@keyframes soft-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 45%, transparent); }
+  50% { box-shadow: 0 0 0 10px color-mix(in oklab, var(--gold) 0%, transparent); }
+}
+.pulse-ring { animation: soft-pulse 2.6s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-glow:hover, .btn-press:active { transform: none; }
+  .pulse-ring { animation: none !important; }
+}
