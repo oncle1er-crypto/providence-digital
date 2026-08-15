@@ -17,6 +17,9 @@ export function HeroVideoCarousel() {
   const [duration, setDuration] = useState(heroSlides[0]!.duration);
   const [reduced, setReduced] = useState(false);
   const [loaded, setLoaded] = useState<number[]>([0]);
+  const [showControls, setShowControls] = useState(false);
+  const controlsRef = useRef<HTMLDivElement>(null);
+  const hideTimerRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
 
