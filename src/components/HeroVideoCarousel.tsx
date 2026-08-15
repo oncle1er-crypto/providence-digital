@@ -68,6 +68,16 @@ export function HeroVideoCarousel() {
 
   const current = heroSlides[index] ?? heroSlides[0]!;
 
+  const scheduleHide = useCallback(() => {
+    if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = window.setTimeout(() => setShowControls(false), 2600);
+  }, []);
+
+  const reveal = useCallback(() => {
+    setShowControls(true);
+    scheduleHide();
+  }, [scheduleHide]);
+
   return (
     <section className="relative isolate min-h-[88svh] overflow-hidden bg-primary text-primary-foreground">
       <div ref={containerRef} className="absolute inset-0 -z-10">
