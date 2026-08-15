@@ -30,9 +30,9 @@ export function Header() {
         <Link to="/" className="flex min-w-0 items-center gap-3" onClick={() => setOpen(false)}>
           <img src={site.logo} alt={`Logo ${site.name}`} className="h-11 w-auto shrink-0" />
           <span className="hidden min-w-0 font-display text-base leading-tight font-semibold sm:block">
-            La Providence
+            Complexe Scolaire
             <span className={`block truncate text-xs font-normal tracking-wide ${solid ? "text-muted-foreground" : "text-primary-foreground/75"}`}>
-              de Don Orione
+              La Providence de Don Orione
             </span>
           </span>
         </Link>
