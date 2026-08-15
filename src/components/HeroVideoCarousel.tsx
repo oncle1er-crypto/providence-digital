@@ -87,7 +87,7 @@ export function HeroVideoCarousel() {
             ref={(el) => {
               videoRefs.current[i] = el;
             }}
-            className={`absolute inset-0 size-full object-cover transition-opacity duration-700 ${
+            className={`absolute inset-0 size-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
               i === index ? "opacity-100" : "opacity-0"
             }`}
             src={loaded.includes(i) ? slide.src : undefined}
@@ -110,24 +110,24 @@ export function HeroVideoCarousel() {
             onTimeUpdate={(e) => i === index && setTime(e.currentTarget.currentTime)}
           />
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/55 to-ink/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/35" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,oklch(0.16_0.02_25/0.72)_0%,oklch(0.16_0.02_25/0.42)_45%,oklch(0.16_0.02_25/0.08)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/25" />
 
       </div>
 
       <div className="container-page flex min-h-[88svh] flex-col justify-center gap-10 py-28">
-        <div className="max-w-3xl">
-          <span className="inline-flex w-fit rounded-full border border-gold/60 px-4 py-1 text-xs tracking-[0.2em] uppercase">
+        <div key={current.id} className="max-w-3xl">
+          <span className="hero-anim hero-eyebrow inline-flex w-fit rounded-full border border-gold/60 px-4 py-1 text-xs tracking-[0.2em] uppercase">
             Site officiel • {site_city}
           </span>
-          <h1 className="mt-6 font-display text-4xl leading-[1.08] font-semibold text-balance sm:text-5xl lg:text-6xl">
+          <h1 className="hero-anim hero-title mt-6 font-display leading-[1.02] font-semibold text-balance [font-size:clamp(2.25rem,6vw,5rem)]">
             Instruire l'esprit, former le cœur.
           </h1>
-          <p className="mt-5 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
+          <p className="hero-anim hero-desc mt-5 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
             École catholique à Bonoua-Château — de la maternelle à la terminale.
           </p>
 
-          <div className="mt-9 flex flex-wrap gap-3">
+          <div className="hero-anim hero-cta mt-9 flex flex-wrap gap-3">
             <Link
               to="/admissions"
               className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-primary focus-visible:outline-none"
