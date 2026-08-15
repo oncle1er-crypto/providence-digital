@@ -1,6 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Globe, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import { site } from "@/data/site";
+import {
+  getPublicSetting,
+  type ContactSetting,
+  type IdentitySetting,
+} from "@/lib/cms";
 import { SITE_URL } from "@/lib/seo";
 
 const columns = [
@@ -46,6 +52,32 @@ const socialIcons = {
 const publicWebsite = SITE_URL.replace(/^https?:\/\//, "");
 
 export function Footer() {
+  const [schoolName, setSchoolName] = useState(site.name);
+  const [contact, setContact] = useState<ContactSetting>(site.contact);
+
+  useEffect(() => {
+    let active = true;
+
+    Promise.all([
+      getPublicSetting<IdentitySetting>("identity").catch(() => null),
+      getPublicSetting<ContactSetting>("contact").catch(() => null),
+    ]).then(([identitySetting, contactSetting]) => {
+      if (!active) return;
+      if (identitySetting?.value.school_name) setSchoolName(identitySetting.value.school_name);
+      if (contactSetting?.value) {
+        setContact((current) => ({ ...current, ...contactSetting.value }));
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const address = contact.address || site.contact.address;
+  const phone = contact.phone || site.contact.phone;
+  const email = contact.email || site.contact.email;
+
   return (
     <footer className="relative bg-primary text-primary-foreground">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/70 to-transparent" />
@@ -53,10 +85,9 @@ export function Footer() {
 
       <div className="relative container-page py-14 lg:py-16">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
-          {/* Marque */}
           <div className="min-w-0 lg:col-span-4">
             <div className="flex items-center gap-3">
-              <img src={site.logo} alt={`Logo ${site.name}`} className="h-12 w-auto shrink-0" />
+              <img src={site.logo} alt={`Logo ${schoolName}`} className="h-12 w-auto shrink-0" />
               <span className="font-display text-lg leading-tight font-semibold">
                 La Providence
                 <span className="block text-xs font-normal tracking-wide text-primary-foreground/65">
@@ -65,7 +96,7 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-primary-foreground/70">
-              {site.name} — {site.motto}.
+              {schoolName} — {site.motto}.
             </p>
             <ul className="mt-6 flex gap-2">
               {site.social.map((s) => {
@@ -89,7 +120,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Colonnes de navigation */}
           <nav
             aria-label="Pied de page"
             className="grid min-w-0 grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-5"
@@ -115,7 +145,6 @@ export function Footer() {
             ))}
           </nav>
 
-          {/* Contact */}
           <div className="min-w-0 lg:col-span-3">
             <h3 className="text-[0.7rem] font-semibold tracking-[0.18em] text-gold uppercase">
               Nous trouver
@@ -123,24 +152,21 @@ export function Footer() {
             <ul className="mt-4 space-y-3.5 text-sm text-primary-foreground/75">
               <li className="flex gap-3">
                 <MapPin className="mt-0.5 size-4 shrink-0 text-gold" />
-                <span>{site.contact.address}</span>
+                <span>{address}</span>
               </li>
               <li className="flex gap-3">
                 <Phone className="mt-0.5 size-4 shrink-0 text-gold" />
                 <a
-                  href={`tel:${site.contact.phone.replace(/[^+\d]/g, "")}`}
+                  href={`tel:${phone.replace(/[^+\d]/g, "")}`}
                   className="transition-colors hover:text-gold"
                 >
-                  {site.contact.phone}
+                  {phone}
                 </a>
               </li>
               <li className="flex gap-3">
                 <Mail className="mt-0.5 size-4 shrink-0 text-gold" />
-                <a
-                  href={`mailto:${site.contact.email}`}
-                  className="break-all transition-colors hover:text-gold"
-                >
-                  {site.contact.email}
+                <a href={`mailto:${email}`} className="break-all transition-colors hover:text-gold">
+                  {email}
                 </a>
               </li>
             </ul>
@@ -157,7 +183,7 @@ export function Footer() {
       <div className="relative border-t border-primary-foreground/12">
         <div className="container-page flex flex-col gap-2 py-5 text-xs text-primary-foreground/55 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {site.name}
+            © {new Date().getFullYear()} {schoolName}
           </p>
           <p>
             {site.city} · {publicWebsite}
