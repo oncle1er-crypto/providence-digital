@@ -8,6 +8,13 @@ import sportTaekwondo from "@/assets/sport-taekwondo.webp.asset.json";
 import ecoleBatiment from "@/assets/ecole-batiment.webp.asset.json";
 import elevesMerite from "@/assets/eleves-merite.webp.asset.json";
 import elevesEtoile from "@/assets/eleves-etoile.webp.asset.json";
+import administration from "@/assets/administration.jpg.asset.json";
+import salleIrmaRicci from "@/assets/salle-irma-ricci.jpg.asset.json";
+import infirmerie from "@/assets/infirmerie.jpg.asset.json";
+import salleClasse from "@/assets/salle-classe.jpg.asset.json";
+import courPreau from "@/assets/cour-preau.jpg.asset.json";
+import campusVue from "@/assets/campus-vue.jpg.asset.json";
+import batimentSecondaire from "@/assets/batiment-secondaire.jpg.asset.json";
 
 /**
  * Toutes les données du site sont centralisées ici (prêt pour un futur CMS).
@@ -22,7 +29,26 @@ export const PHOTO = {
   batiment: ecoleBatiment.url,
   merite: elevesMerite.url,
   etoile: elevesEtoile.url,
+  administration: administration.url,
+  salleIrmaRicci: salleIrmaRicci.url,
+  infirmerie: infirmerie.url,
+  salleClasse: salleClasse.url,
+  courPreau: courPreau.url,
+  campus: campusVue.url,
+  secondaire: batimentSecondaire.url,
 } as const;
+
+/** Galerie du campus — photos réelles de l'établissement. */
+export const campusGallery = [
+  { src: PHOTO.administration, title: "Administration", text: "Le bâtiment administratif et la place du drapeau, à l'entrée du campus." },
+  { src: PHOTO.secondaire, title: "Bâtiment du secondaire", text: "Le bâtiment à étage qui accueille les classes du collège et du lycée." },
+  { src: PHOTO.salleClasse, title: "Salles de classe", text: "Des salles neuves, lumineuses et équipées de mobilier individuel." },
+  { src: PHOTO.salleIrmaRicci, title: "Salle Irma Ricci", text: "Les salles du primaire, ouvertes sur le préau et bien ventilées." },
+  { src: PHOTO.infirmerie, title: "Infirmerie scolaire", text: "Une infirmerie équipée pour la prise en charge immédiate des élèves." },
+  { src: PHOTO.courPreau, title: "Préau & cour", text: "Le préau du primaire et la cour centrale, cœur de la vie de l'école." },
+  { src: PHOTO.campus, title: "Vue du campus", text: "Un site spacieux et verdoyant sur les hauteurs de Bonoua-Château." },
+] as const;
+
 
 export const site = {
   name: "Complexe Scolaire Catholique La Providence de Don Orione",
@@ -223,11 +249,12 @@ export const whyProvidence = [
 ];
 
 export const infrastructures = [
-  { title: "Salles de classe spacieuses", text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés." },
-  { title: "Salle informatique de pointe", text: "Pour l'apprentissage des TIC dès le plus jeune âge." },
-  { title: "Infirmerie scolaire", text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves." },
-  { title: "Terrains de sports conformes", text: "Football, handball, basket-ball : un esprit sain dans un corps sain." },
+  { title: "Salles de classe spacieuses", text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés.", image: PHOTO.salleClasse },
+  { title: "Un campus à taille humaine", text: "Bâtiments neufs, préau et espaces verts sur les hauteurs de Bonoua-Château.", image: PHOTO.courPreau },
+  { title: "Infirmerie scolaire", text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves.", image: PHOTO.infirmerie },
+  { title: "Bâtiment du secondaire", text: "Collège et lycée réunis dans un bâtiment à étage dédié.", image: PHOTO.secondaire },
 ];
+
 
 export const admissionSteps = [
   { step: "01", title: "Prise de contact", text: "Contactez la direction pour connaître les places disponibles par niveau." },
