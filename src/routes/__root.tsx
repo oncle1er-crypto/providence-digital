@@ -133,6 +133,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <div key={pathname} className="page-transition">
         <Outlet />
+        <ScrollToTop />
       </div>
     </QueryClientProvider>
   );
