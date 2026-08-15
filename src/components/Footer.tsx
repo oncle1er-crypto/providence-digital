@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Globe, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { site } from "@/data/site";
+import { SITE_URL } from "@/lib/seo";
 
 const columns = [
   {
@@ -42,6 +43,8 @@ const socialIcons = {
   "Site web": Globe,
 } as const;
 
+const publicWebsite = SITE_URL.replace(/^https?:\/\//, "");
+
 export function Footer() {
   return (
     <footer className="relative bg-primary text-primary-foreground">
@@ -67,12 +70,15 @@ export function Footer() {
             <ul className="mt-6 flex gap-2">
               {site.social.map((s) => {
                 const Icon = socialIcons[s.label as keyof typeof socialIcons] ?? Globe;
+                const isWebsite = s.label === "Site web";
+                const href = isWebsite ? SITE_URL : s.href;
+                const note = isWebsite ? publicWebsite : s.note;
                 return (
                   <li key={s.label}>
                     <a
-                      href={s.href}
-                      title={`${s.label} — ${s.note}`}
-                      aria-label={`${s.label} — ${s.note}`}
+                      href={href}
+                      title={`${s.label} — ${note}`}
+                      aria-label={`${s.label} — ${note}`}
                       className="grid size-11 place-items-center rounded-full border border-primary-foreground/20 text-primary-foreground/80 transition-colors hover:border-gold hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
                     >
                       <Icon className="size-4" />
@@ -150,8 +156,12 @@ export function Footer() {
 
       <div className="relative border-t border-primary-foreground/12">
         <div className="container-page flex flex-col gap-2 py-5 text-xs text-primary-foreground/55 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {site.name}</p>
-          <p>{site.city} · {site.website}</p>
+          <p>
+            © {new Date().getFullYear()} {site.name}
+          </p>
+          <p>
+            {site.city} · {publicWebsite}
+          </p>
         </div>
       </div>
     </footer>
