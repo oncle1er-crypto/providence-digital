@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SITE_URL } from "@/lib/seo";
 
 const publicRoutes = [
   "/",
@@ -13,12 +14,11 @@ const publicRoutes = [
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
-        const origin = new URL(request.url).origin;
+      GET: async () => {
         const urls = publicRoutes
           .map((path) => {
             const priority = path === "/" ? "<priority>1.0</priority>" : "";
-            return `  <url><loc>${origin}${path}</loc>${priority}</url>`;
+            return `  <url><loc>${SITE_URL}${path}</loc>${priority}</url>`;
           })
           .join("\n");
 
