@@ -143,90 +143,127 @@ export function HeroVideoCarousel() {
           </div>
         </div>
 
-        {/* Contrôles personnalisés */}
-        <div className="rounded-2xl border border-primary-foreground/20 bg-primary/40 p-4 backdrop-blur-md sm:p-5">
-          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 sm:flex sm:flex-wrap sm:justify-between">
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold">
-                Vidéo {String(index + 1).padStart(2, "0")} • {current.duration} sec
-              </p>
-              <p className="truncate text-xs text-primary-foreground/75">{current.title}</p>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              <button
-                type="button"
-                aria-label={playing ? "Mettre en pause la vidéo" : "Lire la vidéo"}
-                onClick={() => {
-                  const v = videoRefs.current[index];
-                  if (!v) return;
-                  if (playing) {
-                    v.pause();
-                    setPlaying(false);
-                  } else {
-                    void v.play().catch(() => undefined);
-                    setPlaying(true);
-                  }
-                }}
-                className="grid size-11 place-items-center rounded-full bg-primary-foreground/15 transition-colors hover:bg-primary-foreground/25 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-              >
-                {playing ? <Pause className="size-5" /> : <Play className="size-5" />}
-              </button>
-              <button
-                type="button"
-                aria-label={muted ? "Activer le son" : "Couper le son"}
-                onClick={() => setMuted((m) => !m)}
-                className="grid size-11 place-items-center rounded-full bg-primary-foreground/15 transition-colors hover:bg-primary-foreground/25 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
-              >
-                {muted ? <VolumeX className="size-5" /> : <Volume2 className="size-5" />}
-              </button>
-              <button
-                type="button"
-                aria-label="Afficher la vidéo en plein écran"
-                onClick={() => void videoRefs.current[index]?.requestFullscreen?.().catch(() => undefined)}
-                className="hidden size-11 place-items-center rounded-full bg-primary-foreground/15 transition-colors hover:bg-primary-foreground/25 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none sm:grid"
-              >
-                <Maximize2 className="size-5" />
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-4 flex items-center gap-3">
-            <span className="shrink-0 font-mono text-xs tabular-nums">
-              {fmt(time)} / {fmt(duration || current.duration)}
-            </span>
+        {/* Contrôles vidéo : auto-hide au repos, révélés au survol / interaction */}
+        <div
+          ref={controlsRef}
+          className="group relative mt-auto w-full max-w-3xl"
+          onMouseEnter={reveal}
+          onMouseLeave={() => {
+            if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
+            setShowControls(false);
+          }}
+          onTouchStart={reveal}
+          onFocus={reveal}
+        >
+          {/* Barre de progression toujours visible, fine et discrète */}
+          <div
+            className="h-1 w-full cursor-pointer overflow-hidden rounded-full bg-primary-foreground/15"
+            role="progressbar"
+            aria-label="Progression de la vidéo"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round((time / (duration || current.duration)) * 100) || 0}
+          >
             <div
-              className="h-1.5 w-full overflow-hidden rounded-full bg-primary-foreground/20"
-              role="progressbar"
-              aria-label="Progression de la vidéo"
-              aria-valuemin={0}
-              aria-valuemax={100}
-              aria-valuenow={Math.round((time / (duration || current.duration)) * 100) || 0}
-            >
-              <div
-                className="h-full rounded-full bg-gold transition-[width] duration-200"
-                style={{ width: `${Math.min(100, (time / (duration || current.duration)) * 100)}%` }}
-              />
+              className="h-full rounded-full bg-gold transition-[width] duration-200"
+              style={{ width: `${Math.min(100, (time / (duration || current.duration)) * 100)}%` }}
+            />
+          </div>
+
+          {/* Panneau de contrôles rétractable */}
+          <div
+            className={`overflow-hidden transition-all duration-500 ease-out ${
+              showControls ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="mt-3 rounded-2xl border border-primary-foreground/15 bg-ink/60 p-4 backdrop-blur-md sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold">
+                    Vidéo {String(index + 1).padStart(2, "0")} • {current.duration} sec
+                  </p>
+                  <p className="truncate text-xs text-primary-foreground/75">{current.title}</p>
+                </div>
+                <div className="flex shrink-0 items-center gap-2">
+                  <button
+                    type="button"
+                    aria-label={playing ? "Mettre en pause la vidéo" : "Lire la vidéo"}
+                    onClick={() => {
+                      reveal();
+                      const v = videoRefs.current[index];
+                      if (!v) return;
+                      if (playing) {
+                        v.pause();
+                        setPlaying(false);
+                      } else {
+                        void v.play().catch(() => undefined);
+                        setPlaying(true);
+                      }
+                    }}
+                    className="grid size-10 place-items-center rounded-full bg-primary-foreground/15 transition-colors hover:bg-primary-foreground/25 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                  >
+                    {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label={muted ? "Activer le son" : "Couper le son"}
+                    onClick={() => {
+                      reveal();
+                      setMuted((m) => !m);
+                    }}
+                    className="grid size-10 place-items-center rounded-full bg-primary-foreground/15 transition-colors hover:bg-primary-foreground/25 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none"
+                  >
+                    {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Afficher la vidéo en plein écran"
+                    onClick={() => {
+                      reveal();
+                      void videoRefs.current[index]?.requestFullscreen?.().catch(() => undefined);
+                    }}
+                    className="hidden size-10 place-items-center rounded-full bg-primary-foreground/15 transition-colors hover:bg-primary-foreground/25 focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none sm:grid"
+                  >
+                    <Maximize2 className="size-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center gap-3 text-xs tabular-nums">
+                <span className="shrink-0 font-mono opacity-80">
+                  {fmt(time)} / {fmt(duration || current.duration)}
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {heroSlides.map((slide, i) => (
+                    <button
+                      key={slide.id}
+                      type="button"
+                      onClick={() => {
+                        reveal();
+                        goTo(i);
+                      }}
+                      aria-label={`Afficher la vidéo ${String(i + 1).padStart(2, "0")} : ${slide.title}`}
+                      aria-current={i === index}
+                      className={`grid size-8 place-items-center rounded-full text-xs font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none ${
+                        i === index
+                          ? "bg-gold text-gold-foreground"
+                          : "bg-primary-foreground/10 text-primary-foreground/80 hover:bg-primary-foreground/20"
+                      }`}
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            {heroSlides.map((slide, i) => (
-              <button
-                key={slide.id}
-                type="button"
-                onClick={() => goTo(i)}
-                aria-label={`Afficher la vidéo ${String(i + 1).padStart(2, "0")} : ${slide.title}`}
-                aria-current={i === index}
-                className={`min-h-11 min-w-11 rounded-full px-4 text-xs font-semibold tracking-widest transition-colors focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none ${
-                  i === index
-                    ? "bg-gold text-gold-foreground"
-                    : "bg-primary-foreground/10 text-primary-foreground/80 hover:bg-primary-foreground/20"
-                }`}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </button>
-            ))}
-          </div>
+          {/* Indication subtile au repos */}
+          {!showControls && (
+            <p className="pointer-events-none absolute -top-6 right-0 text-[10px] tracking-wider text-primary-foreground/40 opacity-0 transition-opacity group-hover:opacity-100 sm:text-xs">
+              Survolez pour les contrôles
+            </p>
+          )}
         </div>
       </div>
     </section>
