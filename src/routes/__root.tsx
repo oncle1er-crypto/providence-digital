@@ -13,6 +13,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ScrollToTop } from "../components/ScrollToTop";
+import { RouteProgress } from "../components/RouteProgress";
+import { PageTransition } from "../components/PageTransition";
 
 function NotFoundComponent() {
   return (
@@ -130,11 +132,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <RouteProgress />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <div key={pathname} className="page-transition">
+      <PageTransition routeKey={pathname}>
         <Outlet />
-        <ScrollToTop />
-      </div>
+      </PageTransition>
+      <ScrollToTop />
     </QueryClientProvider>
+
   );
 }

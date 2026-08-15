@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Pause, Play, Volume2, VolumeX, Maximize2 } from "lucide-react";
+import { motion } from "framer-motion";
 import { heroSlides } from "@/data/site";
 
 
@@ -236,24 +237,35 @@ export function HeroVideoCarousel() {
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {heroSlides.map((slide, i) => (
-                    <button
+                    <motion.button
                       key={slide.id}
                       type="button"
+                      whileHover={{ scale: 1.12 }}
+                      whileTap={{ scale: 0.94 }}
+                      transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                       onClick={() => {
                         reveal();
                         goTo(i);
                       }}
                       aria-label={`Afficher la vidéo ${String(i + 1).padStart(2, "0")} : ${slide.title}`}
                       aria-current={i === index}
-                      className={`grid size-8 place-items-center rounded-full text-xs font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none ${
+                      className={`relative grid size-8 place-items-center rounded-full text-xs font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-gold focus-visible:outline-none ${
                         i === index
-                          ? "bg-gold text-gold-foreground"
+                          ? "text-gold-foreground"
                           : "bg-primary-foreground/10 text-primary-foreground/80 hover:bg-primary-foreground/20"
                       }`}
                     >
-                      {String(i + 1).padStart(2, "0")}
-                    </button>
+                      {i === index && (
+                        <motion.span
+                          layoutId="hero-dot-active"
+                          className="absolute inset-0 rounded-full bg-gold"
+                          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                        />
+                      )}
+                      <span className="relative">{String(i + 1).padStart(2, "0")}</span>
+                    </motion.button>
                   ))}
+
                 </div>
               </div>
             </div>
