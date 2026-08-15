@@ -96,28 +96,17 @@ export function Header() {
         >
           <span className="sr-only">Menu</span>
           <span className="relative block h-4 w-5">
-            {[0, 1, 2].map((i) => (
+            {BAR_STATES.map((state, i) => (
               <motion.span
                 key={i}
                 className="absolute left-0 block h-0.5 w-full rounded-full bg-current"
                 initial={false}
-                animate={
-                  open
-                    ? [
-                        { top: 7, rotate: 45, opacity: 1 },
-                        { top: 7, opacity: 0, scaleX: 0.4 },
-                        { top: 7, rotate: -45, opacity: 1 },
-                      ][i]
-                    : [
-                        { top: 1, rotate: 0, opacity: 1, scaleX: 1 },
-                        { top: 7, rotate: 0, opacity: 1, scaleX: 1 },
-                        { top: 13, rotate: 0, opacity: 1, scaleX: 1 },
-                      ][i]
-                }
+                animate={open ? state.open : state.closed}
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               />
             ))}
           </span>
+
         </button>
       </motion.div>
 
