@@ -146,6 +146,7 @@ export function HeroVideoCarousel() {
         {/* Contrôles vidéo : auto-hide au repos, révélés au survol / interaction */}
         <div
           ref={controlsRef}
+          data-hero-controls
           className="group relative mt-auto w-full max-w-3xl"
           onMouseEnter={reveal}
           onMouseLeave={() => {
