@@ -14,7 +14,7 @@ export function Hero() {
         preload="metadata"
         aria-hidden="true"
       />
-      <div className="absolute inset-0 -z-10 bg-primary/80" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary/90 via-primary/75 to-primary/55" />
 
       <div className="container-page flex min-h-[78vh] flex-col justify-center py-24 text-primary-foreground">
         <span className="inline-flex w-fit rounded-full border border-gold/60 px-4 py-1 text-xs tracking-[0.2em] uppercase">
