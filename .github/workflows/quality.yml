@@ -27,7 +27,8 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: ESLint
-        run: bunx eslint . --rule "prettier/prettier: off"
+        run: |
+          bunx eslint . --rule 'prettier/prettier: off'
 
       - name: Formatting report
         continue-on-error: true
