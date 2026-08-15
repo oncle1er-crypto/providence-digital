@@ -1,4 +1,4 @@
-const fallbackSiteUrl = "https://cs-laprovidence.space";
+const fallbackSiteUrl = "https://www.cslaprovidence.org";
 
 /**
  * URL publique canonique du site.
