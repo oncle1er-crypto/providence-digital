@@ -249,11 +249,12 @@ export const whyProvidence = [
 ];
 
 export const infrastructures = [
-  { title: "Salles de classe spacieuses", text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés." },
-  { title: "Salle informatique de pointe", text: "Pour l'apprentissage des TIC dès le plus jeune âge." },
-  { title: "Infirmerie scolaire", text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves." },
-  { title: "Terrains de sports conformes", text: "Football, handball, basket-ball : un esprit sain dans un corps sain." },
+  { title: "Salles de classe spacieuses", text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés.", image: PHOTO.salleClasse },
+  { title: "Un campus à taille humaine", text: "Bâtiments neufs, préau et espaces verts sur les hauteurs de Bonoua-Château.", image: PHOTO.courPreau },
+  { title: "Infirmerie scolaire", text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves.", image: PHOTO.infirmerie },
+  { title: "Bâtiment du secondaire", text: "Collège et lycée réunis dans un bâtiment à étage dédié.", image: PHOTO.secondaire },
 ];
+
 
 export const admissionSteps = [
   { step: "01", title: "Prise de contact", text: "Contactez la direction pour connaître les places disponibles par niveau." },
