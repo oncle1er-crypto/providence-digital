@@ -1,0 +1,141 @@
+from pathlib import Path
+
+path = Path("src/routes/admin.tsx")
+text = path.read_text(encoding="utf-8")
+
+
+def exact(old: str, new: str, label: str) -> None:
+    global text
+    count = text.count(old)
+    if count != 1:
+        raise SystemExit(f"{label}: expected 1 exact match, got {count}")
+    text = text.replace(old, new, 1)
+
+
+exact("  CheckCircle2,\n", "", "remove CheckCircle2 import")
+exact("  claimFirstAdmin,\n", "", "remove claimFirstAdmin import")
+exact("  signUp,\n", "", "remove signUp import")
+exact('  const [message, setMessage] = useState("");\n', "", "remove auth message state")
+
+exact(
+    '  if (!session) {\n    return <AuthScreen onAuthenticated={handleAuthenticated} message={message} setMessage={setMessage} />;\n  }\n',
+    '  if (!session) {\n    return <AuthScreen onAuthenticated={handleAuthenticated} />;\n  }\n',
+    "simplify unauthenticated screen",
+)
+
+old_non_admin = '''  if (!isAdmin) {\n    return (\n      <BootstrapScreen\n        session={session}\n        onClaimed={() => setIsAdmin(true)}\n        onLogout={async () => {\n          await signOut(session);\n          setSession(null);\n          setIsAdmin(false);\n        }}\n      />\n    );\n  }\n'''
+new_non_admin = '''  if (!isAdmin) {\n    return (\n      <main className="grid min-h-screen place-items-center bg-[#f8f5ef] px-4 py-10">\n        <div className="w-full max-w-lg rounded-[2rem] border border-primary/10 bg-white p-7 shadow-xl sm:p-10">\n          <div className="grid size-14 place-items-center rounded-2xl bg-primary text-gold">\n            <ShieldCheck className="size-7" />\n          </div>\n          <p className="mt-7 text-xs font-semibold tracking-[0.2em] text-gold uppercase">Accès refusé</p>\n          <h1 className="mt-2 font-display text-3xl font-semibold text-primary">Compte non autorisé</h1>\n          <p className="mt-3 text-sm leading-6 text-muted-foreground">\n            Ce compte est authentifié mais ne possède pas le rôle administrateur du site. Contactez le propriétaire du site pour obtenir un accès.\n          </p>\n          <button\n            onClick={async () => {\n              await signOut(session);\n              setSession(null);\n              setIsAdmin(false);\n            }}\n            className="mt-6 w-full rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"\n          >\n            Se déconnecter\n          </button>\n        </div>\n      </main>\n    );\n  }\n'''
+exact(old_non_admin, new_non_admin, "replace bootstrap gate")
+
+auth_start = text.find("function AuthScreen(")
+bootstrap_start = text.find("function BootstrapScreen(")
+dashboard_start = text.find("function AdminDashboard(")
+if min(auth_start, bootstrap_start, dashboard_start) < 0:
+    raise SystemExit("Could not locate AuthScreen/BootstrapScreen/AdminDashboard")
+if not (auth_start < bootstrap_start < dashboard_start):
+    raise SystemExit("Unexpected admin function order")
+
+login_only = r'''function AuthScreen({ onAuthenticated }: { onAuthenticated: (session: CmsSession) => Promise<void> }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  async function submit(event: React.FormEvent) {
+    event.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      const next = await signIn(email.trim(), password);
+      await onAuthenticated(next);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Connexion impossible.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <main className="min-h-screen bg-[#f8f5ef] px-4 py-10 sm:py-16">
+      <div className="mx-auto grid max-w-5xl overflow-hidden rounded-[2rem] border border-primary/10 bg-white shadow-2xl lg:grid-cols-[0.9fr_1.1fr]">
+        <section className="hidden bg-primary p-10 text-primary-foreground lg:flex lg:flex-col lg:justify-between">
+          <div>
+            <img src="/logo-gsp.png" alt="Logo La Providence" className="h-16 w-auto" />
+            <p className="mt-8 text-xs font-semibold tracking-[0.24em] text-gold uppercase">Espace sécurisé</p>
+            <h1 className="mt-4 font-display text-4xl font-semibold">Administration du site</h1>
+            <p className="mt-4 max-w-sm text-sm leading-7 text-primary-foreground/75">
+              Publiez les actualités, gérez les médias et mettez à jour les informations essentielles du site sans modifier le code.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-primary-foreground/60">
+            <ShieldCheck className="size-4 text-gold" /> Accès protégé par Supabase Auth + RLS
+          </div>
+        </section>
+
+        <section className="p-6 sm:p-10 lg:p-12">
+          <div className="flex items-center gap-3 lg:hidden">
+            <img src="/logo-gsp.png" alt="Logo La Providence" className="h-12 w-auto" />
+            <div>
+              <p className="font-display text-lg font-semibold text-primary">La Providence</p>
+              <p className="text-xs text-muted-foreground">Administration du site</p>
+            </div>
+          </div>
+
+          <div className="mt-8 lg:mt-0">
+            <p className="text-xs font-semibold tracking-[0.2em] text-gold uppercase">Connexion</p>
+            <h2 className="mt-2 font-display text-3xl font-semibold text-primary">Bienvenue</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Utilisez votre compte administrateur autorisé.</p>
+          </div>
+
+          <form onSubmit={submit} className="mt-8 space-y-5">
+            <Field label="Adresse e-mail">
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input-admin"
+                placeholder="nom@exemple.com"
+                autoComplete="email"
+              />
+            </Field>
+            <Field label="Mot de passe">
+              <input
+                type="password"
+                required
+                minLength={8}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-admin"
+                placeholder="Votre mot de passe"
+                autoComplete="current-password"
+              />
+            </Field>
+
+            {error && <Alert tone="error">{error}</Alert>}
+
+            <button
+              type="submit"
+              disabled={busy}
+              className="flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground transition hover:opacity-95 disabled:opacity-50"
+            >
+              {busy ? <Loader2 className="size-4 animate-spin" /> : <LockKeyhole className="size-4" />}
+              Se connecter
+            </button>
+          </form>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+'''
+
+text = text[:auth_start] + login_only + text[dashboard_start:]
+
+for forbidden in ("claimFirstAdmin", "Premier compte", "Première activation", "BootstrapScreen", "signUp"):
+    if forbidden in text:
+        raise SystemExit(f"Forbidden bootstrap reference remains: {forbidden}")
+
+path.write_text(text, encoding="utf-8")
+print("admin bootstrap cleanup complete")
