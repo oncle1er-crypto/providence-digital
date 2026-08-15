@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
 import { SchoolLevels } from "@/components/SchoolLevels";
+import { CampusGallery } from "@/components/CampusGallery";
 import { values } from "@/data/site";
 
 export const Route = createFileRoute("/notre-ecole")({
@@ -47,9 +48,18 @@ function Page() {
           </div>
         </Section>
 
+        <Section
+          eyebrow="Campus"
+          title="Nos infrastructures en images"
+          description="Administration, salles de classe, préau, infirmerie : un cadre neuf et adapté, au service des élèves."
+        >
+          <CampusGallery />
+        </Section>
+
         <Section eyebrow="Enseignement" title="Nos niveaux">
           <SchoolLevels />
         </Section>
+
       </main>
       <Footer />
     </>
