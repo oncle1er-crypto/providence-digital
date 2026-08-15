@@ -13,7 +13,7 @@ export const Route = createFileRoute("/notre-ecole")({
       {
         name: "description",
         content:
-          "Projet éducatif, valeurs orionines et niveaux d'enseignement du Complexe Scolaire La Providence de Don Orione.",
+          "Projet éducatif, valeurs orionines et niveaux d'enseignement (maternelle, primaire, collège et lycée) du Complexe Scolaire La Providence de Don Orione à Bonoua.",
       },
       { property: "og:title", content: "Notre école — La Providence de Don Orione" },
       {
@@ -35,7 +35,8 @@ function Page() {
       <main className="pt-20">
         <Section
           eyebrow="Notre école"
-          title="Un projet éducatif complet"
+          as="h1"
+          title="Notre école — un projet éducatif complet à Bonoua"
           description="Le Complexe Scolaire La Providence de Don Orione accueille les élèves de la maternelle au collège, avec l'ambition d'unir formation humaine et réussite scolaire."
         >
           <div className="grid gap-6 sm:grid-cols-2">

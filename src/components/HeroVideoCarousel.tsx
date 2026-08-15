@@ -122,8 +122,12 @@ export function HeroVideoCarousel() {
             Site officiel • {site_city}
           </span>
           <h1 className="hero-anim hero-title mt-6 font-display leading-[1.02] font-semibold text-balance [font-size:clamp(2.25rem,6vw,5rem)]">
-            Instruire l'esprit, former le cœur.
+            Complexe Scolaire La Providence de Don Orione
+            <span className="mt-3 block text-primary-foreground/85 [font-size:clamp(1.1rem,2.4vw,1.9rem)]">
+              Bonoua — Instruire l'esprit, former le cœur.
+            </span>
           </h1>
+
           <p className="hero-anim hero-desc mt-5 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
             École catholique à Bonoua-Château — de la maternelle à la terminale.
           </p>

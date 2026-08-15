@@ -33,7 +33,8 @@ function Page() {
       <main className="pt-20">
         <Section
           eyebrow="Contact"
-          title="Nous écrire ou nous rendre visite"
+          as="h1"
+          title="Contact — Complexe Scolaire La Providence de Don Orione, Bonoua"
           description="L'administration répond aux familles pendant les heures d'ouverture de l'établissement."
           className="pb-24"
         >

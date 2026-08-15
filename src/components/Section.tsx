@@ -8,13 +8,16 @@ export function Section({
   description,
   children,
   className,
+  as = "h2",
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
   children?: ReactNode;
   className?: string;
+  as?: "h1" | "h2";
 }) {
+  const Heading = as;
   return (
     <section className={cn("container-page py-16 sm:py-20", className)}>
       <Reveal className="max-w-2xl">
@@ -23,9 +26,10 @@ export function Section({
             {eyebrow}
           </p>
         )}
-        <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{title}</h2>
+        <Heading className="mt-3 font-display text-3xl font-semibold sm:text-4xl">{title}</Heading>
         {description && <p className="mt-4 text-muted-foreground">{description}</p>}
       </Reveal>
+
       {children && (
         <Reveal delay={120} className="mt-10">
           {children}

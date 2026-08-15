@@ -12,7 +12,7 @@ export const Route = createFileRoute("/formations")({
       {
         name: "description",
         content:
-          "Découvrez les niveaux d'enseignement du Complexe Scolaire La Providence de Don Orione à Bonoua : maternelle, primaire et collège.",
+          "Découvrez les niveaux d'enseignement du Complexe Scolaire La Providence de Don Orione à Bonoua : maternelle, primaire, collège et lycée.",
       },
       { property: "og:title", content: "Nos formations — La Providence de Don Orione" },
       { property: "og:description", content: "Maternelle, primaire et collège à Bonoua." },
@@ -32,7 +32,8 @@ function FormationsPage() {
       <main className="pt-20">
         <Section
           eyebrow="Formations"
-          title="Nos niveaux d'enseignement"
+          as="h1"
+          title="Nos formations : maternelle, primaire, collège et lycée"
           description="Un parcours cohérent de la maternelle au collège, où chaque étape prépare la suivante."
         >
           <SchoolLevels />
