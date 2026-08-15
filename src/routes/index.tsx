@@ -35,7 +35,16 @@ export const Route = createFileRoute("/")({
           name: site.name,
           description,
           url: "/",
-          address: { "@type": "PostalAddress", addressLocality: "Bonoua", addressCountry: "CI" },
+          telephone: site.contact.phone,
+          email: site.contact.email,
+          slogan: site.motto,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Quartier Château",
+            addressLocality: "Bonoua",
+            addressCountry: "CI",
+          },
+
         }),
       },
     ],
