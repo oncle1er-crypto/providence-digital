@@ -86,6 +86,12 @@ export function HeroVideoCarousel() {
             aria-hidden="true"
             tabIndex={-1}
             onEnded={() => i === index && goTo(index + 1)}
+            onCanPlay={(e) => {
+              if (i !== index || !playing || reduced) return;
+              const v = e.currentTarget;
+              v.muted = muted;
+              void v.play().catch(() => setPlaying(false));
+            }}
             onLoadedMetadata={(e) => i === index && setDuration(e.currentTarget.duration || slide.duration)}
             onTimeUpdate={(e) => i === index && setTime(e.currentTarget.currentTime)}
           />
