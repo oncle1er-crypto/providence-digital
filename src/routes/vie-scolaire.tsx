@@ -3,7 +3,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { VideoCarousel } from "@/components/VideoCarousel";
 import { Section } from "@/components/Section";
-import { schoolLife, site } from "@/data/site";
+import { schoolLife } from "@/data/site";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/vie-scolaire")({
   head: () => ({
@@ -15,14 +16,11 @@ export const Route = createFileRoute("/vie-scolaire")({
           "Encadrement, activités, sport et formation humaine : la vie quotidienne des élèves à La Providence de Don Orione.",
       },
       { property: "og:title", content: "Vie scolaire — La Providence de Don Orione" },
-      {
-        property: "og:description",
-        content: "Encadrement, activités et formation humaine au quotidien.",
-      },
+      { property: "og:description", content: "Encadrement, activités et formation humaine au quotidien." },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "/vie-scolaire" },
+      { property: "og:url", content: absoluteUrl("/vie-scolaire") },
     ],
-    links: [{ rel: "canonical", href: "/vie-scolaire" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/vie-scolaire") }],
   }),
   component: Page,
 });
@@ -51,7 +49,6 @@ function Page() {
         <Section eyebrow="En images" title="Notre établissement en vidéo">
           <VideoCarousel />
         </Section>
-
       </main>
       <Footer />
     </>

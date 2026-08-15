@@ -5,6 +5,7 @@ import { Section } from "@/components/Section";
 import { SchoolLevels } from "@/components/SchoolLevels";
 import { CampusGallery } from "@/components/CampusGallery";
 import { values } from "@/data/site";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/notre-ecole")({
   head: () => ({
@@ -21,9 +22,9 @@ export const Route = createFileRoute("/notre-ecole")({
         content: "Projet éducatif, valeurs et niveaux d'enseignement de l'établissement.",
       },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "/notre-ecole" },
+      { property: "og:url", content: absoluteUrl("/notre-ecole") },
     ],
-    links: [{ rel: "canonical", href: "/notre-ecole" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/notre-ecole") }],
   }),
   component: Page,
 });
@@ -37,7 +38,7 @@ function Page() {
           eyebrow="Notre école"
           as="h1"
           title="Notre école — un projet éducatif complet à Bonoua"
-          description="Le Complexe Scolaire La Providence de Don Orione accueille les élèves de la maternelle au collège, avec l'ambition d'unir formation humaine et réussite scolaire."
+          description="Le Complexe Scolaire La Providence de Don Orione accueille les élèves de la maternelle au lycée, avec l'ambition d'unir formation humaine et réussite scolaire."
         >
           <div className="grid gap-6 sm:grid-cols-2">
             {values.map((v) => (
@@ -60,7 +61,6 @@ function Page() {
         <Section eyebrow="Enseignement" title="Nos niveaux">
           <SchoolLevels />
         </Section>
-
       </main>
       <Footer />
     </>
