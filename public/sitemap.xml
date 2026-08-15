@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>/</loc><priority>1.0</priority></url>
-  <url><loc>/notre-ecole</loc></url>
-  <url><loc>/formations</loc></url>
-  <url><loc>/vie-scolaire</loc></url>
-  <url><loc>/actualites</loc></url>
-  <url><loc>/admissions</loc></url>
-  <url><loc>/contact</loc></url>
+  <url><loc>https://providence-digit.lovable.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://providence-digit.lovable.app/notre-ecole</loc></url>
+  <url><loc>https://providence-digit.lovable.app/formations</loc></url>
+  <url><loc>https://providence-digit.lovable.app/vie-scolaire</loc></url>
+  <url><loc>https://providence-digit.lovable.app/actualites</loc></url>
+  <url><loc>https://providence-digit.lovable.app/admissions</loc></url>
+  <url><loc>https://providence-digit.lovable.app/contact</loc></url>
 </urlset>
