@@ -1,0 +1,3 @@
+-- Historical migration placeholder.
+-- The one-time bootstrap objects are absent from the final schema. This version is
+-- intentionally a no-op for fresh environments while matching remote history.

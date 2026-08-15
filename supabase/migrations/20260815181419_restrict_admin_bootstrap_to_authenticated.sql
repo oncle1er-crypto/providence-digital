@@ -1,0 +1,3 @@
+-- Historical migration placeholder.
+-- The bootstrap function no longer exists in the final schema. This file preserves
+-- the remote migration version without recreating the retired mechanism.

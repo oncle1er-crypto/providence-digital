@@ -6,10 +6,15 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+const isVercel = process.env["VERCEL"] === "1";
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Lovable conserve sa cible Cloudflare par défaut. Sur Vercel, on force seulement
+  // le preset Vercel ; Nitro générera alors des Vercel Functions au lieu d'un Worker.
+  nitro: isVercel ? { preset: "vercel" } : {},
 });

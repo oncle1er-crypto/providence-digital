@@ -10,11 +10,24 @@ import { WhyProvidence } from "@/components/WhyProvidence";
 import { NewsCarousel } from "@/components/NewsCarousel";
 import { Testimonials } from "@/components/Testimonials";
 import { site, welcomeBadges } from "@/data/site";
+import { getPublicNews, getPublicSetting, type AdmissionsSetting } from "@/lib/cms";
+import { absoluteUrl, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 const description =
-  "Site officiel du Complexe Scolaire La Providence de Don Orione à Bonoua : école catholique de la maternelle à la terminale : maternelle, primaire, collège et lycée.";
+  "Site officiel du Complexe Scolaire La Providence de Don Orione à Bonoua : école catholique de la maternelle à la terminale, avec maternelle, primaire, collège et lycée.";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    const [cmsNews, admissions] = await Promise.all([
+      getPublicNews(8).catch(() => []),
+      getPublicSetting<AdmissionsSetting>("admissions").catch(() => null),
+    ]);
+
+    return {
+      cmsNews,
+      admissions: admissions?.value,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Complexe Scolaire La Providence de Don Orione | Bonoua" },
@@ -22,19 +35,24 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Complexe Scolaire La Providence de Don Orione | Bonoua" },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: absoluteUrl("/") },
+      { property: "og:image", content: DEFAULT_OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/") }],
     scripts: [
       {
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "School",
+          "@id": `${absoluteUrl("/")}#school`,
           name: site.name,
+          alternateName: site.shortName,
           description,
-          url: "/",
+          url: absoluteUrl("/"),
+          logo: absoluteUrl(site.logo),
+          image: DEFAULT_OG_IMAGE,
           telephone: site.contact.phone,
           email: site.contact.email,
           slogan: site.motto,
@@ -44,7 +62,6 @@ export const Route = createFileRoute("/")({
             addressLocality: "Bonoua",
             addressCountry: "CI",
           },
-
         }),
       },
     ],
@@ -53,6 +70,8 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { cmsNews, admissions } = Route.useLoaderData();
+
   return (
     <>
       <Header />
@@ -80,7 +99,7 @@ function Index() {
           </Link>
         </Section>
 
-        <AdmissionsCTA />
+        <AdmissionsCTA content={admissions} />
 
         <Section
           eyebrow="Formations"
@@ -105,7 +124,7 @@ function Index() {
           title="Actualités & événements"
           description="Les temps forts de la communauté éducative."
         >
-          <NewsCarousel />
+          <NewsCarousel cmsNews={cmsNews} />
         </Section>
 
         <Section eyebrow="Témoignages" title="Ils témoignent" className="pb-24">

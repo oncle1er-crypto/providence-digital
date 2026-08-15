@@ -1,0 +1,4 @@
+-- Historical migration placeholder.
+-- The one-time bootstrap mechanism was intentionally removed after the first
+-- administrator was provisioned. Keeping this version number prevents remote/local
+-- migration drift without reintroducing any activation token or callable bootstrap.

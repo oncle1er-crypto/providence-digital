@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
 import { site } from "@/data/site";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -14,14 +15,11 @@ export const Route = createFileRoute("/contact")({
           "Contacter le secrétariat du Complexe Scolaire La Providence de Don Orione pour toute information ou demande d'inscription.",
       },
       { property: "og:title", content: "Contact — La Providence de Don Orione" },
-      {
-        property: "og:description",
-        content: "Coordonnées du secrétariat de l'établissement.",
-      },
+      { property: "og:description", content: "Coordonnées du secrétariat de l'établissement." },
       { property: "og:type", content: "article" },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: absoluteUrl("/contact") },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
   }),
   component: Page,
 });
@@ -80,7 +78,6 @@ function Page() {
             </div>
           </div>
         </Section>
-
       </main>
       <Footer />
     </>

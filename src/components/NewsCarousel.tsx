@@ -1,12 +1,29 @@
 import { HCarousel } from "@/components/HCarousel";
 import { news } from "@/data/site";
+import { mediaPublicUrl, type NewsPost } from "@/lib/cms";
 import { Play } from "lucide-react";
 
-export function NewsCarousel() {
+type NewsCarouselProps = {
+  cmsNews?: NewsPost[];
+};
+
+export function NewsCarousel({ cmsNews = [] }: NewsCarouselProps) {
+  const items =
+    cmsNews.length > 0
+      ? cmsNews.map((item) => ({
+          id: item.id,
+          title: item.title,
+          excerpt: item.excerpt || item.body,
+          category: item.category || "Actualité",
+          image: mediaPublicUrl(item.image_path),
+          kind: item.video_url ? ("video" as const) : ("article" as const),
+        }))
+      : news;
+
   return (
     <HCarousel
       label="Actualités et événements"
-      items={news.map((item) => (
+      items={items.map((item) => (
         <article
           key={item.id}
           className="h-full overflow-hidden rounded-2xl border border-border bg-card shadow-sm"
@@ -32,7 +49,7 @@ export function NewsCarousel() {
           </div>
           <div className="p-5">
             <h3 className="font-display text-lg font-semibold">{item.title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{item.excerpt}</p>
+            <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{item.excerpt}</p>
           </div>
         </article>
       ))}

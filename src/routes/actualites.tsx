@@ -3,8 +3,11 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
 import { NewsCarousel } from "@/components/NewsCarousel";
+import { getPublicNews } from "@/lib/cms";
+import { absoluteUrl } from "@/lib/seo";
 
 export const Route = createFileRoute("/actualites")({
+  loader: () => getPublicNews(24).catch(() => []),
   head: () => ({
     meta: [
       { title: "Actualités & événements | La Providence de Don Orione" },
@@ -16,15 +19,17 @@ export const Route = createFileRoute("/actualites")({
       { property: "og:title", content: "Actualités & événements — La Providence de Don Orione" },
       { property: "og:description", content: "Les temps forts de la vie de l'école à Bonoua." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/actualites" },
+      { property: "og:url", content: absoluteUrl("/actualites") },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/actualites" }],
+    links: [{ rel: "canonical", href: absoluteUrl("/actualites") }],
   }),
   component: ActualitesPage,
 });
 
 function ActualitesPage() {
+  const cmsNews = Route.useLoaderData();
+
   return (
     <>
       <Header />
@@ -35,7 +40,7 @@ function ActualitesPage() {
           title="Actualités & événements de La Providence de Don Orione"
           description="Les temps forts de la vie de l'école, en articles, photos et vidéos courtes."
         >
-          <NewsCarousel />
+          <NewsCarousel cmsNews={cmsNews} />
         </Section>
       </main>
       <Footer />

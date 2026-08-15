@@ -3,20 +3,39 @@ import { whyProvidence } from "@/data/site";
 import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 import { Counter } from "@/components/Counter";
 
+const safeWhyProvidence = whyProvidence.map((item) =>
+  item.title === "Résultats"
+    ? {
+        ...item,
+        title: "Suivi académique",
+        text: "Un accompagnement régulier pour aider chaque élève à progresser et préparer ses examens.",
+      }
+    : item,
+);
+
 export function WhyProvidence() {
   const reduced = useReducedMotion();
 
   return (
     <section className="mt-16 overflow-hidden bg-primary py-16 text-primary-foreground sm:py-20">
       <div className="container-page">
-        <Reveal as="p" variant="left" className="text-xs font-semibold tracking-[0.22em] text-gold uppercase">
+        <Reveal
+          as="p"
+          variant="left"
+          className="text-xs font-semibold tracking-[0.22em] text-gold uppercase"
+        >
           Nos atouts
         </Reveal>
-        <Reveal as="h2" variant="left" delay={80} className="mt-3 max-w-2xl font-display text-3xl font-semibold text-balance sm:text-4xl">
+        <Reveal
+          as="h2"
+          variant="left"
+          delay={80}
+          className="mt-3 max-w-2xl font-display text-3xl font-semibold text-balance sm:text-4xl"
+        >
           Pourquoi choisir La Providence ?
         </Reveal>
         <RevealGroup delay={0.1} className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {whyProvidence.map((item, i) => (
+          {safeWhyProvidence.map((item, i) => (
             <RevealItem key={item.title} variant={i % 2 === 0 ? "up" : "zoom"}>
               <motion.div
                 whileHover={reduced ? {} : { y: -6, scale: 1.01 }}
