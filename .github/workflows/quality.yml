@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Lint
+        run: bun run lint
+
       - name: Build for Vercel
         run: bun run build
         env:
@@ -33,6 +36,3 @@ jobs:
 
       - name: TypeScript
         run: bunx tsc --noEmit
-
-      - name: Lint
-        run: bun run lint
