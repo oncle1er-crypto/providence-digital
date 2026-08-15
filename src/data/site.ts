@@ -1,35 +1,65 @@
-import maternelle from "@/assets/maternelle.jpg";
-import primaire from "@/assets/primaire.jpg";
-import college from "@/assets/college.jpg";
 import posterCour from "@/assets/posters/cour.jpg";
 import posterClasse from "@/assets/posters/classe.jpg";
 import posterSport from "@/assets/posters/sport.jpg";
 import posterGroupe from "@/assets/posters/groupe.jpg";
+import primaireGroupe from "@/assets/primaire-groupe.webp.asset.json";
+import primaireEleves from "@/assets/primaire-eleves.webp.asset.json";
+import sportTaekwondo from "@/assets/sport-taekwondo.webp.asset.json";
+import ecoleBatiment from "@/assets/ecole-batiment.webp.asset.json";
+import elevesMerite from "@/assets/eleves-merite.webp.asset.json";
+import elevesEtoile from "@/assets/eleves-etoile.webp.asset.json";
 
 /**
  * Toutes les données du site sont centralisées ici (prêt pour un futur CMS).
- * Les vidéos sont des démonstrations temporaires : remplacer les URLs ci-dessous
- * par les vidéos définitives de l'établissement.
+ * Les photos du primaire sont réelles. Les vidéos restent des démonstrations
+ * temporaires, remplaçables par les vidéos définitives de l'établissement.
  */
 
+export const PHOTO = {
+  primaireGroupe: primaireGroupe.url,
+  primaireEleves: primaireEleves.url,
+  sport: sportTaekwondo.url,
+  batiment: ecoleBatiment.url,
+  merite: elevesMerite.url,
+  etoile: elevesEtoile.url,
+} as const;
+
 export const site = {
-  name: "Complexe Scolaire La Providence de Don Orione",
+  name: "Complexe Scolaire Catholique La Providence de Don Orione",
   shortName: "La Providence",
-  city: "Bonoua, Côte d'Ivoire",
+  city: "Bonoua-Château, Côte d'Ivoire",
+  motto: "Instruire l'esprit, former le cœur",
   tagline: "École catholique d'excellence à Bonoua",
   intro:
-    "Un établissement catholique d'inspiration orionine où chaque élève est accompagné avec exigence et bienveillance, de la maternelle au collège.",
+    "De la maternelle à la terminale, un établissement catholique dirigé par la Congrégation Petite Œuvre de la Divine Providence — Don Orione, où chaque élève est accompagné avec discipline, charité et excellence.",
   logo: "/logo-gsp.png",
-  // À REMPLACER par les coordonnées officielles fournies par l'établissement
+  website: "www.cslaprodorione.org",
   contact: {
-    phone: "[Téléphone à compléter]",
-    email: "[Email à compléter]",
-    address: "[Adresse à compléter] — Bonoua, Côte d'Ivoire",
+    address:
+      "Bonoua, Quartier Château — à proximité de la Paroisse Marie Mère de la Divine Providence",
+    phone: "(+225) 05 65 25 76 93",
+    email: "ecolelaprovidencebonoua@gmail.com",
   },
+  directions: [
+    {
+      label: "Maternelle & Primaire",
+      phone: "(+225) 05 65 25 76 93",
+      email: "ecolelaprovidencebonoua@gmail.com",
+    },
+    {
+      label: "Collège & Lycée",
+      phone: "(+225) 07 14 76 78 08",
+      email: "c.s.laprovidence2019@gmail.com",
+    },
+  ],
+  hours: [
+    { days: "Lundi — Vendredi", time: "07h30 – 17h30" },
+    { days: "Samedi", time: "08h00 – 12h00" },
+  ],
   social: [
-    { label: "Facebook", href: "#", note: "[Lien à compléter]" },
-    { label: "WhatsApp", href: "#", note: "[Lien à compléter]" },
-    { label: "YouTube", href: "#", note: "[Lien à compléter]" },
+    { label: "Facebook", href: "#", note: "CS LA PROVIDENCE DE DON ORIONE" },
+    { label: "Instagram", href: "#", note: "@cs_laprodorione" },
+    { label: "Site web", href: "#", note: "www.cslaprodorione.org" },
   ],
 };
 
@@ -110,7 +140,7 @@ export const schoolLifeClips: VideoSlide[] = [
   {
     id: "spirituelle",
     title: "Vie spirituelle",
-    description: "Temps de prière et formation humaine et chrétienne.",
+    description: "Messes régulières, catéchèse et éducation aux valeurs.",
     duration: 7,
     src: VIDEO.groupe,
     poster: posterGroupe,
@@ -118,15 +148,15 @@ export const schoolLifeClips: VideoSlide[] = [
   {
     id: "sports",
     title: "Sports & bien-être",
-    description: "Activités physiques, santé et esprit d'équipe.",
+    description: "Football, handball, basket-ball et arts martiaux.",
     duration: 8,
     src: VIDEO.sport,
     poster: posterSport,
   },
   {
     id: "arts",
-    title: "Arts & culture",
-    description: "Expression artistique, chant et activités culturelles.",
+    title: "Clubs & culture",
+    description: "Clubs de lecture, théâtre, chorale et action catholique.",
     duration: 9,
     src: VIDEO.cour,
     poster: posterCour,
@@ -142,16 +172,16 @@ export const schoolLifeClips: VideoSlide[] = [
 ];
 
 export const welcomeBadges = [
-  { title: "Foi & Valeurs", text: "L'héritage de saint Luigi Orione : accueillir, servir, faire grandir." },
-  { title: "Excellence académique", text: "Un travail régulier et des méthodes claires, de la maternelle au collège." },
-  { title: "Ouverture & Service", text: "Former des élèves responsables, solidaires et ouverts au monde." },
+  { title: "Discipline", text: "Une rigueur nécessaire associée à une écoute paternelle, selon la pédagogie de saint Louis Orione." },
+  { title: "Charité", text: "La charité concrète au cœur de la mission : accueillir, servir, faire grandir chaque enfant." },
+  { title: "Excellence", text: "Un parcours complet de la maternelle à la terminale, jusqu'au baccalauréat." },
 ];
 
 export const levels = [
   {
     slug: "maternelle",
     title: "Maternelle",
-    image: maternelle,
+    image: PHOTO.etoile,
     summary:
       "Un premier pas serein vers l'école : éveil, langage, motricité et vie en groupe dans un cadre protecteur.",
     points: ["Éveil et langage", "Motricité et jeux encadrés", "Apprentissage de l'autonomie"],
@@ -159,42 +189,88 @@ export const levels = [
   {
     slug: "primaire",
     title: "Primaire",
-    image: primaire,
+    image: PHOTO.primaireEleves,
     summary:
       "Les fondamentaux solidement posés : lire, écrire, compter, raisonner, avec un suivi individualisé.",
-    points: ["Lecture et expression écrite", "Mathématiques et raisonnement", "Suivi personnalisé"],
+    points: ["Lecture et expression écrite", "Mathématiques et raisonnement", "Effectifs maîtrisés"],
   },
   {
     slug: "college",
     title: "Collège",
-    image: college,
+    image: PHOTO.merite,
     summary:
       "Méthode de travail, culture générale et préparation aux examens dans un climat de discipline bienveillante.",
-    points: ["Méthodologie et travail personnel", "Sciences et langues", "Préparation aux examens"],
+    points: ["Méthodologie et travail personnel", "Sciences et langues", "Préparation au BEPC"],
+  },
+  {
+    slug: "lycee",
+    title: "Lycée",
+    image: PHOTO.primaireGroupe,
+    summary:
+      "Enseignement général jusqu'en terminale, avec une exigence académique orientée vers le baccalauréat.",
+    points: ["Enseignement général", "Préparation au baccalauréat", "Orientation et projet d'avenir"],
   },
 ] as const;
 
 export const values = welcomeBadges;
 
 export const whyProvidence = [
-  { title: "Foi & valeurs", text: "Une éducation catholique qui forme l'esprit et élève le cœur." },
-  { title: "Enseignants qualifiés", text: "Une équipe éducative engagée et attentive à chaque élève." },
-  { title: "Effectifs à taille humaine", text: "Des classes suivies, pour un accompagnement réellement personnalisé." },
-  { title: "Infrastructure adaptée", text: "Des espaces pensés pour apprendre, jouer et grandir en sécurité." },
-  { title: "Expérience", text: "Une école enracinée dans la tradition éducative orionine." },
+  { title: "Foi & valeurs", text: "Messes régulières, catéchèse et éducation aux valeurs morales." },
+  { title: "Résultats", text: "100 % de réussite aux examens nationaux." },
+  { title: "Effectifs maîtrisés", text: "Des classes suivies, pour un accompagnement réellement personnalisé." },
+  { title: "Infrastructures adaptées", text: "Salles spacieuses, salle informatique, infirmerie et terrains de sport." },
+  { title: "Réseau international", text: "Un établissement de la Petite Œuvre de la Divine Providence — Don Orione." },
+];
+
+export const infrastructures = [
+  { title: "Salles de classe spacieuses", text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés." },
+  { title: "Salle informatique de pointe", text: "Pour l'apprentissage des TIC dès le plus jeune âge." },
+  { title: "Infirmerie scolaire", text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves." },
+  { title: "Terrains de sports conformes", text: "Football, handball, basket-ball : un esprit sain dans un corps sain." },
 ];
 
 export const admissionSteps = [
-  { step: "01", title: "Prise de contact", text: "Contactez le secrétariat pour connaître les places disponibles par niveau." },
-  { step: "02", title: "Dossier de candidature", text: "Retrait et dépôt du dossier avec les pièces demandées par l'établissement." },
-  { step: "03", title: "Entretien et évaluation", text: "Rencontre avec la famille et évaluation du niveau selon la classe visée." },
-  { step: "04", title: "Inscription", text: "Confirmation de l'admission et finalisation de l'inscription au secrétariat." },
+  { step: "01", title: "Prise de contact", text: "Contactez la direction pour connaître les places disponibles par niveau." },
+  { step: "02", title: "Dossier de candidature", text: "Dépôt du dossier avec les pièces demandées selon le cycle visé." },
+  { step: "03", title: "Test d'entrée", text: "Le test d'entrée est obligatoire ; les places sont limitées." },
+  { step: "04", title: "Inscription", text: "Confirmation de l'admission et finalisation à l'administration." },
+];
+
+export const admissionDocs = [
+  {
+    level: "Maternelle",
+    items: ["1 certificat de vaccination", "1 extrait d'acte de naissance original"],
+  },
+  {
+    level: "Primaire",
+    items: [
+      "1 certificat de scolarité",
+      "1 extrait d'acte de naissance original",
+      "1 fiche d'inscription",
+      "Fiche cursus pour les nouveaux CP2 & CM2",
+    ],
+  },
+  {
+    level: "Collège & Lycée",
+    items: [
+      "1 extrait de naissance",
+      "4 photos d'identité",
+      "1 chemise dossier",
+      "Dernier bulletin de notes",
+    ],
+  },
+];
+
+export const uniforms = [
+  { level: "Maternelle", text: "Tissu carrelé marron et blanc (garçons et filles). Tenues disponibles à l'école." },
+  { level: "Primaire", text: "Garçons : culotte marron et chemise blanche. Filles : jupe marron et chemise blanche." },
+  { level: "Collège & Lycée", text: "Garçons : pantalon et chemise kaki. Filles : jupe bleue et chemise blanche." },
 ];
 
 export const schoolLife = [
-  { title: "Vie de classe", text: "Des effectifs suivis, des enseignants disponibles, un climat propice au travail." },
-  { title: "Activités et sport", text: "Sport, culture et animations qui développent la confiance et l'esprit d'équipe." },
-  { title: "Pastorale et valeurs", text: "Temps de formation humaine et spirituelle, dans le respect de chaque famille." },
+  { title: "Vie de classe", text: "Des effectifs maîtrisés, des enseignants disponibles, un climat propice au travail." },
+  { title: "Sport & clubs", text: "Football, handball, basket-ball, clubs de lecture, théâtre et chorale." },
+  { title: "Pastorale et valeurs", text: "Messes régulières, catéchèse et mouvements d'action catholique." },
   { title: "Encadrement", text: "Une équipe éducative attentive à la présence, au comportement et aux progrès." },
 ];
 
@@ -213,25 +289,25 @@ export const news: NewsItem[] = [
     id: "rentree",
     kind: "article",
     category: "Vie de l'école",
-    title: "Rentrée scolaire",
+    title: "Rentrée scolaire 2026–2027",
     excerpt: "Accueil des élèves et des familles pour le lancement de la nouvelle année.",
-    image: posterCour,
+    image: PHOTO.batiment,
   },
   {
-    id: "orione",
+    id: "merite",
     kind: "photo",
-    category: "Vie spirituelle",
-    title: "Fête de Saint Luigi Orione",
-    excerpt: "Célébration du fondateur et temps fort de la communauté éducative.",
-    image: posterGroupe,
+    category: "Excellence",
+    title: "Élèves du mois",
+    excerpt: "Les élèves distingués reçoivent leur écharpe et leur attestation.",
+    image: PHOTO.merite,
   },
   {
     id: "excellence",
     kind: "article",
     category: "Pédagogie",
     title: "Journée de l'excellence",
-    excerpt: "Mise à l'honneur du travail et des progrès des élèves.",
-    image: posterClasse,
+    excerpt: "Mise à l'honneur du travail et des progrès des élèves du primaire.",
+    image: PHOTO.primaireGroupe,
   },
   {
     id: "sortie",
@@ -243,21 +319,20 @@ export const news: NewsItem[] = [
     video: VIDEO.cour,
   },
   {
-    id: "tournoi",
-    kind: "video",
+    id: "taekwondo",
+    kind: "photo",
     category: "Sport",
-    title: "Tournoi sportif",
-    excerpt: "Compétition inter-classes dans un bel esprit d'équipe.",
-    image: posterSport,
-    video: VIDEO.sport,
+    title: "Arts martiaux à l'école",
+    excerpt: "Discipline, maîtrise de soi et esprit d'équipe dès la maternelle.",
+    image: PHOTO.sport,
   },
   {
-    id: "retraite",
+    id: "etoile",
     kind: "photo",
-    category: "Vie spirituelle",
-    title: "Retraite spirituelle",
-    excerpt: "Un temps de recueillement et de formation pour les élèves.",
-    image: posterGroupe,
+    category: "Vie de l'école",
+    title: "Étoiles du mois",
+    excerpt: "Un temps fort mensuel qui encourage l'effort et la régularité.",
+    image: PHOTO.etoile,
   },
 ];
 
@@ -287,7 +362,7 @@ export const testimonials = [
     id: "religieux",
     role: "Responsable religieux",
     quote:
-      "Notre mission reste celle de Don Orione : former l'esprit et élever le cœur, au service des familles.",
+      "Notre mission reste celle de Don Orione : instruire l'esprit et former le cœur, au service des familles.",
     author: "Témoignage de la communauté",
   },
 ];
