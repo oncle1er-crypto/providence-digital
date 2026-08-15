@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { VideoCarousel } from "@/components/VideoCarousel";
 import { Section } from "@/components/Section";
 import { schoolLife, site } from "@/data/site";
 
@@ -30,7 +31,7 @@ function Page() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pt-20">
         <Section
           eyebrow="Vie scolaire"
           title="Le quotidien des élèves"

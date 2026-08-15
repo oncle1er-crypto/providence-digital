@@ -1,27 +1,29 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { Hero } from "@/components/Hero";
+import { HeroVideoCarousel } from "@/components/HeroVideoCarousel";
 import { Section } from "@/components/Section";
-import { LevelCards } from "@/components/LevelCards";
-import { site, values } from "@/data/site";
+import { SchoolLevels } from "@/components/SchoolLevels";
+import { AdmissionsCTA } from "@/components/AdmissionsCTA";
+import { VideoCarousel } from "@/components/VideoCarousel";
+import { WhyProvidence } from "@/components/WhyProvidence";
+import { NewsCarousel } from "@/components/NewsCarousel";
+import { Testimonials } from "@/components/Testimonials";
+import { site, welcomeBadges } from "@/data/site";
+
+const description =
+  "Site officiel du Complexe Scolaire La Providence de Don Orione à Bonoua : école catholique proposant Maternelle, Primaire et Collège.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "La Providence de Don Orione — Complexe Scolaire" },
-      {
-        name: "description",
-        content:
-          "Site officiel du Complexe Scolaire La Providence de Don Orione : maternelle, primaire et collège, dans un cadre exigeant et bienveillant.",
-      },
-      { property: "og:title", content: "La Providence de Don Orione — Site officiel" },
-      {
-        property: "og:description",
-        content: "Maternelle, primaire et collège : éduquer le cœur et l'intelligence.",
-      },
+      { title: "Complexe Scolaire La Providence de Don Orione | Bonoua" },
+      { name: "description", content: description },
+      { property: "og:title", content: "Complexe Scolaire La Providence de Don Orione | Bonoua" },
+      { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/" }],
     scripts: [
@@ -31,8 +33,9 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "School",
           name: site.name,
-          description: site.intro,
+          description,
           url: "/",
+          address: { "@type": "PostalAddress", addressLocality: "Bonoua", addressCountry: "CI" },
         }),
       },
     ],
@@ -45,44 +48,59 @@ function Index() {
     <>
       <Header />
       <main>
-        <Hero />
+        <HeroVideoCarousel />
 
         <Section
-          eyebrow="Nos niveaux"
-          title="De la maternelle au collège"
-          description="Un parcours cohérent, où chaque étape prépare la suivante."
+          eyebrow="Bienvenue"
+          title="La Providence de Don Orione"
+          description="Une école catholique au service des familles de Bonoua : instruire avec exigence, éduquer avec charité, dans l'héritage de saint Luigi Orione."
         >
-          <LevelCards />
+          <div className="grid gap-6 sm:grid-cols-3">
+            {welcomeBadges.map((b) => (
+              <div key={b.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+                <h3 className="font-display text-lg font-semibold">{b.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{b.text}</p>
+              </div>
+            ))}
+          </div>
+          <Link
+            to="/notre-ecole"
+            className="mt-8 inline-block rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
+          >
+            Découvrir notre histoire
+          </Link>
         </Section>
 
-        <div className="bg-secondary/60">
-          <Section
-            eyebrow="Nos valeurs"
-            title="Une école d'inspiration orionine"
-            description="Ce qui guide notre projet éducatif au quotidien."
-          >
-            <div className="grid gap-6 sm:grid-cols-2">
-              {values.map((v) => (
-                <div key={v.title} className="rounded-xl border border-border bg-card p-6">
-                  <h3 className="font-display text-lg font-semibold">{v.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{v.text}</p>
-                </div>
-              ))}
-            </div>
-          </Section>
-        </div>
+        <AdmissionsCTA />
 
         <Section
-          eyebrow="Admissions"
-          title="Rejoindre La Providence"
-          description="Les inscriptions se font auprès du secrétariat de l'établissement."
+          eyebrow="Formations"
+          title="Nos niveaux d'enseignement"
+          description="De la maternelle au collège, un parcours cohérent et accompagné."
         >
-          <Link
-            to="/admissions"
-            className="inline-flex rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Voir la procédure d'inscription
-          </Link>
+          <SchoolLevels />
+        </Section>
+
+        <Section
+          eyebrow="Vie scolaire"
+          title="Le quotidien de nos élèves"
+          description="Classe, vie spirituelle, sport, arts et vie étudiante — en vidéo."
+        >
+          <VideoCarousel />
+        </Section>
+
+        <WhyProvidence />
+
+        <Section
+          eyebrow="Actualités"
+          title="Actualités & événements"
+          description="Les temps forts de la communauté éducative."
+        >
+          <NewsCarousel />
+        </Section>
+
+        <Section eyebrow="Témoignages" title="Ils témoignent" className="pb-24">
+          <Testimonials />
         </Section>
       </main>
       <Footer />

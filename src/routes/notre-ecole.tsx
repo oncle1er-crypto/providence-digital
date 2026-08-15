@@ -31,7 +31,7 @@ function Page() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pt-20">
         <Section
           eyebrow="Notre école"
           title="Un projet éducatif complet"
