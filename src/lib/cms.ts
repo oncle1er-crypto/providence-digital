@@ -1,9 +1,9 @@
 const SUPABASE_URL = (
-  import.meta.env.VITE_SUPABASE_URL || "https://laujoixondbpzdsmdfko.supabase.co"
+  import.meta.env["VITE_SUPABASE_URL"] || "https://laujoixondbpzdsmdfko.supabase.co"
 ).replace(/\/$/, "");
 
 const SUPABASE_PUBLISHABLE_KEY =
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+  import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
   "sb_publishable_xGQro0faYiaIqjf4qmN52g_cQHx3Scc";
 
 const SESSION_KEY = "providence-cms-session";
@@ -84,7 +84,7 @@ function authHeaders(session?: CmsSession, json = true): HeadersInit {
   };
 
   if (session?.access_token) {
-    headers.Authorization = `Bearer ${session.access_token}`;
+    headers["Authorization"] = `Bearer ${session.access_token}`;
   }
 
   if (json) headers["Content-Type"] = "application/json";
@@ -112,12 +112,10 @@ function saveSession(session: CmsSession | null) {
     return;
   }
 
-  const normalized: CmsSession = {
-    ...session,
-    expires_at:
-      session.expires_at ||
-      (session.expires_in ? Math.floor(Date.now() / 1000) + session.expires_in : undefined),
-  };
+  const normalized: CmsSession = { ...session };
+  if (!normalized.expires_at && normalized.expires_in) {
+    normalized.expires_at = Math.floor(Date.now() / 1000) + normalized.expires_in;
+  }
   window.localStorage.setItem(SESSION_KEY, JSON.stringify(normalized));
 }
 
