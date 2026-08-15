@@ -31,8 +31,10 @@ Les quatre posters locaux préexistants (`cour.jpg`, `classe.jpg`, `sport.jpg`, 
 - TypeScript sans émission : **validé** ;
 - build de production : **validé** ;
 - tests automatisés : aucun script `test` n'est défini dans le projet ;
-- HTTP 200 et type MIME correct pour les 8 vidéos et les 8 posters du carrousel dans le build local : **16/16 validés** ;
-- contrôle final des mêmes URL sur l'URL de prévisualisation Vercel avant fusion.
+- HTTP 200 pour l'ensemble des médias migrés dans l'artefact de build : **25/25 validés** ;
+- vidéos et posters du carrousel : types MIME et tailles corrects, **16/16 validés** ;
+- GitHub Actions `Quality` : **réussi** ;
+- Vercel : déploiement de prévisualisation **Ready**, mais URL protégée par SSO (redirection HTTP 302 vers la connexion Vercel), donc contrôle public HTTP 200 à refaire après authentification ou après fusion.
 
 Les huit MP4 répondent en `video/mp4` et les huit posters en `image/jpeg`. Les tailles HTTP obtenues correspondent aux fichiers sources complets.
 
