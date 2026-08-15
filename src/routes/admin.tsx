@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  CheckCircle2,
   Copy,
   FileText,
   Image as ImageIcon,
@@ -18,7 +17,6 @@ import {
 } from "lucide-react";
 import { site } from "@/data/site";
 import {
-  claimFirstAdmin,
   deleteMedia,
   deleteNews,
   getAdminNews,
@@ -31,7 +29,6 @@ import {
   saveSetting,
   signIn,
   signOut,
-  signUp,
   uploadMedia,
   type AdmissionsSetting,
   type CmsSession,
@@ -115,7 +112,6 @@ function AdminPage() {
   const [session, setSession] = useState<CmsSession | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -153,20 +149,33 @@ function AdminPage() {
   }
 
   if (!session) {
-    return <AuthScreen onAuthenticated={handleAuthenticated} message={message} setMessage={setMessage} />;
+    return <AuthScreen onAuthenticated={handleAuthenticated} />;
   }
 
   if (!isAdmin) {
     return (
-      <BootstrapScreen
-        session={session}
-        onClaimed={() => setIsAdmin(true)}
-        onLogout={async () => {
-          await signOut(session);
-          setSession(null);
-          setIsAdmin(false);
-        }}
-      />
+      <main className="grid min-h-screen place-items-center bg-[#f8f5ef] px-4 py-10">
+        <div className="w-full max-w-lg rounded-[2rem] border border-primary/10 bg-white p-7 shadow-xl sm:p-10">
+          <div className="grid size-14 place-items-center rounded-2xl bg-primary text-gold">
+            <ShieldCheck className="size-7" />
+          </div>
+          <p className="mt-7 text-xs font-semibold tracking-[0.2em] text-gold uppercase">Accès refusé</p>
+          <h1 className="mt-2 font-display text-3xl font-semibold text-primary">Compte non autorisé</h1>
+          <p className="mt-3 text-sm leading-6 text-muted-foreground">
+            Ce compte est authentifié mais ne possède pas le rôle administrateur du site. Contactez le propriétaire du site pour obtenir un accès.
+          </p>
+          <button
+            onClick={async () => {
+              await signOut(session);
+              setSession(null);
+              setIsAdmin(false);
+            }}
+            className="mt-6 w-full rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
+          >
+            Se déconnecter
+          </button>
+        </div>
+      </main>
     );
   }
 
@@ -182,16 +191,7 @@ function AdminPage() {
   );
 }
 
-function AuthScreen({
-  onAuthenticated,
-  message,
-  setMessage,
-}: {
-  onAuthenticated: (session: CmsSession) => Promise<void>;
-  message: string;
-  setMessage: (message: string) => void;
-}) {
-  const [mode, setMode] = useState<"login" | "signup">("login");
+function AuthScreen({ onAuthenticated }: { onAuthenticated: (session: CmsSession) => Promise<void> }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -201,25 +201,11 @@ function AuthScreen({
     event.preventDefault();
     setBusy(true);
     setError("");
-    setMessage("");
     try {
-      if (mode === "login") {
-        const next = await signIn(email.trim(), password);
-        await onAuthenticated(next);
-        return;
-      }
-
-      const result = await signUp(email.trim(), password);
-      if ("access_token" in result && result.access_token) {
-        await onAuthenticated(result as CmsSession);
-      } else {
-        setMessage(
-          "Compte créé. Vérifiez votre boîte e-mail si Supabase vous demande de confirmer l’adresse, puis revenez vous connecter.",
-        );
-        setMode("login");
-      }
+      const next = await signIn(email.trim(), password);
+      await onAuthenticated(next);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Impossible de continuer.");
+      setError(cause instanceof Error ? cause.message : "Connexion impossible.");
     } finally {
       setBusy(false);
     }
@@ -251,39 +237,10 @@ function AuthScreen({
             </div>
           </div>
 
-          <div className="mt-8 flex rounded-full bg-muted p-1 lg:mt-0">
-            <button
-              type="button"
-              onClick={() => setMode("login")}
-              className={`flex-1 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
-                mode === "login" ? "bg-white text-primary shadow-sm" : "text-muted-foreground"
-              }`}
-            >
-              Se connecter
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode("signup")}
-              className={`flex-1 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
-                mode === "signup" ? "bg-white text-primary shadow-sm" : "text-muted-foreground"
-              }`}
-            >
-              Premier compte
-            </button>
-          </div>
-
-          <div className="mt-8">
-            <p className="text-xs font-semibold tracking-[0.2em] text-gold uppercase">
-              {mode === "login" ? "Connexion" : "Configuration initiale"}
-            </p>
-            <h2 className="mt-2 font-display text-3xl font-semibold text-primary">
-              {mode === "login" ? "Bienvenue" : "Créer votre compte"}
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              {mode === "login"
-                ? "Utilisez votre compte administrateur autorisé."
-                : "Cette étape crée uniquement votre identité. L’activation administrateur se fait ensuite avec le code unique."}
-            </p>
+          <div className="mt-8 lg:mt-0">
+            <p className="text-xs font-semibold tracking-[0.2em] text-gold uppercase">Connexion</p>
+            <h2 className="mt-2 font-display text-3xl font-semibold text-primary">Bienvenue</h2>
+            <p className="mt-2 text-sm text-muted-foreground">Utilisez votre compte administrateur autorisé.</p>
           </div>
 
           <form onSubmit={submit} className="mt-8 space-y-5">
@@ -306,13 +263,12 @@ function AuthScreen({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="input-admin"
-                placeholder="8 caractères minimum"
-                autoComplete={mode === "login" ? "current-password" : "new-password"}
+                placeholder="Votre mot de passe"
+                autoComplete="current-password"
               />
             </Field>
 
             {error && <Alert tone="error">{error}</Alert>}
-            {message && <Alert tone="success">{message}</Alert>}
 
             <button
               type="submit"
@@ -320,78 +276,10 @@ function AuthScreen({
               className="flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground transition hover:opacity-95 disabled:opacity-50"
             >
               {busy ? <Loader2 className="size-4 animate-spin" /> : <LockKeyhole className="size-4" />}
-              {mode === "login" ? "Se connecter" : "Créer le compte"}
+              Se connecter
             </button>
           </form>
         </section>
-      </div>
-    </main>
-  );
-}
-
-function BootstrapScreen({
-  session,
-  onClaimed,
-  onLogout,
-}: {
-  session: CmsSession;
-  onClaimed: () => void;
-  onLogout: () => Promise<void>;
-}) {
-  const [token, setToken] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState("");
-
-  async function claim(event: React.FormEvent) {
-    event.preventDefault();
-    setBusy(true);
-    setError("");
-    try {
-      const ok = await claimFirstAdmin(session, token.trim());
-      if (!ok) throw new Error("Code incorrect, déjà utilisé, ou un administrateur existe déjà.");
-      onClaimed();
-    } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Activation impossible.");
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  return (
-    <main className="grid min-h-screen place-items-center bg-[#f8f5ef] px-4 py-10">
-      <div className="w-full max-w-lg rounded-[2rem] border border-primary/10 bg-white p-7 shadow-xl sm:p-10">
-        <div className="grid size-14 place-items-center rounded-2xl bg-primary text-gold">
-          <ShieldCheck className="size-7" />
-        </div>
-        <p className="mt-7 text-xs font-semibold tracking-[0.2em] text-gold uppercase">Première activation</p>
-        <h1 className="mt-2 font-display text-3xl font-semibold text-primary">Autoriser ce compte</h1>
-        <p className="mt-3 text-sm leading-6 text-muted-foreground">
-          Votre compte est authentifié mais n’a pas encore le rôle administrateur. Entrez le code unique fourni lors de la mise en place du CMS.
-        </p>
-
-        <form onSubmit={claim} className="mt-7 space-y-5">
-          <Field label="Code d’activation unique">
-            <input
-              required
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              className="input-admin font-mono"
-              autoComplete="off"
-            />
-          </Field>
-          {error && <Alert tone="error">{error}</Alert>}
-          <button
-            disabled={busy}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
-          >
-            {busy ? <Loader2 className="size-4 animate-spin" /> : <CheckCircle2 className="size-4" />}
-            Activer l’administration
-          </button>
-        </form>
-
-        <button onClick={onLogout} className="mt-4 w-full text-sm font-medium text-muted-foreground hover:text-primary">
-          Se déconnecter
-        </button>
       </div>
     </main>
   );
