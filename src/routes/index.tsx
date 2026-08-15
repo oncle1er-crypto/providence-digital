@@ -9,6 +9,7 @@ import { VideoCarousel } from "@/components/VideoCarousel";
 import { WhyProvidence } from "@/components/WhyProvidence";
 import { NewsCarousel } from "@/components/NewsCarousel";
 import { Testimonials } from "@/components/Testimonials";
+import { RevealGroup, RevealItem } from "@/components/Reveal";
 import { site, welcomeBadges } from "@/data/site";
 import { getPublicNews, getPublicSetting, type AdmissionsSetting } from "@/lib/cms";
 import { absoluteUrl, DEFAULT_OG_IMAGE } from "@/lib/seo";
@@ -83,14 +84,19 @@ function Index() {
           title="La Providence de Don Orione"
           description="Une école catholique au service des familles de Bonoua-Château, dirigée par la Congrégation Petite Œuvre de la Divine Providence — Don Orione : discipline, charité, excellence."
         >
-          <div className="grid gap-6 sm:grid-cols-3">
-            {welcomeBadges.map((b) => (
-              <div key={b.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <RevealGroup stagger={0.12} className="grid gap-6 sm:grid-cols-3">
+            {welcomeBadges.map((b, index) => (
+              <RevealItem
+                as="article"
+                key={b.title}
+                variant={index % 2 === 0 ? "up" : "zoom"}
+                className="rounded-2xl border border-border bg-card p-6 shadow-sm"
+              >
                 <h3 className="font-display text-lg font-semibold">{b.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{b.text}</p>
-              </div>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
           <Link
             to="/notre-ecole"
             className="mt-8 inline-block rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
