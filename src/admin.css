@@ -1,0 +1,32 @@
+.input-admin {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  background: var(--card);
+  color: var(--foreground);
+  padding: 0.7rem 0.9rem;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.input-admin::placeholder {
+  color: color-mix(in oklab, var(--foreground) 42%, transparent);
+}
+
+.input-admin:hover {
+  border-color: color-mix(in oklab, var(--primary) 28%, var(--border));
+}
+
+.input-admin:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--gold) 18%, transparent);
+}
+
+.input-admin:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
