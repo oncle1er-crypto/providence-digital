@@ -11,10 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActualitesRouteImport } from './routes/actualites'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdmissionsRouteImport } from './routes/admissions'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FormationsRouteImport } from './routes/formations'
 import { Route as NotreEcoleRouteImport } from './routes/notre-ecole'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as VieScolaireRouteImport } from './routes/vie-scolaire'
 
 const IndexRoute = IndexRouteImport.update({
@@ -25,6 +28,11 @@ const IndexRoute = IndexRouteImport.update({
 const ActualitesRoute = ActualitesRouteImport.update({
   id: '/actualites',
   path: '/actualites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdmissionsRoute = AdmissionsRouteImport.update({
@@ -47,6 +55,16 @@ const NotreEcoleRoute = NotreEcoleRouteImport.update({
   path: '/notre-ecole',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VieScolaireRoute = VieScolaireRouteImport.update({
   id: '/vie-scolaire',
   path: '/vie-scolaire',
@@ -56,29 +74,38 @@ const VieScolaireRoute = VieScolaireRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/actualites': typeof ActualitesRoute
+  '/admin': typeof AdminRoute
   '/admissions': typeof AdmissionsRoute
   '/contact': typeof ContactRoute
   '/formations': typeof FormationsRoute
   '/notre-ecole': typeof NotreEcoleRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/vie-scolaire': typeof VieScolaireRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/actualites': typeof ActualitesRoute
+  '/admin': typeof AdminRoute
   '/admissions': typeof AdmissionsRoute
   '/contact': typeof ContactRoute
   '/formations': typeof FormationsRoute
   '/notre-ecole': typeof NotreEcoleRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/vie-scolaire': typeof VieScolaireRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/actualites': typeof ActualitesRoute
+  '/admin': typeof AdminRoute
   '/admissions': typeof AdmissionsRoute
   '/contact': typeof ContactRoute
   '/formations': typeof FormationsRoute
   '/notre-ecole': typeof NotreEcoleRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/vie-scolaire': typeof VieScolaireRoute
 }
 export interface FileRouteTypes {
@@ -86,38 +113,50 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/actualites'
+    | '/admin'
     | '/admissions'
     | '/contact'
     | '/formations'
     | '/notre-ecole'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/vie-scolaire'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/actualites'
+    | '/admin'
     | '/admissions'
     | '/contact'
     | '/formations'
     | '/notre-ecole'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/vie-scolaire'
   id:
     | '__root__'
     | '/'
     | '/actualites'
+    | '/admin'
     | '/admissions'
     | '/contact'
     | '/formations'
     | '/notre-ecole'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/vie-scolaire'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActualitesRoute: typeof ActualitesRoute
+  AdminRoute: typeof AdminRoute
   AdmissionsRoute: typeof AdmissionsRoute
   ContactRoute: typeof ContactRoute
   FormationsRoute: typeof FormationsRoute
   NotreEcoleRoute: typeof NotreEcoleRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   VieScolaireRoute: typeof VieScolaireRoute
 }
 
@@ -135,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/actualites'
       fullPath: '/actualites'
       preLoaderRoute: typeof ActualitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admissions': {
@@ -165,6 +211,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NotreEcoleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/vie-scolaire': {
       id: '/vie-scolaire'
       path: '/vie-scolaire'
@@ -178,10 +238,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActualitesRoute: ActualitesRoute,
+  AdminRoute: AdminRoute,
   AdmissionsRoute: AdmissionsRoute,
   ContactRoute: ContactRoute,
   FormationsRoute: FormationsRoute,
   NotreEcoleRoute: NotreEcoleRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   VieScolaireRoute: VieScolaireRoute,
 }
 export const routeTree = rootRouteImport

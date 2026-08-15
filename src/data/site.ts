@@ -2,19 +2,23 @@ import posterCour from "@/assets/posters/cour.jpg";
 import posterClasse from "@/assets/posters/classe.jpg";
 import posterSport from "@/assets/posters/sport.jpg";
 import posterGroupe from "@/assets/posters/groupe.jpg";
-import primaireGroupe from "@/assets/primaire-groupe.webp.asset.json";
-import primaireEleves from "@/assets/primaire-eleves.webp.asset.json";
-import sportTaekwondo from "@/assets/sport-taekwondo.webp.asset.json";
-import ecoleBatiment from "@/assets/ecole-batiment.webp.asset.json";
-import elevesMerite from "@/assets/eleves-merite.webp.asset.json";
-import elevesEtoile from "@/assets/eleves-etoile.webp.asset.json";
-import administration from "@/assets/administration.jpg.asset.json";
-import salleIrmaRicci from "@/assets/salle-irma-ricci.jpg.asset.json";
-import infirmerie from "@/assets/infirmerie.jpg.asset.json";
-import salleClasse from "@/assets/salle-classe.jpg.asset.json";
-import courPreau from "@/assets/cour-preau.jpg.asset.json";
-import campusVue from "@/assets/campus-vue.jpg.asset.json";
-import batimentSecondaire from "@/assets/batiment-secondaire.jpg.asset.json";
+import primaireGroupe from "@/assets/primaire-groupe.webp";
+import primaireEleves from "@/assets/primaire-eleves.webp";
+import sportTaekwondo from "@/assets/sport-taekwondo.webp";
+import ecoleBatiment from "@/assets/ecole-batiment.webp";
+import elevesMerite from "@/assets/eleves-merite.webp";
+import elevesEtoile from "@/assets/eleves-etoile.webp";
+import administration from "@/assets/administration.jpg";
+import salleIrmaRicci from "@/assets/salle-irma-ricci.jpg";
+import infirmerie from "@/assets/infirmerie.jpg";
+import salleClasse from "@/assets/salle-classe.jpg";
+import courPreau from "@/assets/cour-preau.jpg";
+import campusVue from "@/assets/campus-vue.jpg";
+import batimentSecondaire from "@/assets/batiment-secondaire.jpg";
+import posterInstitutionnel from "@/assets/poster-01-institutionnel.jpg";
+import posterVieScolaire from "@/assets/poster-02-vie-scolaire.jpg";
+import posterExcellence from "@/assets/poster-03-excellence.jpg";
+import posterEspaces from "@/assets/poster-04-espaces.jpg";
 
 /**
  * Toutes les données du site sont centralisées ici (prêt pour un futur CMS).
@@ -23,19 +27,19 @@ import batimentSecondaire from "@/assets/batiment-secondaire.jpg.asset.json";
  */
 
 export const PHOTO = {
-  primaireGroupe: primaireGroupe.url,
-  primaireEleves: primaireEleves.url,
-  sport: sportTaekwondo.url,
-  batiment: ecoleBatiment.url,
-  merite: elevesMerite.url,
-  etoile: elevesEtoile.url,
-  administration: administration.url,
-  salleIrmaRicci: salleIrmaRicci.url,
-  infirmerie: infirmerie.url,
-  salleClasse: salleClasse.url,
-  courPreau: courPreau.url,
-  campus: campusVue.url,
-  secondaire: batimentSecondaire.url,
+  primaireGroupe,
+  primaireEleves,
+  sport: sportTaekwondo,
+  batiment: ecoleBatiment,
+  merite: elevesMerite,
+  etoile: elevesEtoile,
+  administration,
+  salleIrmaRicci,
+  infirmerie,
+  salleClasse,
+  courPreau,
+  campus: campusVue,
+  secondaire: batimentSecondaire,
 } as const;
 
 /** Galerie du campus — photos réelles de l'établissement. */
@@ -109,24 +113,24 @@ export type VideoSlide = {
   poster: string;
 };
 
-/** URLs des vidéos — officielles de l'établissement + démonstrations restantes. */
+/** Vidéos versionnées dans le dépôt et servies par Vercel. */
 export const VIDEO = {
-  cour: "/__l5e/assets-v1/31272f5c-5d8d-42cf-90aa-d0ffc75905a2/hero-cour.mp4",
-  classe: "/__l5e/assets-v1/ed2dfc4f-433f-4c09-8e34-112b8e6139fa/hero-classe.mp4",
-  sport: "/__l5e/assets-v1/d85cdec2-d227-48bc-8ed9-b5a774e8a267/hero-sport.mp4",
-  groupe: "/__l5e/assets-v1/5361a177-17e0-488f-a49a-7240bb4988e0/hero-groupe.mp4",
-  institutionnel: "/__l5e/assets-v1/870e1752-e3f0-4479-90a8-458f191c8c00/la-providence-01-institutionnel.mp4",
-  vieScolaire: "/__l5e/assets-v1/bae0d242-81dd-4f40-b921-e3725292f374/la-providence-02-vie-scolaire.mp4",
-  excellence: "/__l5e/assets-v1/10823d3a-bbbe-4cce-bbf9-4551e0e44cc7/la-providence-03-excellence.mp4",
-  espaces: "/__l5e/assets-v1/ea93c374-76bc-41eb-8ceb-94fce625c75c/la-providence-04-espaces.mp4",
+  cour: "/media/hero-cour.mp4",
+  classe: "/media/hero-classe.mp4",
+  sport: "/media/hero-sport.mp4",
+  groupe: "/media/hero-groupe.mp4",
+  institutionnel: "/media/la-providence-01-institutionnel.mp4",
+  vieScolaire: "/media/la-providence-02-vie-scolaire.mp4",
+  excellence: "/media/la-providence-03-excellence.mp4",
+  espaces: "/media/la-providence-04-espaces.mp4",
 } as const;
 
 /** Posters des vidéos officielles. */
 export const VIDEO_POSTER = {
-  institutionnel: "/__l5e/assets-v1/5e492f52-4935-4456-b267-377d273ee6cf/poster-01-institutionnel.jpg",
-  vieScolaire: "/__l5e/assets-v1/31246f6d-9a61-4e3d-90b5-9c713da85bc0/poster-02-vie-scolaire.jpg",
-  excellence: "/__l5e/assets-v1/2be7ca78-7ac5-4b20-9f08-e05be5f997fc/poster-03-excellence.jpg",
-  espaces: "/__l5e/assets-v1/62535579-e552-4430-80b6-020e4616bf74/poster-04-espaces.jpg",
+  institutionnel: posterInstitutionnel,
+  vieScolaire: posterVieScolaire,
+  excellence: posterExcellence,
+  espaces: posterEspaces,
 } as const;
 
 
