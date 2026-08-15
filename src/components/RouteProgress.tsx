@@ -1,9 +1,15 @@
 import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
-/** Fine barre dorée animée pendant les changements de page. */
+/** Fine barre dorée animée pendant les changements de page, après hydratation. */
 export function RouteProgress() {
   const isLoading = useRouterState({ select: (s) => s.status === "pending" || s.isLoading });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   return (
     <AnimatePresence>

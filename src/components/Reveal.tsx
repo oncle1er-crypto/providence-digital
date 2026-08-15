@@ -1,8 +1,17 @@
-import type { ElementType, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type RevealVariant = "up" | "left" | "right" | "zoom" | "fade";
+type RevealElement = "div" | "article" | "figure" | "p" | "h2";
+
+const motionElements = {
+  div: motion.div,
+  article: motion.article,
+  figure: motion.figure,
+  p: motion.p,
+  h2: motion.h2,
+} as const;
 
 const offsets: Record<RevealVariant, { x?: number; y?: number; scale?: number }> = {
   up: { y: 28 },
@@ -20,13 +29,13 @@ export function Reveal({
   className,
 }: {
   children: ReactNode;
-  as?: ElementType;
+  as?: RevealElement;
   variant?: RevealVariant;
   delay?: number;
   className?: string;
 }) {
   const reduced = useReducedMotion();
-  const MotionTag = motion.create(as as ElementType);
+  const MotionTag = motionElements[as];
 
   const variants: Variants = reduced
     ? { hidden: { opacity: 0 }, shown: { opacity: 1, transition: { duration: 0.2 } } }
@@ -71,9 +80,9 @@ export function RevealGroup({
   className?: string;
   stagger?: number;
   delay?: number;
-  as?: ElementType;
+  as?: RevealElement;
 }) {
-  const MotionTag = motion.create(as as ElementType);
+  const MotionTag = motionElements[as];
   return (
     <MotionTag
       initial="hidden"
@@ -99,10 +108,10 @@ export function RevealItem({
   children: ReactNode;
   className?: string;
   variant?: RevealVariant;
-  as?: ElementType;
+  as?: RevealElement;
 }) {
   const reduced = useReducedMotion();
-  const MotionTag = motion.create(as as ElementType);
+  const MotionTag = motionElements[as];
   const variants: Variants = reduced
     ? { hidden: { opacity: 0 }, shown: { opacity: 1, transition: { duration: 0.2 } } }
     : {

@@ -6,7 +6,7 @@ export function PageTransition({ routeKey, children }: { routeKey: string; child
   const reduced = useReducedMotion();
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="wait">
       <motion.div
         key={routeKey}
         initial={reduced ? { opacity: 0 } : { opacity: 0, y: 18 }}

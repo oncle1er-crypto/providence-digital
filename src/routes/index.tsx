@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion, useReducedMotion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { HeroVideoCarousel } from "@/components/HeroVideoCarousel";
@@ -71,6 +72,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { cmsNews, admissions } = Route.useLoaderData();
+  const reduced = useReducedMotion();
 
   return (
     <>
@@ -84,11 +86,26 @@ function Index() {
           description="Une école catholique au service des familles de Bonoua-Château, dirigée par la Congrégation Petite Œuvre de la Divine Providence — Don Orione : discipline, charité, excellence."
         >
           <div className="grid gap-6 sm:grid-cols-3">
-            {welcomeBadges.map((b) => (
-              <div key={b.title} className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+            {welcomeBadges.map((b, index) => (
+              <motion.article
+                key={b.title}
+                initial={
+                  reduced
+                    ? false
+                    : { opacity: 0, y: index % 2 === 0 ? 28 : 0, scale: index === 1 ? 0.94 : 1 }
+                }
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{
+                  duration: reduced ? 0 : 0.7,
+                  delay: reduced ? 0 : index * 0.12,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="rounded-2xl border border-border bg-card p-6 shadow-sm"
+              >
                 <h3 className="font-display text-lg font-semibold">{b.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{b.text}</p>
-              </div>
+              </motion.article>
             ))}
           </div>
           <Link
