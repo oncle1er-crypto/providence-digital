@@ -9,7 +9,7 @@ export const site = {
   intro:
     "Un établissement d'inspiration orionine où chaque élève est accompagné avec exigence et bienveillance, de la maternelle au collège.",
   logo: "/logo-gsp.png",
-  heroVideo: "/media/hero-cour.mp4",
+  heroVideo: "/__l5e/assets-v1/31272f5c-5d8d-42cf-90aa-d0ffc75905a2/hero-cour.mp4",
   // À REMPLACER par les coordonnées officielles fournies par l'établissement
   contact: {
     phone: "[Téléphone à compléter]",
