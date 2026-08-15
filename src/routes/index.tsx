@@ -12,7 +12,7 @@ import { Testimonials } from "@/components/Testimonials";
 import { site, welcomeBadges } from "@/data/site";
 
 const description =
-  "Site officiel du Complexe Scolaire La Providence de Don Orione à Bonoua : école catholique proposant Maternelle, Primaire et Collège.";
+  "Site officiel du Complexe Scolaire La Providence de Don Orione à Bonoua : école catholique de la maternelle à la terminale : maternelle, primaire, collège et lycée.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -62,7 +62,7 @@ function Index() {
         <Section
           eyebrow="Bienvenue"
           title="La Providence de Don Orione"
-          description="Une école catholique au service des familles de Bonoua : instruire avec exigence, éduquer avec charité, dans l'héritage de saint Luigi Orione."
+          description="Une école catholique au service des familles de Bonoua-Château, dirigée par la Congrégation Petite Œuvre de la Divine Providence — Don Orione : discipline, charité, excellence."
         >
           <div className="grid gap-6 sm:grid-cols-3">
             {welcomeBadges.map((b) => (
@@ -85,7 +85,7 @@ function Index() {
         <Section
           eyebrow="Formations"
           title="Nos niveaux d'enseignement"
-          description="De la maternelle au collège, un parcours cohérent et accompagné."
+          description="De la maternelle à la terminale, un parcours cohérent et accompagné."
         >
           <SchoolLevels />
         </Section>
