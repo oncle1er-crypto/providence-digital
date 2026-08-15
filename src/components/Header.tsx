@@ -3,6 +3,12 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { nav, site } from "@/data/site";
 
+const BAR_STATES = [
+  { closed: { top: 1, rotate: 0, opacity: 1, scaleX: 1 }, open: { top: 7, rotate: 45, opacity: 1, scaleX: 1 } },
+  { closed: { top: 7, rotate: 0, opacity: 1, scaleX: 1 }, open: { top: 7, rotate: 0, opacity: 0, scaleX: 0.4 } },
+  { closed: { top: 13, rotate: 0, opacity: 1, scaleX: 1 }, open: { top: 7, rotate: -45, opacity: 1, scaleX: 1 } },
+];
+
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
