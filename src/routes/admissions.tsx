@@ -4,6 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
 import { admissionSteps, admissionDocs, uniforms } from "@/data/site";
 import { absoluteUrl } from "@/lib/seo";
+import { AdmissionsFaq } from "@/components/AdmissionsFaq";
+import { PreRegistrationForm } from "@/components/PreRegistrationForm";
 
 export const Route = createFileRoute("/admissions")({
   head: () => ({
@@ -89,9 +91,33 @@ function Page() {
             ))}
           </div>
           <p className="mt-6 text-sm text-muted-foreground">
-            Chaussures fermées, cheveux courts ou bien tressés sans perles, uniforme propre obligatoire.
+            Chaussures fermées, cheveux courts ou bien tressés sans perles, uniforme propre
+            obligatoire.
           </p>
         </Section>
+
+        <div className="bg-secondary/55">
+          <Section
+            eyebrow="Questions fréquentes"
+            title="Tout savoir avant de déposer votre demande"
+            description="Retrouvez les réponses aux questions les plus fréquentes des familles concernant l'admission à La Providence."
+          >
+            <AdmissionsFaq />
+          </Section>
+        </div>
+
+        <div id="preinscription" className="bg-primary text-primary-foreground">
+          <Section
+            eyebrow="Préinscription"
+            title="Formulaire de préinscription"
+            description="Complétez ce formulaire pour être recontacté par notre équipe administrative. Les champs marqués d'un astérisque sont obligatoires."
+            className="py-20 sm:py-24"
+          >
+            <div className="text-foreground">
+              <PreRegistrationForm />
+            </div>
+          </Section>
+        </div>
       </main>
       <Footer />
     </>
