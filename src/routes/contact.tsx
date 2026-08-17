@@ -1,9 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ExternalLink, MapPin } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
 import { site } from "@/data/site";
 import { absoluteUrl } from "@/lib/seo";
+
+const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/JTjt5MgkMjqtNFCB9";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -39,6 +42,37 @@ function Page() {
           <div className="rounded-xl border border-border bg-card p-6">
             <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Adresse</p>
             <p className="mt-2 text-sm">{site.contact.address}</p>
+            <a
+              href={GOOGLE_MAPS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-5 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
+            >
+              <MapPin className="size-4" />
+              Obtenir l’itinéraire
+              <ExternalLink className="size-3.5" />
+            </a>
+          </div>
+
+          <div className="mt-6 overflow-hidden rounded-xl border border-border bg-card">
+            <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Localisation</p>
+                <h2 className="mt-2 font-display text-xl font-semibold">Retrouvez-nous facilement sur Google Maps</h2>
+                <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+                  Ouvrez notre position officielle pour lancer la navigation depuis votre téléphone ou votre ordinateur.
+                </p>
+              </div>
+              <a
+                href={GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md border border-border px-5 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
+              >
+                <MapPin className="size-4 text-gold" />
+                Ouvrir Google Maps
+              </a>
+            </div>
           </div>
 
           <div className="mt-6 grid gap-6 sm:grid-cols-2">
