@@ -2,9 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { HeroVideoCarousel } from "@/components/HeroVideoCarousel";
+import { HeroVideoCarousel, type HomeHeroSetting } from "@/components/HeroVideoCarousel";
 import { Section } from "@/components/Section";
-import { SchoolLevels } from "@/components/SchoolLevels";
+import { SchoolLevels, type SchoolLevelsSetting } from "@/components/SchoolLevels";
 import { AdmissionsCTA } from "@/components/AdmissionsCTA";
 import { VideoCarousel } from "@/components/VideoCarousel";
 import { WhyProvidence } from "@/components/WhyProvidence";
@@ -19,14 +19,18 @@ const description =
 
 export const Route = createFileRoute("/")({
   loader: async () => {
-    const [cmsNews, admissions] = await Promise.all([
+    const [cmsNews, admissions, homeHero, schoolLevels] = await Promise.all([
       getPublicNews(8).catch(() => []),
       getPublicSetting<AdmissionsSetting>("admissions").catch(() => null),
+      getPublicSetting<HomeHeroSetting>("home_hero").catch(() => null),
+      getPublicSetting<SchoolLevelsSetting>("school_levels").catch(() => null),
     ]);
 
     return {
       cmsNews,
       admissions: admissions?.value,
+      homeHero: homeHero?.value,
+      schoolLevels: schoolLevels?.value,
     };
   },
   head: () => ({
@@ -71,14 +75,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const { cmsNews, admissions } = Route.useLoaderData();
+  const { cmsNews, admissions, homeHero, schoolLevels } = Route.useLoaderData();
   const reduced = useReducedMotion();
 
   return (
     <>
       <Header />
       <main>
-        <HeroVideoCarousel />
+        <HeroVideoCarousel content={homeHero} />
 
         <Section
           eyebrow="Bienvenue"
@@ -86,61 +90,38 @@ function Index() {
           description="Une école catholique au service des familles de Bonoua-Château, dirigée par la Congrégation Petite Œuvre de la Divine Providence — Don Orione : discipline, charité, excellence."
         >
           <div className="grid gap-6 sm:grid-cols-3">
-            {welcomeBadges.map((b, index) => (
+            {welcomeBadges.map((badge, index) => (
               <motion.article
-                key={b.title}
-                initial={
-                  reduced
-                    ? false
-                    : { opacity: 0, y: index % 2 === 0 ? 28 : 0, scale: index === 1 ? 0.94 : 1 }
-                }
+                key={badge.title}
+                initial={reduced ? false : { opacity: 0, y: index % 2 === 0 ? 28 : 0, scale: index === 1 ? 0.94 : 1 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.25 }}
-                transition={{
-                  duration: reduced ? 0 : 0.7,
-                  delay: reduced ? 0 : index * 0.12,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                transition={{ duration: reduced ? 0 : 0.7, delay: reduced ? 0 : index * 0.12, ease: [0.16, 1, 0.3, 1] }}
                 className="rounded-2xl border border-border bg-card p-6 shadow-sm"
               >
-                <h3 className="font-display text-lg font-semibold">{b.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{b.text}</p>
+                <h3 className="font-display text-lg font-semibold">{badge.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{badge.text}</p>
               </motion.article>
             ))}
           </div>
-          <Link
-            to="/notre-ecole"
-            className="mt-8 inline-block rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
-          >
+          <Link to="/notre-ecole" className="mt-8 inline-block rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary">
             Découvrir notre histoire
           </Link>
         </Section>
 
         <AdmissionsCTA content={admissions} />
 
-        <Section
-          eyebrow="Formations"
-          title="Nos niveaux d'enseignement"
-          description="De la maternelle à la terminale, un parcours cohérent et accompagné."
-        >
-          <SchoolLevels />
+        <Section eyebrow="Formations" title="Nos niveaux d'enseignement" description="De la maternelle à la terminale, un parcours cohérent et accompagné.">
+          <SchoolLevels content={schoolLevels} />
         </Section>
 
-        <Section
-          eyebrow="Vie scolaire"
-          title="Le quotidien de nos élèves"
-          description="Classe, vie spirituelle, sport, arts et vie étudiante — en vidéo."
-        >
+        <Section eyebrow="Vie scolaire" title="Le quotidien de nos élèves" description="Classe, vie spirituelle, sport, arts et vie étudiante — en vidéo.">
           <VideoCarousel />
         </Section>
 
         <WhyProvidence />
 
-        <Section
-          eyebrow="Actualités"
-          title="Actualités & événements"
-          description="Les temps forts de la communauté éducative."
-        >
+        <Section eyebrow="Actualités" title="Actualités & événements" description="Les temps forts de la communauté éducative.">
           <NewsCarousel cmsNews={cmsNews} />
         </Section>
 
