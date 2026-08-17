@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Globe, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Globe, Instagram, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { site } from "@/data/site";
 import {
@@ -8,6 +8,8 @@ import {
   type IdentitySetting,
 } from "@/lib/cms";
 import { SITE_URL } from "@/lib/seo";
+
+const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/JTjt5MgkMjqtNFCB9";
 
 const columns = [
   {
@@ -170,12 +172,23 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-            <Link
-              to="/admissions"
-              className="mt-6 inline-flex rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
-            >
-              Demander une inscription
-            </Link>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a
+                href={GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-gold/50 px-5 py-2.5 text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-gold-foreground"
+              >
+                <Navigation className="size-4" />
+                Itinéraire
+              </a>
+              <Link
+                to="/admissions"
+                className="inline-flex rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
+              >
+                Demander une inscription
+              </Link>
+            </div>
           </div>
         </div>
       </div>
