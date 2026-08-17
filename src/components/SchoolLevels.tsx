@@ -16,6 +16,7 @@ export type SchoolLevelsSetting = {
   levels?: SchoolLevelContent[];
 };
 
+// Le contenu CMS reste optionnel : si aucun réglage n'est enregistré, les valeurs historiques sont conservées.
 export function SchoolLevels({ content }: { content?: SchoolLevelsSetting | null }) {
   const reduced = useReducedMotion();
   const cmsLevels = content?.levels?.filter((level) => level.title && level.slug) ?? [];
