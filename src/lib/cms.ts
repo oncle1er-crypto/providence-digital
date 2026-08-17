@@ -78,6 +78,16 @@ export type AdmissionsSetting = {
 
 type Json = Record<string, unknown> | unknown[] | string | number | boolean | null;
 
+export type PreRegistrationInput = {
+  guardian_name: string;
+  email: string;
+  phone: string;
+  child_name: string;
+  child_age: number;
+  desired_level: "Maternelle" | "Primaire" | "Collège" | "Lycée";
+  message: string | null;
+};
+
 function authHeaders(session?: CmsSession, json = true): HeadersInit {
   const headers: Record<string, string> = {
     apikey: SUPABASE_PUBLISHABLE_KEY,
@@ -93,16 +103,33 @@ function authHeaders(session?: CmsSession, json = true): HeadersInit {
 
 async function parseResponse<T>(response: Response): Promise<T> {
   const text = await response.text();
-  const payload = text ? (JSON.parse(text) as T | { message?: string; error_description?: string }) : null;
+  const payload = text
+    ? (JSON.parse(text) as T | { message?: string; error_description?: string })
+    : null;
 
   if (!response.ok) {
     const errorPayload = payload as { message?: string; error_description?: string } | null;
     throw new Error(
-      errorPayload?.error_description || errorPayload?.message || `Erreur Supabase (${response.status})`,
+      errorPayload?.error_description ||
+        errorPayload?.message ||
+        `Erreur Supabase (${response.status})`,
     );
   }
 
   return payload as T;
+}
+
+export async function submitPreRegistration(input: PreRegistrationInput): Promise<void> {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/pre_registration_requests`, {
+    method: "POST",
+    headers: {
+      ...authHeaders(undefined),
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!response.ok) await parseResponse<Json>(response);
 }
 
 function saveSession(session: CmsSession | null) {
@@ -171,7 +198,10 @@ export async function signIn(email: string, password: string): Promise<CmsSessio
   return session;
 }
 
-export async function signUp(email: string, password: string): Promise<CmsSession | { user?: CmsUser }> {
+export async function signUp(
+  email: string,
+  password: string,
+): Promise<CmsSession | { user?: CmsUser }> {
   const response = await fetch(`${SUPABASE_URL}/auth/v1/signup`, {
     method: "POST",
     headers: authHeaders(undefined),
@@ -272,10 +302,13 @@ export async function saveNews(
 }
 
 export async function deleteNews(session: CmsSession, id: string) {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/news_posts?id=eq.${encodeURIComponent(id)}`, {
-    method: "DELETE",
-    headers: authHeaders(session, false),
-  });
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/news_posts?id=eq.${encodeURIComponent(id)}`,
+    {
+      method: "DELETE",
+      headers: authHeaders(session, false),
+    },
+  );
   if (!response.ok) await parseResponse<Json>(response);
 }
 
@@ -325,9 +358,12 @@ export function mediaPublicUrl(path: string | null | undefined): string | undefi
 }
 
 export async function getMediaAssets(session: CmsSession): Promise<MediaAsset[]> {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/media_assets?select=*&order=created_at.desc`, {
-    headers: authHeaders(session, false),
-  });
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/media_assets?select=*&order=created_at.desc`,
+    {
+      headers: authHeaders(session, false),
+    },
+  );
   return parseResponse<MediaAsset[]>(response);
 }
 
@@ -390,10 +426,13 @@ export async function deleteMedia(session: CmsSession, asset: MediaAsset) {
     .split("/")
     .map((part) => encodeURIComponent(part))
     .join("/");
-  const storageResponse = await fetch(`${SUPABASE_URL}/storage/v1/object/cms-media/${encodedPath}`, {
-    method: "DELETE",
-    headers: authHeaders(session, false),
-  });
+  const storageResponse = await fetch(
+    `${SUPABASE_URL}/storage/v1/object/cms-media/${encodedPath}`,
+    {
+      method: "DELETE",
+      headers: authHeaders(session, false),
+    },
+  );
   if (!storageResponse.ok) await parseResponse<Json>(storageResponse);
 
   const dbResponse = await fetch(
