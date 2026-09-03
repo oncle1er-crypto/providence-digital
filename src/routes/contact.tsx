@@ -7,6 +7,7 @@ import { site } from "@/data/site";
 import { absoluteUrl } from "@/lib/seo";
 
 const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/JTjt5MgkMjqtNFCB9";
+const CANONICAL_WEBSITE = "www.cslaprovidence.org";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -105,7 +106,7 @@ function Page() {
               <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
                 {site.social.map((s) => (
                   <li key={s.label}>
-                    {s.label} — {s.note}
+                    {s.label} — {s.label === "Site web" ? CANONICAL_WEBSITE : s.note}
                   </li>
                 ))}
               </ul>
