@@ -1,10 +1,28 @@
 import { Link } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "framer-motion";
-import { levels } from "@/data/site";
+import { levels as defaultLevels } from "@/data/site";
+import { mediaPublicUrl } from "@/lib/cms";
 import { RevealGroup, RevealItem } from "@/components/Reveal";
 
-export function SchoolLevels() {
+export type SchoolLevelContent = {
+  slug: string;
+  title: string;
+  image: string;
+  summary: string;
+  points: string[];
+};
+
+export type SchoolLevelsSetting = {
+  levels?: SchoolLevelContent[];
+};
+
+// Le contenu CMS reste optionnel : si aucun réglage n'est enregistré, les valeurs historiques sont conservées.
+export function SchoolLevels({ content }: { content?: SchoolLevelsSetting | null }) {
   const reduced = useReducedMotion();
+  const cmsLevels = content?.levels?.filter((level) => level.title && level.slug) ?? [];
+  const levels: SchoolLevelContent[] = cmsLevels.length
+    ? cmsLevels
+    : defaultLevels.map((level) => ({ ...level, points: [...level.points] }));
 
   return (
     <RevealGroup stagger={0.11} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -17,7 +35,7 @@ export function SchoolLevels() {
           >
             <div className="relative h-64 overflow-hidden sm:h-72">
               <img
-                src={level.image}
+                src={mediaPublicUrl(level.image) || level.image}
                 alt={`Élèves en ${level.title.toLowerCase()} au Complexe Scolaire La Providence de Don Orione`}
                 loading="lazy"
                 decoding="async"
@@ -31,10 +49,10 @@ export function SchoolLevels() {
             <div className="p-6">
               <p className="text-sm text-muted-foreground">{level.summary}</p>
               <ul className="mt-4 space-y-1.5 text-sm">
-                {level.points.map((p) => (
-                  <li key={p} className="flex gap-2">
+                {level.points.map((point) => (
+                  <li key={point} className="flex gap-2">
                     <span className="mt-2 size-1.5 shrink-0 rounded-full bg-gold" />
-                    {p}
+                    {point}
                   </li>
                 ))}
               </ul>
