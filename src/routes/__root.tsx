@@ -18,6 +18,7 @@ import { PageTransition } from "../components/PageTransition";
 import { CookieConsent } from "../components/CookieConsent";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
+import { FloatingActions } from "../components/FloatingActions";
 import { nav } from "../data/site";
 import { DEFAULT_OG_IMAGE } from "../lib/seo";
 
@@ -178,6 +179,7 @@ function RootComponent() {
         </div>
       </PageTransition>
       <ScrollToTop />
+      <FloatingActions />
       <CookieConsent />
     </QueryClientProvider>
   );

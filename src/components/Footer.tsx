@@ -13,9 +13,12 @@ type FooterLink = {
   to:
     | "/formations/$slug"
     | "/notre-ecole"
+    | "/equipe"
     | "/vie-scolaire"
     | "/actualites"
     | "/admissions"
+    | "/frais-scolarite"
+    | "/calendrier"
     | "/contact";
   params?: { slug: string };
 };
@@ -34,6 +37,7 @@ const columns: { title: string; links: FooterLink[] }[] = [
     title: "Notre école",
     links: [
       { to: "/notre-ecole", label: "Présentation" },
+      { to: "/equipe", label: "Équipe éducative" },
       { to: "/vie-scolaire", label: "Vie scolaire" },
       { to: "/actualites", label: "Actualités" },
     ],
@@ -42,6 +46,8 @@ const columns: { title: string; links: FooterLink[] }[] = [
     title: "Familles",
     links: [
       { to: "/admissions", label: "Admissions" },
+      { to: "/frais-scolarite", label: "Frais de scolarité" },
+      { to: "/calendrier", label: "Calendrier scolaire" },
       { to: "/contact", label: "Nous contacter" },
     ],
   },

@@ -28,12 +28,15 @@ npm run dev
 | ---------------------------- | ---------------------------------------------------- |
 | `/`                          | Accueil (hero vidéo, cycles, actualités, témoignages) |
 | `/notre-ecole`               | Projet éducatif, valeurs, infrastructures             |
+| `/equipe`                    | Mot de la direction, pôles de l'équipe, congrégation  |
 | `/formations`                | Présentation des cycles                              |
 | `/formations/$slug`          | Détail d'un cycle (maternelle, primaire, collège, lycée) |
 | `/vie-scolaire`              | Vie quotidienne                                      |
 | `/actualites`                | Liste des actualités                                 |
 | `/actualites/$slug`          | Article (contenu du CMS)                             |
 | `/admissions`                | Procédure, pièces à fournir, préinscription          |
+| `/frais-scolarite`           | Ce que comprennent les frais, modalités de paiement  |
+| `/calendrier`                | Rentrée, trimestres, congés, examens, inscriptions   |
 | `/contact`                   | Coordonnées, itinéraire et formulaire de contact     |
 | `/mentions-legales`          | Éditeur, hébergement, propriété intellectuelle       |
 | `/politique-confidentialite` | Données personnelles et cookies                      |

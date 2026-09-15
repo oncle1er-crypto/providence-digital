@@ -111,6 +111,8 @@ export const site = {
       "Bonoua, Quartier Château — à proximité de la Paroisse Marie Mère de la Divine Providence",
     phone: "(+225) 05 65 25 76 93",
     email: "ecolelaprovidencebonoua@gmail.com",
+    /** Numéro WhatsApp du secrétariat (à vérifier s'il diffère du téléphone principal). */
+    whatsapp: "(+225) 05 65 25 76 93",
   },
   directions: [
     {
@@ -800,4 +802,20 @@ export const levelDetails: LevelDetail[] = [
     ],
     image: PHOTO.primaireGroupe,
   },
+];
+
+/** Chiffres clés affichés en bandeau (accueil, notre école). */
+export type KeyStat = {
+  /** Valeur numérique animée au scroll. */
+  value: number;
+  /** Suffixed affiché collé au chiffre (ex. « ans », « % »). */
+  suffix?: string;
+  label: string;
+};
+
+export const keyStats: KeyStat[] = [
+  { value: 4, label: "cycles, de la maternelle au lycée" },
+  { value: 16, suffix: " ans", label: "de parcours continu, de 3 à 18 ans" },
+  { value: 3, label: "piliers : discipline, charité, excellence" },
+  { value: 3, label: "examens nationaux préparés : CEPE, BEPC, bac" },
 ];

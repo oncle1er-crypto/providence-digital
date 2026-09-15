@@ -53,12 +53,24 @@ function Page() {
             ))}
           </ol>
 
-          <div className="mt-10">
+          <div className="mt-10 flex flex-wrap gap-3">
             <Link
               to="/contact"
-              className="inline-flex rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+              className="btn-press inline-flex rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
               Contacter l'administration
+            </Link>
+            <Link
+              to="/frais-scolarite"
+              className="btn-press inline-flex rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
+            >
+              Frais de scolarité
+            </Link>
+            <Link
+              to="/calendrier"
+              className="btn-press inline-flex rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
+            >
+              Calendrier scolaire
             </Link>
           </div>
         </Section>

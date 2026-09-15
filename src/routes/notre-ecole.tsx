@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -30,6 +30,28 @@ export const Route = createFileRoute("/notre-ecole")({
   }),
   component: Page,
 });
+
+const seeAlso: {
+  to: "/equipe" | "/frais-scolarite" | "/calendrier";
+  title: string;
+  text: string;
+}[] = [
+  {
+    to: "/equipe",
+    title: "Équipe éducative",
+    text: "Direction, enseignants, vie scolaire et services : celles et ceux qui accompagnent vos enfants.",
+  },
+  {
+    to: "/frais-scolarite",
+    title: "Frais de scolarité",
+    text: "Ce que comprennent les frais, ce qui reste à prévoir et les modalités de paiement.",
+  },
+  {
+    to: "/calendrier",
+    title: "Calendrier scolaire",
+    text: "Rentrée, trimestres, congés, examens nationaux et périodes d'inscription.",
+  },
+];
 
 function Page() {
   const reduced = useReducedMotion();
@@ -82,6 +104,26 @@ function Page() {
         <Section eyebrow="Enseignement" title="Nos niveaux">
           <SchoolLevels />
         </Section>
+
+        <div className="bg-secondary/50">
+          <Section eyebrow="Aller plus loin" title="Découvrir l'établissement">
+            <div className="grid gap-4 sm:grid-cols-3">
+              {seeAlso.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="card-lift rounded-2xl border border-border bg-card p-6 shadow-sm"
+                >
+                  <h3 className="font-display text-lg font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{item.text}</p>
+                  <span className="mt-4 inline-block text-sm font-semibold text-primary underline-offset-4">
+                    En savoir plus →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </Section>
+        </div>
       </main>
       <Footer />
     </>

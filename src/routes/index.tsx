@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "framer-motion";
 import { Header } from "@/components/Header";
+import { KeyStats } from "@/components/KeyStats";
 import { Footer } from "@/components/Footer";
 import { HeroVideoCarousel, type HomeHeroSetting } from "@/components/HeroVideoCarousel";
 import { Section } from "@/components/Section";
@@ -83,6 +84,8 @@ function Index() {
       <Header />
       <main>
         <HeroVideoCarousel content={homeHero} />
+
+        <KeyStats />
 
         <Section
           eyebrow="Bienvenue"

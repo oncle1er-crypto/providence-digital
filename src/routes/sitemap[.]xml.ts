@@ -5,6 +5,9 @@ import { getPublicNews } from "@/lib/cms";
 const publicRoutes: Array<{ path: string; priority?: string }> = [
   { path: "/", priority: "1.0" },
   { path: "/notre-ecole", priority: "0.8" },
+  { path: "/equipe", priority: "0.6" },
+  { path: "/calendrier", priority: "0.6" },
+  { path: "/frais-scolarite", priority: "0.7" },
   { path: "/formations", priority: "0.9" },
   { path: "/formations/maternelle", priority: "0.7" },
   { path: "/formations/primaire", priority: "0.7" },
