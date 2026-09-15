@@ -96,10 +96,18 @@ function Index() {
             {welcomeBadges.map((badge, index) => (
               <motion.article
                 key={badge.title}
-                initial={reduced ? false : { opacity: 0, y: index % 2 === 0 ? 28 : 0, scale: index === 1 ? 0.94 : 1 }}
+                initial={
+                  reduced
+                    ? false
+                    : { opacity: 0, y: index % 2 === 0 ? 28 : 0, scale: index === 1 ? 0.94 : 1 }
+                }
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: reduced ? 0 : 0.7, delay: reduced ? 0 : index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                transition={{
+                  duration: reduced ? 0 : 0.7,
+                  delay: reduced ? 0 : index * 0.12,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 className="rounded-2xl border border-border bg-card p-6 shadow-sm"
               >
                 <h3 className="font-display text-lg font-semibold">{badge.title}</h3>
@@ -107,24 +115,39 @@ function Index() {
               </motion.article>
             ))}
           </div>
-          <Link to="/notre-ecole" className="mt-8 inline-block rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary">
+          <Link
+            to="/notre-ecole"
+            className="mt-8 inline-block rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
+          >
             Découvrir notre histoire
           </Link>
         </Section>
 
         <AdmissionsCTA content={admissions} />
 
-        <Section eyebrow="Formations" title="Nos niveaux d'enseignement" description="De la maternelle à la terminale, un parcours cohérent et accompagné.">
+        <Section
+          eyebrow="Formations"
+          title="Nos niveaux d'enseignement"
+          description="De la maternelle à la terminale, un parcours cohérent et accompagné."
+        >
           <SchoolLevels content={schoolLevels} />
         </Section>
 
-        <Section eyebrow="Vie scolaire" title="Le quotidien de nos élèves" description="Classe, vie spirituelle, sport, arts et vie étudiante — en vidéo.">
+        <Section
+          eyebrow="Vie scolaire"
+          title="Le quotidien de nos élèves"
+          description="Classe, vie spirituelle, sport, arts et vie étudiante — en vidéo."
+        >
           <VideoCarousel />
         </Section>
 
         <WhyProvidence />
 
-        <Section eyebrow="Actualités" title="Actualités & événements" description="Les temps forts de la communauté éducative.">
+        <Section
+          eyebrow="Actualités"
+          title="Actualités & événements"
+          description="Les temps forts de la communauté éducative."
+        >
           <NewsCarousel cmsNews={cmsNews} />
         </Section>
 

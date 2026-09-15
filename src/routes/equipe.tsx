@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { buttonStyles } from "@/components/Button";
 import { Quote } from "lucide-react";
 
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -154,22 +155,13 @@ function EquipePage() {
           description="Les familles comme les candidats à un poste peuvent s'adresser directement à l'administration de l'établissement."
         >
           <div className="flex flex-wrap gap-3">
-            <Link
-              to="/contact"
-              className="btn-glow btn-press rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground"
-            >
+            <Link to="/contact" className={buttonStyles({ variant: "gold", size: "lg" })}>
               Contacter le secrétariat
             </Link>
-            <Link
-              to="/admissions"
-              className="btn-press rounded-full border border-border px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-secondary"
-            >
+            <Link to="/admissions" className={buttonStyles({ variant: "outline", size: "lg" })}>
               Inscrire mon enfant
             </Link>
-            <Link
-              to="/notre-ecole"
-              className="btn-press rounded-full border border-border px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-secondary"
-            >
+            <Link to="/notre-ecole" className={buttonStyles({ variant: "outline", size: "lg" })}>
               Découvrir le projet éducatif
             </Link>
           </div>

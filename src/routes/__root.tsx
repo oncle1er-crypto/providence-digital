@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { buttonStyles } from "@/components/Button";
 import {
   Outlet,
   Link,
@@ -21,6 +22,7 @@ import { Header } from "../components/Header";
 import { FloatingActions } from "../components/FloatingActions";
 import { nav } from "../data/site";
 import { DEFAULT_OG_IMAGE } from "../lib/seo";
+import { themeInitScript } from "../components/ThemeToggle";
 
 function NotFoundComponent() {
   return (
@@ -34,16 +36,10 @@ function NotFoundComponent() {
           découvrir l'une des rubriques du site.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link
-            to="/"
-            className="btn-glow btn-press inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
-          >
+          <Link to="/" className={buttonStyles({ variant: "primary", size: "md" })}>
             Retour à l'accueil
           </Link>
-          <Link
-            to="/contact"
-            className="btn-press inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
-          >
+          <Link to="/contact" className={buttonStyles({ variant: "outline", size: "md" })}>
             Nous contacter
           </Link>
         </div>
@@ -95,10 +91,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
           >
             Réessayer
           </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
+          <a href="/" className={buttonStyles({ variant: "outline", size: "sm" })}>
             Retour à l'accueil
           </a>
         </div>
@@ -128,6 +121,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: DEFAULT_OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:image", content: DEFAULT_OG_IMAGE },
+    ],
+    scripts: [
+      // Applique le thème (clair/sombre) avant le premier rendu : pas de « flash ».
+      { children: themeInitScript },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

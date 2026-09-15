@@ -1,4 +1,5 @@
 import { Reveal } from "@/components/Reveal";
+import { buttonStyles } from "@/components/Button";
 import type { AdmissionsSetting } from "@/lib/cms";
 
 const fallback: Required<AdmissionsSetting> = {
@@ -28,10 +29,7 @@ export function AdmissionsCTA({ content }: { content?: AdmissionsSetting | null 
           </h2>
           <p className="mt-3 max-w-xl text-sm text-primary-foreground/85">{data.message}</p>
         </div>
-        <a
-          href={data.cta_url}
-          className="inline-flex w-fit rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground transition-transform hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-primary focus-visible:outline-none"
-        >
+        <a href={data.cta_url} className={buttonStyles({ variant: "gold", size: "lg" })}>
           {data.cta_label}
         </a>
       </Reveal>

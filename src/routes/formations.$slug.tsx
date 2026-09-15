@@ -1,4 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { buttonStyles } from "@/components/Button";
 import { CalendarClock, CheckCircle2, GraduationCap, Users } from "lucide-react";
 
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -93,16 +94,10 @@ function LevelPage() {
               </h1>
               <p className="mt-5 max-w-2xl text-lg text-muted-foreground">{level.intro}</p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  to="/admissions"
-                  className="btn-glow btn-press rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground"
-                >
+                <Link to="/admissions" className={buttonStyles({ variant: "gold", size: "lg" })}>
                   Demander une inscription
                 </Link>
-                <Link
-                  to="/contact"
-                  className="btn-press rounded-full border border-border px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-secondary"
-                >
+                <Link to="/contact" className={buttonStyles({ variant: "outline", size: "lg" })}>
                   Visiter l'école
                 </Link>
               </div>

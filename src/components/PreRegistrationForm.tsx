@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/Button";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,7 +29,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 const fieldClass =
-  "h-12 rounded-xl border-border bg-white px-4 shadow-none focus-visible:ring-2 focus-visible:ring-gold";
+  "h-12 rounded-xl border-border bg-background px-4 shadow-none focus-visible:ring-2 focus-visible:ring-gold";
 
 export function PreRegistrationForm() {
   const startedAt = useRef(Date.now());
@@ -161,7 +162,7 @@ export function PreRegistrationForm() {
         <Textarea
           rows={5}
           placeholder="Précisez vos questions ou les besoins de votre enfant…"
-          className="min-h-32 rounded-xl border-border bg-white px-4 py-3 shadow-none focus-visible:ring-2 focus-visible:ring-gold"
+          className="min-h-32 rounded-xl border-border bg-background px-4 py-3 shadow-none focus-visible:ring-2 focus-visible:ring-gold"
           {...register("message")}
         />
         {errorFor("message")}
@@ -193,14 +194,14 @@ export function PreRegistrationForm() {
         </p>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={isSubmitting}
-        className="btn-glow btn-press mt-7 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3 font-semibold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="mt-7 min-h-12 w-full rounded-xl sm:w-auto"
       >
         {isSubmitting ? <Loader2 className="size-5 animate-spin" /> : <Send className="size-5" />}
         {isSubmitting ? "Envoi en cours…" : "Envoyer la préinscription"}
-      </button>
+      </Button>
       <p className="mt-4 text-xs leading-5 text-muted-foreground">
         En envoyant ce formulaire, vous acceptez que l'établissement utilise ces informations
         uniquement pour traiter votre demande d'admission.

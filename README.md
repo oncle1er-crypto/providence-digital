@@ -24,23 +24,23 @@ npm run dev
 
 ## Structure des pages
 
-| Route                        | Contenu                                              |
-| ---------------------------- | ---------------------------------------------------- |
-| `/`                          | Accueil (hero vidéo, cycles, actualités, témoignages) |
-| `/notre-ecole`               | Projet éducatif, valeurs, infrastructures             |
-| `/equipe`                    | Mot de la direction, pôles de l'équipe, congrégation  |
-| `/formations`                | Présentation des cycles                              |
+| Route                        | Contenu                                                  |
+| ---------------------------- | -------------------------------------------------------- |
+| `/`                          | Accueil (hero vidéo, cycles, actualités, témoignages)    |
+| `/notre-ecole`               | Projet éducatif, valeurs, infrastructures                |
+| `/equipe`                    | Mot de la direction, pôles de l'équipe, congrégation     |
+| `/formations`                | Présentation des cycles                                  |
 | `/formations/$slug`          | Détail d'un cycle (maternelle, primaire, collège, lycée) |
-| `/vie-scolaire`              | Vie quotidienne                                      |
-| `/actualites`                | Liste des actualités                                 |
-| `/actualites/$slug`          | Article (contenu du CMS)                             |
-| `/admissions`                | Procédure, pièces à fournir, préinscription          |
-| `/frais-scolarite`           | Ce que comprennent les frais, modalités de paiement  |
-| `/calendrier`                | Rentrée, trimestres, congés, examens, inscriptions   |
-| `/contact`                   | Coordonnées, itinéraire et formulaire de contact     |
-| `/mentions-legales`          | Éditeur, hébergement, propriété intellectuelle       |
-| `/politique-confidentialite` | Données personnelles et cookies                      |
-| `/admin`, `/admin-contenu`   | Espace d'administration (non indexé)                 |
+| `/vie-scolaire`              | Vie quotidienne                                          |
+| `/actualites`                | Liste des actualités                                     |
+| `/actualites/$slug`          | Article (contenu du CMS)                                 |
+| `/admissions`                | Procédure, pièces à fournir, préinscription              |
+| `/frais-scolarite`           | Ce que comprennent les frais, modalités de paiement      |
+| `/calendrier`                | Rentrée, trimestres, congés, examens, inscriptions       |
+| `/contact`                   | Coordonnées, itinéraire et formulaire de contact         |
+| `/mentions-legales`          | Éditeur, hébergement, propriété intellectuelle           |
+| `/politique-confidentialite` | Données personnelles et cookies                          |
+| `/admin`, `/admin-contenu`   | Espace d'administration (non indexé)                     |
 
 Les routes `formations` et `actualites` sont des routes « layout » : la liste vit dans
 `*.index.tsx`, le détail dans `*.$slug.tsx`.
@@ -49,11 +49,11 @@ Les routes `formations` et `actualites` sont des routes « layout » : la liste 
 
 Copier `.env.example` vers `.env.local` puis compléter :
 
-| Variable                          | Rôle                                                        |
-| --------------------------------- | ----------------------------------------------------------- |
-| `VITE_SUPABASE_URL`               | URL du projet Supabase                                      |
-| `VITE_SUPABASE_PUBLISHABLE_KEY`   | Clé publique Supabase (les droits sont gérés par les RLS)   |
-| `VITE_SITE_URL`                   | Domaine public, utilisé pour les URL canoniques et le sitemap |
+| Variable                        | Rôle                                                          |
+| ------------------------------- | ------------------------------------------------------------- |
+| `VITE_SUPABASE_URL`             | URL du projet Supabase                                        |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Clé publique Supabase (les droits sont gérés par les RLS)     |
+| `VITE_SITE_URL`                 | Domaine public, utilisé pour les URL canoniques et le sitemap |
 
 ## Base de données
 

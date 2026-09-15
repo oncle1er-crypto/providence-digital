@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { buttonStyles } from "@/components/Button";
 import { ExternalLink, MapPin } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -55,7 +56,7 @@ function Page() {
               href={GOOGLE_MAPS_URL}
               target="_blank"
               rel="noreferrer"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
+              className={buttonStyles({ variant: "gold", size: "sm", className: "mt-5" })}
             >
               <MapPin className="size-4" />
               Obtenir l’itinéraire
@@ -81,7 +82,7 @@ function Page() {
                 href={GOOGLE_MAPS_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md border border-border px-5 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
+                className={buttonStyles({ variant: "outline", size: "md", className: "shrink-0" })}
               >
                 <MapPin className="size-4 text-gold" />
                 Ouvrir Google Maps

@@ -108,7 +108,26 @@ function slugify(value: string) {
     .replace(/^-|-$/g, "");
 }
 
+/** L'espace d'administration reste en thème clair, quel que soit le réglage du visiteur. */
+function useForceLightTheme() {
+  useEffect(() => {
+    const root = document.documentElement;
+    const wasDark = root.classList.contains("dark");
+    if (wasDark) {
+      root.classList.remove("dark");
+      root.style.colorScheme = "light";
+    }
+    return () => {
+      if (wasDark) {
+        root.classList.add("dark");
+        root.style.colorScheme = "dark";
+      }
+    };
+  }, []);
+}
+
 function AdminPage() {
+  useForceLightTheme();
   const [session, setSession] = useState<CmsSession | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -159,10 +178,15 @@ function AdminPage() {
           <div className="grid size-14 place-items-center rounded-2xl bg-primary text-gold">
             <ShieldCheck className="size-7" />
           </div>
-          <p className="mt-7 text-xs font-semibold tracking-[0.2em] text-gold uppercase">Accès refusé</p>
-          <h1 className="mt-2 font-display text-3xl font-semibold text-primary">Compte non autorisé</h1>
+          <p className="mt-7 text-xs font-semibold tracking-[0.2em] text-gold uppercase">
+            Accès refusé
+          </p>
+          <h1 className="mt-2 font-display text-3xl font-semibold text-primary">
+            Compte non autorisé
+          </h1>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            Ce compte est authentifié mais ne possède pas le rôle administrateur du site. Contactez le propriétaire du site pour obtenir un accès.
+            Ce compte est authentifié mais ne possède pas le rôle administrateur du site. Contactez
+            le propriétaire du site pour obtenir un accès.
           </p>
           <button
             onClick={async () => {
@@ -191,7 +215,11 @@ function AdminPage() {
   );
 }
 
-function AuthScreen({ onAuthenticated }: { onAuthenticated: (session: CmsSession) => Promise<void> }) {
+function AuthScreen({
+  onAuthenticated,
+}: {
+  onAuthenticated: (session: CmsSession) => Promise<void>;
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -217,10 +245,13 @@ function AuthScreen({ onAuthenticated }: { onAuthenticated: (session: CmsSession
         <section className="hidden bg-primary p-10 text-primary-foreground lg:flex lg:flex-col lg:justify-between">
           <div>
             <img src="/logo-gsp.png" alt="Logo La Providence" className="h-16 w-auto" />
-            <p className="mt-8 text-xs font-semibold tracking-[0.24em] text-gold uppercase">Espace sécurisé</p>
+            <p className="mt-8 text-xs font-semibold tracking-[0.24em] text-gold uppercase">
+              Espace sécurisé
+            </p>
             <h1 className="mt-4 font-display text-4xl font-semibold">Administration du site</h1>
             <p className="mt-4 max-w-sm text-sm leading-7 text-primary-foreground/75">
-              Publiez les actualités, gérez les médias et mettez à jour les informations essentielles du site sans modifier le code.
+              Publiez les actualités, gérez les médias et mettez à jour les informations
+              essentielles du site sans modifier le code.
             </p>
           </div>
           <div className="flex items-center gap-2 text-xs text-primary-foreground/60">
@@ -240,7 +271,9 @@ function AuthScreen({ onAuthenticated }: { onAuthenticated: (session: CmsSession
           <div className="mt-8 lg:mt-0">
             <p className="text-xs font-semibold tracking-[0.2em] text-gold uppercase">Connexion</p>
             <h2 className="mt-2 font-display text-3xl font-semibold text-primary">Bienvenue</h2>
-            <p className="mt-2 text-sm text-muted-foreground">Utilisez votre compte administrateur autorisé.</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Utilisez votre compte administrateur autorisé.
+            </p>
           </div>
 
           <form onSubmit={submit} className="mt-8 space-y-5">
@@ -275,7 +308,11 @@ function AuthScreen({ onAuthenticated }: { onAuthenticated: (session: CmsSession
               disabled={busy}
               className="flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground transition hover:opacity-95 disabled:opacity-50"
             >
-              {busy ? <Loader2 className="size-4 animate-spin" /> : <LockKeyhole className="size-4" />}
+              {busy ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <LockKeyhole className="size-4" />
+              )}
               Se connecter
             </button>
           </form>
@@ -285,7 +322,13 @@ function AuthScreen({ onAuthenticated }: { onAuthenticated: (session: CmsSession
   );
 }
 
-function AdminDashboard({ session, onLogout }: { session: CmsSession; onLogout: () => Promise<void> }) {
+function AdminDashboard({
+  session,
+  onLogout,
+}: {
+  session: CmsSession;
+  onLogout: () => Promise<void>;
+}) {
   const [tab, setTab] = useState<Tab>("news");
   const [news, setNews] = useState<NewsPost[]>([]);
   const [settings, setSettings] = useState<SiteSetting[]>([]);
@@ -329,7 +372,9 @@ function AdminDashboard({ session, onLogout }: { session: CmsSession; onLogout: 
           <div className="flex min-w-0 items-center gap-3">
             <img src="/logo-gsp.png" alt="Logo La Providence" className="h-10 w-auto shrink-0" />
             <div className="min-w-0">
-              <p className="truncate font-display text-base font-semibold text-primary sm:text-lg">La Providence</p>
+              <p className="truncate font-display text-base font-semibold text-primary sm:text-lg">
+                La Providence
+              </p>
               <p className="text-[11px] text-muted-foreground">Administration du site</p>
             </div>
           </div>
@@ -349,7 +394,9 @@ function AdminDashboard({ session, onLogout }: { session: CmsSession; onLogout: 
               key={id}
               onClick={() => setTab(id)}
               className={`inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${
-                tab === id ? "bg-primary text-primary-foreground shadow-sm" : "bg-white text-primary hover:bg-primary/5"
+                tab === id
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-white text-primary hover:bg-primary/5"
               }`}
             >
               <Icon className="size-4" /> {label}
@@ -357,7 +404,11 @@ function AdminDashboard({ session, onLogout }: { session: CmsSession; onLogout: 
           ))}
         </div>
 
-        {error && <div className="mb-6"><Alert tone="error">{error}</Alert></div>}
+        {error && (
+          <div className="mb-6">
+            <Alert tone="error">{error}</Alert>
+          </div>
+        )}
         {loading ? (
           <div className="grid min-h-[45vh] place-items-center rounded-3xl bg-white">
             <Loader2 className="size-7 animate-spin text-primary" />
@@ -365,7 +416,9 @@ function AdminDashboard({ session, onLogout }: { session: CmsSession; onLogout: 
         ) : (
           <>
             {tab === "news" && <NewsManager session={session} news={news} onChanged={reload} />}
-            {tab === "site" && <SiteManager session={session} settings={settings} onChanged={reload} />}
+            {tab === "site" && (
+              <SiteManager session={session} settings={settings} onChanged={reload} />
+            )}
             {tab === "media" && <MediaManager session={session} media={media} onChanged={reload} />}
           </>
         )}
@@ -374,7 +427,15 @@ function AdminDashboard({ session, onLogout }: { session: CmsSession; onLogout: 
   );
 }
 
-function NewsManager({ session, news, onChanged }: { session: CmsSession; news: NewsPost[]; onChanged: () => Promise<void> }) {
+function NewsManager({
+  session,
+  news,
+  onChanged,
+}: {
+  session: CmsSession;
+  news: NewsPost[];
+  onChanged: () => Promise<void>;
+}) {
   const [form, setForm] = useState<NewsForm>(emptyNews);
   const [editingId, setEditingId] = useState<string | undefined>();
   const [busy, setBusy] = useState(false);
@@ -468,7 +529,12 @@ function NewsManager({ session, news, onChanged }: { session: CmsSession; news: 
             </h2>
           </div>
           {editingId && (
-            <button onClick={reset} className="rounded-full bg-muted px-3 py-2 text-xs font-semibold text-primary">Nouvelle</button>
+            <button
+              onClick={reset}
+              className="rounded-full bg-muted px-3 py-2 text-xs font-semibold text-primary"
+            >
+              Nouvelle
+            </button>
           )}
         </div>
 
@@ -489,42 +555,87 @@ function NewsManager({ session, news, onChanged }: { session: CmsSession; news: 
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Slug URL">
-              <input className="input-admin" value={form.slug} onChange={(e) => setForm({ ...form, slug: slugify(e.target.value) })} />
+              <input
+                className="input-admin"
+                value={form.slug}
+                onChange={(e) => setForm({ ...form, slug: slugify(e.target.value) })}
+              />
             </Field>
             <Field label="Catégorie">
-              <input className="input-admin" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} placeholder="Événement" />
+              <input
+                className="input-admin"
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                placeholder="Événement"
+              />
             </Field>
           </div>
           <Field label="Résumé">
-            <textarea className="input-admin min-h-24 resize-y" value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} />
+            <textarea
+              className="input-admin min-h-24 resize-y"
+              value={form.excerpt}
+              onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
+            />
           </Field>
           <Field label="Contenu">
-            <textarea required className="input-admin min-h-44 resize-y" value={form.body} onChange={(e) => setForm({ ...form, body: e.target.value })} />
+            <textarea
+              required
+              className="input-admin min-h-44 resize-y"
+              value={form.body}
+              onChange={(e) => setForm({ ...form, body: e.target.value })}
+            />
           </Field>
           <Field label="Image — URL publique ou chemin de la médiathèque">
-            <input className="input-admin" value={form.image_path} onChange={(e) => setForm({ ...form, image_path: e.target.value })} placeholder="https://… ou user-id/fichier.webp" />
+            <input
+              className="input-admin"
+              value={form.image_path}
+              onChange={(e) => setForm({ ...form, image_path: e.target.value })}
+              placeholder="https://… ou user-id/fichier.webp"
+            />
           </Field>
           <Field label="Vidéo — URL facultative">
-            <input className="input-admin" value={form.video_url} onChange={(e) => setForm({ ...form, video_url: e.target.value })} placeholder="https://…" />
+            <input
+              className="input-admin"
+              value={form.video_url}
+              onChange={(e) => setForm({ ...form, video_url: e.target.value })}
+              placeholder="https://…"
+            />
           </Field>
           <div className="grid gap-4 sm:grid-cols-3">
             <Field label="Statut">
-              <select className="input-admin" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value as NewsPost["status"] })}>
+              <select
+                className="input-admin"
+                value={form.status}
+                onChange={(e) => setForm({ ...form, status: e.target.value as NewsPost["status"] })}
+              >
                 <option value="draft">Brouillon</option>
                 <option value="published">Publié</option>
                 <option value="archived">Archivé</option>
               </select>
             </Field>
             <Field label="Date de publication">
-              <input type="datetime-local" className="input-admin" value={form.published_at} onChange={(e) => setForm({ ...form, published_at: e.target.value })} />
+              <input
+                type="datetime-local"
+                className="input-admin"
+                value={form.published_at}
+                onChange={(e) => setForm({ ...form, published_at: e.target.value })}
+              />
             </Field>
             <Field label="Ordre">
-              <input type="number" className="input-admin" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })} />
+              <input
+                type="number"
+                className="input-admin"
+                value={form.sort_order}
+                onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
+              />
             </Field>
           </div>
           {notice && <Alert tone="success">{notice}</Alert>}
           {error && <Alert tone="error">{error}</Alert>}
-          <button disabled={busy} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-50">
+          <button
+            disabled={busy}
+            className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+          >
             {busy ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />}
             {editingId ? "Enregistrer les modifications" : "Créer l’actualité"}
           </button>
@@ -534,41 +645,75 @@ function NewsManager({ session, news, onChanged }: { session: CmsSession; news: 
       <section className="rounded-3xl bg-white p-5 shadow-sm sm:p-7">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold tracking-[0.18em] text-gold uppercase">Publications</p>
-            <h2 className="mt-2 font-display text-2xl font-semibold text-primary">Actualités enregistrées</h2>
+            <p className="text-xs font-semibold tracking-[0.18em] text-gold uppercase">
+              Publications
+            </p>
+            <h2 className="mt-2 font-display text-2xl font-semibold text-primary">
+              Actualités enregistrées
+            </h2>
           </div>
-          <span className="rounded-full bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">{news.length}</span>
+          <span className="rounded-full bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
+            {news.length}
+          </span>
         </div>
 
         <div className="mt-6 space-y-3">
-          {news.length === 0 && <EmptyState icon={Newspaper} text="Aucune actualité pour le moment." />}
+          {news.length === 0 && (
+            <EmptyState icon={Newspaper} text="Aucune actualité pour le moment." />
+          )}
           {news.map((item) => (
             <article key={item.id} className="flex gap-4 rounded-2xl border border-border p-4">
               <div className="hidden size-20 shrink-0 overflow-hidden rounded-xl bg-muted sm:block">
                 {item.image_path ? (
-                  <img src={mediaPublicUrl(item.image_path)} alt="" className="size-full object-cover" />
+                  <img
+                    src={mediaPublicUrl(item.image_path)}
+                    alt=""
+                    className="size-full object-cover"
+                  />
                 ) : (
-                  <div className="grid size-full place-items-center"><Newspaper className="size-5 text-muted-foreground" /></div>
+                  <div className="grid size-full place-items-center">
+                    <Newspaper className="size-5 text-muted-foreground" />
+                  </div>
                 )}
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase ${
-                    item.status === "published"
-                      ? "bg-emerald-100 text-emerald-700"
+                  <span
+                    className={`rounded-full px-2.5 py-1 text-[10px] font-bold uppercase ${
+                      item.status === "published"
+                        ? "bg-emerald-100 text-emerald-700"
+                        : item.status === "draft"
+                          ? "bg-amber-100 text-amber-800"
+                          : "bg-slate-100 text-slate-600"
+                    }`}
+                  >
+                    {item.status === "published"
+                      ? "Publié"
                       : item.status === "draft"
-                        ? "bg-amber-100 text-amber-800"
-                        : "bg-slate-100 text-slate-600"
-                  }`}>
-                    {item.status === "published" ? "Publié" : item.status === "draft" ? "Brouillon" : "Archivé"}
+                        ? "Brouillon"
+                        : "Archivé"}
                   </span>
-                  {item.category && <span className="text-xs text-muted-foreground">{item.category}</span>}
+                  {item.category && (
+                    <span className="text-xs text-muted-foreground">{item.category}</span>
+                  )}
                 </div>
-                <h3 className="mt-2 truncate font-display text-lg font-semibold text-primary">{item.title}</h3>
-                <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{item.excerpt || item.body}</p>
+                <h3 className="mt-2 truncate font-display text-lg font-semibold text-primary">
+                  {item.title}
+                </h3>
+                <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+                  {item.excerpt || item.body}
+                </p>
                 <div className="mt-3 flex gap-2">
-                  <button onClick={() => edit(item)} className="rounded-full bg-primary/5 px-3 py-1.5 text-xs font-semibold text-primary">Modifier</button>
-                  <button onClick={() => remove(item.id)} className="inline-flex items-center gap-1 rounded-full bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700">
+                  <button
+                    onClick={() => edit(item)}
+                    className="rounded-full bg-primary/5 px-3 py-1.5 text-xs font-semibold text-primary"
+                  >
+                    Modifier
+                  </button>
+                  <button
+                    onClick={() => remove(item.id)}
+                    className="inline-flex items-center gap-1 rounded-full bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700"
+                  >
                     <Trash2 className="size-3.5" /> Supprimer
                   </button>
                 </div>
@@ -581,11 +726,31 @@ function NewsManager({ session, news, onChanged }: { session: CmsSession; news: 
   );
 }
 
-function SiteManager({ session, settings, onChanged }: { session: CmsSession; settings: SiteSetting[]; onChanged: () => Promise<void> }) {
-  const settingMap = useMemo(() => new Map(settings.map((setting) => [setting.key, setting.value])), [settings]);
-  const [identity, setIdentity] = useState<IdentitySetting>({ ...defaultIdentity, ...(settingMap.get("identity") as IdentitySetting | undefined) });
-  const [contact, setContact] = useState<ContactSetting>({ ...defaultContact, ...(settingMap.get("contact") as ContactSetting | undefined) });
-  const [admissions, setAdmissions] = useState<AdmissionsSetting>({ ...defaultAdmissions, ...(settingMap.get("admissions") as AdmissionsSetting | undefined) });
+function SiteManager({
+  session,
+  settings,
+  onChanged,
+}: {
+  session: CmsSession;
+  settings: SiteSetting[];
+  onChanged: () => Promise<void>;
+}) {
+  const settingMap = useMemo(
+    () => new Map(settings.map((setting) => [setting.key, setting.value])),
+    [settings],
+  );
+  const [identity, setIdentity] = useState<IdentitySetting>({
+    ...defaultIdentity,
+    ...(settingMap.get("identity") as IdentitySetting | undefined),
+  });
+  const [contact, setContact] = useState<ContactSetting>({
+    ...defaultContact,
+    ...(settingMap.get("contact") as ContactSetting | undefined),
+  });
+  const [admissions, setAdmissions] = useState<AdmissionsSetting>({
+    ...defaultAdmissions,
+    ...(settingMap.get("admissions") as AdmissionsSetting | undefined),
+  });
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
@@ -615,20 +780,55 @@ function SiteManager({ session, settings, onChanged }: { session: CmsSession; se
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="rounded-3xl bg-white p-5 shadow-sm sm:p-7">
           <p className="text-xs font-semibold tracking-[0.18em] text-gold uppercase">Identité</p>
-          <h2 className="mt-2 font-display text-2xl font-semibold text-primary">Informations générales</h2>
+          <h2 className="mt-2 font-display text-2xl font-semibold text-primary">
+            Informations générales
+          </h2>
           <div className="mt-6 space-y-4">
-            <Field label="Nom de l’établissement"><input className="input-admin" value={identity.school_name || ""} onChange={(e) => setIdentity({ ...identity, school_name: e.target.value })} /></Field>
-            <Field label="Site web"><input className="input-admin" value={identity.website || ""} onChange={(e) => setIdentity({ ...identity, website: e.target.value })} /></Field>
+            <Field label="Nom de l’établissement">
+              <input
+                className="input-admin"
+                value={identity.school_name || ""}
+                onChange={(e) => setIdentity({ ...identity, school_name: e.target.value })}
+              />
+            </Field>
+            <Field label="Site web">
+              <input
+                className="input-admin"
+                value={identity.website || ""}
+                onChange={(e) => setIdentity({ ...identity, website: e.target.value })}
+              />
+            </Field>
           </div>
         </section>
 
         <section className="rounded-3xl bg-white p-5 shadow-sm sm:p-7">
           <p className="text-xs font-semibold tracking-[0.18em] text-gold uppercase">Contact</p>
-          <h2 className="mt-2 font-display text-2xl font-semibold text-primary">Coordonnées publiques</h2>
+          <h2 className="mt-2 font-display text-2xl font-semibold text-primary">
+            Coordonnées publiques
+          </h2>
           <div className="mt-6 space-y-4">
-            <Field label="Adresse"><textarea className="input-admin min-h-20" value={contact.address || ""} onChange={(e) => setContact({ ...contact, address: e.target.value })} /></Field>
-            <Field label="Téléphone"><input className="input-admin" value={contact.phone || ""} onChange={(e) => setContact({ ...contact, phone: e.target.value })} /></Field>
-            <Field label="E-mail"><input type="email" className="input-admin" value={contact.email || ""} onChange={(e) => setContact({ ...contact, email: e.target.value })} /></Field>
+            <Field label="Adresse">
+              <textarea
+                className="input-admin min-h-20"
+                value={contact.address || ""}
+                onChange={(e) => setContact({ ...contact, address: e.target.value })}
+              />
+            </Field>
+            <Field label="Téléphone">
+              <input
+                className="input-admin"
+                value={contact.phone || ""}
+                onChange={(e) => setContact({ ...contact, phone: e.target.value })}
+              />
+            </Field>
+            <Field label="E-mail">
+              <input
+                type="email"
+                className="input-admin"
+                value={contact.email || ""}
+                onChange={(e) => setContact({ ...contact, email: e.target.value })}
+              />
+            </Field>
           </div>
         </section>
       </div>
@@ -637,24 +837,68 @@ function SiteManager({ session, settings, onChanged }: { session: CmsSession; se
         <p className="text-xs font-semibold tracking-[0.18em] text-gold uppercase">Accueil</p>
         <h2 className="mt-2 font-display text-2xl font-semibold text-primary">Bloc Admissions</h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
-          <Field label="Sur-titre"><input className="input-admin" value={admissions.eyebrow || ""} onChange={(e) => setAdmissions({ ...admissions, eyebrow: e.target.value })} /></Field>
-          <Field label="Titre"><input className="input-admin" value={admissions.title || ""} onChange={(e) => setAdmissions({ ...admissions, title: e.target.value })} /></Field>
-          <div className="md:col-span-2"><Field label="Message"><textarea className="input-admin min-h-28" value={admissions.message || ""} onChange={(e) => setAdmissions({ ...admissions, message: e.target.value })} /></Field></div>
-          <Field label="Texte du bouton"><input className="input-admin" value={admissions.cta_label || ""} onChange={(e) => setAdmissions({ ...admissions, cta_label: e.target.value })} /></Field>
-          <Field label="Lien du bouton"><input className="input-admin" value={admissions.cta_url || ""} onChange={(e) => setAdmissions({ ...admissions, cta_url: e.target.value })} /></Field>
+          <Field label="Sur-titre">
+            <input
+              className="input-admin"
+              value={admissions.eyebrow || ""}
+              onChange={(e) => setAdmissions({ ...admissions, eyebrow: e.target.value })}
+            />
+          </Field>
+          <Field label="Titre">
+            <input
+              className="input-admin"
+              value={admissions.title || ""}
+              onChange={(e) => setAdmissions({ ...admissions, title: e.target.value })}
+            />
+          </Field>
+          <div className="md:col-span-2">
+            <Field label="Message">
+              <textarea
+                className="input-admin min-h-28"
+                value={admissions.message || ""}
+                onChange={(e) => setAdmissions({ ...admissions, message: e.target.value })}
+              />
+            </Field>
+          </div>
+          <Field label="Texte du bouton">
+            <input
+              className="input-admin"
+              value={admissions.cta_label || ""}
+              onChange={(e) => setAdmissions({ ...admissions, cta_label: e.target.value })}
+            />
+          </Field>
+          <Field label="Lien du bouton">
+            <input
+              className="input-admin"
+              value={admissions.cta_url || ""}
+              onChange={(e) => setAdmissions({ ...admissions, cta_url: e.target.value })}
+            />
+          </Field>
         </div>
       </section>
 
       {notice && <Alert tone="success">{notice}</Alert>}
       {error && <Alert tone="error">{error}</Alert>}
-      <button disabled={busy} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-50">
-        {busy ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />} Enregistrer les informations du site
+      <button
+        disabled={busy}
+        className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+      >
+        {busy ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />}{" "}
+        Enregistrer les informations du site
       </button>
     </form>
   );
 }
 
-function MediaManager({ session, media, onChanged }: { session: CmsSession; media: MediaAsset[]; onChanged: () => Promise<void> }) {
+function MediaManager({
+  session,
+  media,
+  onChanged,
+}: {
+  session: CmsSession;
+  media: MediaAsset[];
+  onChanged: () => Promise<void>;
+}) {
   const [file, setFile] = useState<File | null>(null);
   const [altText, setAltText] = useState("");
   const [busy, setBusy] = useState(false);
@@ -696,45 +940,101 @@ function MediaManager({ session, media, onChanged }: { session: CmsSession; medi
       <section className="rounded-3xl bg-white p-5 shadow-sm sm:p-7">
         <p className="text-xs font-semibold tracking-[0.18em] text-gold uppercase">Médiathèque</p>
         <h2 className="mt-2 font-display text-2xl font-semibold text-primary">Ajouter un média</h2>
-        <p className="mt-2 text-sm text-muted-foreground">Images JPEG/PNG/WebP/AVIF, vidéos MP4/WebM ou PDF, maximum 25 Mo.</p>
-        <form onSubmit={upload} className="mt-6 grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] md:items-end">
+        <p className="mt-2 text-sm text-muted-foreground">
+          Images JPEG/PNG/WebP/AVIF, vidéos MP4/WebM ou PDF, maximum 25 Mo.
+        </p>
+        <form
+          onSubmit={upload}
+          className="mt-6 grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] md:items-end"
+        >
           <Field label="Fichier">
-            <input type="file" required onChange={(e) => setFile(e.target.files?.[0] || null)} className="input-admin file:mr-3 file:rounded-full file:border-0 file:bg-primary/5 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-primary" />
+            <input
+              type="file"
+              required
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              className="input-admin file:mr-3 file:rounded-full file:border-0 file:bg-primary/5 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-primary"
+            />
           </Field>
-          <Field label="Texte alternatif"><input className="input-admin" value={altText} onChange={(e) => setAltText(e.target.value)} placeholder="Décrire l’image" /></Field>
-          <button disabled={busy || !file} className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground disabled:opacity-50">
-            {busy ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />} Envoyer
+          <Field label="Texte alternatif">
+            <input
+              className="input-admin"
+              value={altText}
+              onChange={(e) => setAltText(e.target.value)}
+              placeholder="Décrire l’image"
+            />
+          </Field>
+          <button
+            disabled={busy || !file}
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground disabled:opacity-50"
+          >
+            {busy ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}{" "}
+            Envoyer
           </button>
         </form>
-        {notice && <div className="mt-4"><Alert tone="success">{notice}</Alert></div>}
-        {error && <div className="mt-4"><Alert tone="error">{error}</Alert></div>}
+        {notice && (
+          <div className="mt-4">
+            <Alert tone="success">{notice}</Alert>
+          </div>
+        )}
+        {error && (
+          <div className="mt-4">
+            <Alert tone="error">{error}</Alert>
+          </div>
+        )}
       </section>
 
       <section className="rounded-3xl bg-white p-5 shadow-sm sm:p-7">
         <div className="flex items-center justify-between">
           <h2 className="font-display text-2xl font-semibold text-primary">Fichiers disponibles</h2>
-          <span className="rounded-full bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">{media.length}</span>
+          <span className="rounded-full bg-primary/5 px-3 py-1 text-xs font-semibold text-primary">
+            {media.length}
+          </span>
         </div>
         {media.length === 0 ? (
-          <div className="mt-6"><EmptyState icon={ImageIcon} text="Aucun média téléversé." /></div>
+          <div className="mt-6">
+            <EmptyState icon={ImageIcon} text="Aucun média téléversé." />
+          </div>
         ) : (
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {media.map((asset) => {
               const url = mediaPublicUrl(asset.storage_path) || "";
               return (
-                <article key={asset.id} className="overflow-hidden rounded-2xl border border-border">
+                <article
+                  key={asset.id}
+                  className="overflow-hidden rounded-2xl border border-border"
+                >
                   <div className="aspect-[4/3] bg-muted">
                     {asset.kind === "image" ? (
-                      <img src={url} alt={asset.alt_text || ""} className="size-full object-cover" loading="lazy" />
+                      <img
+                        src={url}
+                        alt={asset.alt_text || ""}
+                        className="size-full object-cover"
+                        loading="lazy"
+                      />
                     ) : (
                       <div className="grid size-full place-items-center text-muted-foreground">
-                        {asset.kind === "video" ? <ImageIcon className="size-8" /> : <FileText className="size-8" />}
+                        {asset.kind === "video" ? (
+                          <ImageIcon className="size-8" />
+                        ) : (
+                          <FileText className="size-8" />
+                        )}
                       </div>
                     )}
                   </div>
                   <div className="p-4">
-                    <p className="truncate text-xs font-semibold text-primary" title={asset.storage_path}>{asset.storage_path.split("/").pop()}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">{asset.kind === "image" ? "Image" : asset.kind === "video" ? "Vidéo" : "Document"}</p>
+                    <p
+                      className="truncate text-xs font-semibold text-primary"
+                      title={asset.storage_path}
+                    >
+                      {asset.storage_path.split("/").pop()}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      {asset.kind === "image"
+                        ? "Image"
+                        : asset.kind === "video"
+                          ? "Vidéo"
+                          : "Document"}
+                    </p>
                     <div className="mt-3 flex gap-2">
                       <button
                         onClick={async () => {
@@ -745,7 +1045,11 @@ function MediaManager({ session, media, onChanged }: { session: CmsSession; medi
                       >
                         <Copy className="size-3.5" /> Copier URL
                       </button>
-                      <button onClick={() => remove(asset)} className="grid size-8 place-items-center rounded-full bg-red-50 text-red-700" aria-label="Supprimer">
+                      <button
+                        onClick={() => remove(asset)}
+                        className="grid size-8 place-items-center rounded-full bg-red-50 text-red-700"
+                        aria-label="Supprimer"
+                      >
                         <Trash2 className="size-3.5" />
                       </button>
                     </div>
@@ -771,7 +1075,9 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function Alert({ tone, children }: { tone: "error" | "success"; children: React.ReactNode }) {
   return (
-    <div className={`rounded-2xl px-4 py-3 text-sm ${tone === "error" ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"}`}>
+    <div
+      className={`rounded-2xl px-4 py-3 text-sm ${tone === "error" ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"}`}
+    >
       {children}
     </div>
   );

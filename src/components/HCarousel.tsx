@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 /**
  * Carrousel horizontal accessible : scroll natif (swipe mobile),
- * flèches et pagination synchronisées.
+ * flèches et pagination synchronisées, navigation au clavier (flèches ← →).
  */
 export function HCarousel({
   items,
@@ -45,8 +45,33 @@ export function HCarousel({
     return () => track.removeEventListener("scroll", onScroll);
   }, []);
 
+  const step = useCallback(
+    (direction: 1 | -1) => {
+      setActive((current) => {
+        const next = Math.min(items.length - 1, Math.max(0, current + direction));
+        if (next !== current) scrollToIndex(next);
+        return next;
+      });
+    },
+    [items.length, scrollToIndex],
+  );
+
   return (
-    <div className="relative" role="group" aria-roledescription="carrousel" aria-label={label}>
+    <div
+      className="relative"
+      role="group"
+      aria-roledescription="carrousel"
+      aria-label={label}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          step(1);
+        } else if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          step(-1);
+        }
+      }}
+    >
       <div
         ref={trackRef}
         className="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-5 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -58,14 +83,17 @@ export function HCarousel({
         ))}
       </div>
 
+      <p aria-live="polite" className="sr-only">
+        Élément {active + 1} sur {items.length} — {label}
+      </p>
+
       <div className="mt-4 flex items-center justify-between gap-4">
-        <div className="flex gap-2" role="tablist" aria-label={`Pagination — ${label}`}>
+        <div className="flex gap-2" aria-label={`Pagination — ${label}`}>
           {items.map((_, i) => (
             <button
               key={i}
               type="button"
-              role="tab"
-              aria-selected={i === active}
+              aria-current={i === active ? "true" : undefined}
               aria-label={`Aller à l'élément ${i + 1}`}
               onClick={() => scrollToIndex(i)}
               className="grid h-11 w-6 place-items-center focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
@@ -82,16 +110,18 @@ export function HCarousel({
           <button
             type="button"
             aria-label="Élément précédent"
-            onClick={() => scrollToIndex(Math.max(0, active - 1))}
-            className="grid size-11 place-items-center rounded-full border border-border transition-colors hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            disabled={active === 0}
+            onClick={() => step(-1)}
+            className="grid size-11 place-items-center rounded-full border border-border transition-colors hover:bg-secondary disabled:pointer-events-none disabled:opacity-40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <ChevronLeft className="size-5" />
           </button>
           <button
             type="button"
             aria-label="Élément suivant"
-            onClick={() => scrollToIndex(Math.min(items.length - 1, active + 1))}
-            className="grid size-11 place-items-center rounded-full border border-border transition-colors hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            disabled={active >= items.length - 1}
+            onClick={() => step(1)}
+            className="grid size-11 place-items-center rounded-full border border-border transition-colors hover:bg-secondary disabled:pointer-events-none disabled:opacity-40 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <ChevronRight className="size-5" />
           </button>

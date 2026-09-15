@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { buttonStyles } from "@/components/Button";
 import { CheckCircle2, Info, Minus } from "lucide-react";
 
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -178,16 +179,10 @@ function FraisPage() {
               ))}
             </ol>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/contact"
-                className="btn-glow btn-press rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground"
-              >
+              <Link to="/contact" className={buttonStyles({ variant: "gold", size: "lg" })}>
                 Demander la grille tarifaire
               </Link>
-              <Link
-                to="/admissions"
-                className="btn-press rounded-full border border-border px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-secondary"
-              >
+              <Link to="/admissions" className={buttonStyles({ variant: "outline", size: "lg" })}>
                 Voir la procédure d'admission
               </Link>
             </div>

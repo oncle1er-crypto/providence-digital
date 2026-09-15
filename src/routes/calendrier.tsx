@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { buttonStyles } from "@/components/Button";
 import { CalendarDays, Info } from "lucide-react";
 
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -95,21 +96,15 @@ function CalendrierPage() {
             description="Les places sont limitées par niveau : les familles sont invitées à se manifester dès l'ouverture de la campagne d'inscription, et à visiter l'établissement sur rendez-vous."
           >
             <div className="flex flex-wrap gap-3">
-              <Link
-                to="/admissions"
-                className="btn-glow btn-press rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground"
-              >
+              <Link to="/admissions" className={buttonStyles({ variant: "gold", size: "lg" })}>
                 Demander une inscription
               </Link>
-              <Link
-                to="/contact"
-                className="btn-press rounded-full border border-primary-foreground/45 px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-primary-foreground/10"
-              >
+              <Link to="/contact" className={buttonStyles({ variant: "onDark", size: "lg" })}>
                 Prendre rendez-vous
               </Link>
               <Link
                 to="/frais-scolarite"
-                className="btn-press rounded-full border border-primary-foreground/45 px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-primary-foreground/10"
+                className={buttonStyles({ variant: "onDark", size: "lg" })}
               >
                 Frais de scolarité
               </Link>

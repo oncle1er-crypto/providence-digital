@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { buttonStyles } from "@/components/Button";
 import { Facebook, Globe, Instagram, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { CookieSettingsLink } from "@/components/CookieConsent";
@@ -203,10 +204,7 @@ export function Footer() {
                 <Navigation className="size-4" />
                 Itinéraire
               </a>
-              <Link
-                to="/admissions"
-                className="inline-flex rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-gold-foreground transition-opacity hover:opacity-90"
-              >
+              <Link to="/admissions" className={buttonStyles({ variant: "gold", size: "sm" })}>
                 Demander une inscription
               </Link>
             </div>

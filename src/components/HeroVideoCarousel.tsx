@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { buttonStyles } from "@/components/Button";
 import { Link } from "@tanstack/react-router";
 import { Maximize2, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { motion } from "framer-motion";
@@ -44,6 +45,7 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
   const [reduced, setReduced] = useState(false);
   const [loaded, setLoaded] = useState<number[]>([0]);
   const [showControls, setShowControls] = useState(false);
+  const [allowVideo, setAllowVideo] = useState(true);
   const hideTimerRef = useRef<number | null>(null);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
 
@@ -61,6 +63,26 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
     apply();
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  // Sur mobile, en connexion lente ou en « économie de données », on affiche
+  // l'affiche (poster) plutôt que de télécharger plusieurs mégaoctets de vidéo.
+  useEffect(() => {
+    const connection = (
+      navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }
+    ).connection;
+
+    const update = () => {
+      const smallScreen = window.matchMedia("(max-width: 640px)").matches;
+      const slowNetwork = /(^|-)2g$/.test(connection?.effectiveType || "");
+      setAllowVideo(!smallScreen && !connection?.saveData && !slowNetwork);
+    };
+
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   useEffect(() => {
@@ -115,36 +137,45 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
   return (
     <section className="relative isolate min-h-[88svh] overflow-hidden bg-primary text-primary-foreground">
       <div className="absolute inset-0 -z-10">
-        {slides.map((slide, i) => (
-          <video
-            key={slide.id}
-            ref={(el) => {
-              videoRefs.current[i] = el;
-            }}
-            className={`absolute inset-0 size-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
-              i === index ? "opacity-100" : "opacity-0"
-            }`}
-            src={loaded.includes(i) ? mediaPublicUrl(slide.src) || slide.src : undefined}
-            poster={mediaPublicUrl(slide.poster) || slide.poster}
-            autoPlay={i === 0 && !reduced}
-            muted={muted}
-            loop={false}
-            playsInline
-            preload={i === 0 ? "auto" : loaded.includes(i) ? "metadata" : "none"}
+        {allowVideo &&
+          slides.map((slide, i) => (
+            <video
+              key={slide.id}
+              ref={(el) => {
+                videoRefs.current[i] = el;
+              }}
+              className={`absolute inset-0 size-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
+                i === index ? "opacity-100" : "opacity-0"
+              }`}
+              src={loaded.includes(i) ? mediaPublicUrl(slide.src) || slide.src : undefined}
+              poster={mediaPublicUrl(slide.poster) || slide.poster}
+              autoPlay={i === 0 && !reduced}
+              muted={muted}
+              loop={false}
+              playsInline
+              preload={loaded.includes(i) ? "metadata" : "none"}
+              aria-hidden="true"
+              tabIndex={-1}
+              onEnded={() => i === index && goTo(index + 1)}
+              onCanPlay={(event) => {
+                if (i !== index || !playing || reduced) return;
+                event.currentTarget.muted = muted;
+                void event.currentTarget.play().catch(() => setPlaying(false));
+              }}
+              onLoadedMetadata={(event) =>
+                i === index && setDuration(event.currentTarget.duration || slide.duration)
+              }
+              onTimeUpdate={(event) => i === index && setTime(event.currentTarget.currentTime)}
+            />
+          ))}
+        {!allowVideo && current && (
+          <img
+            src={mediaPublicUrl(current.poster) || current.poster}
+            alt=""
             aria-hidden="true"
-            tabIndex={-1}
-            onEnded={() => i === index && goTo(index + 1)}
-            onCanPlay={(event) => {
-              if (i !== index || !playing || reduced) return;
-              event.currentTarget.muted = muted;
-              void event.currentTarget.play().catch(() => setPlaying(false));
-            }}
-            onLoadedMetadata={(event) =>
-              i === index && setDuration(event.currentTarget.duration || slide.duration)
-            }
-            onTimeUpdate={(event) => i === index && setTime(event.currentTarget.currentTime)}
+            className="absolute inset-0 size-full object-cover"
           />
-        ))}
+        )}
         <div className="absolute inset-0 bg-[linear-gradient(90deg,oklch(0.16_0.02_25/0.72)_0%,oklch(0.16_0.02_25/0.42)_45%,oklch(0.16_0.02_25/0.08)_100%)]" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/25" />
       </div>
@@ -167,13 +198,13 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
           <div className="hero-anim hero-cta mt-9 flex flex-wrap gap-3">
             <Link
               to={primaryUrl as "/admissions"}
-              className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground transition-transform hover:-translate-y-0.5"
+              className={buttonStyles({ variant: "gold", size: "lg" })}
             >
               {content?.primary_label || "Demander une inscription"}
             </Link>
             <Link
               to={secondaryUrl as "/contact"}
-              className="rounded-full border border-primary-foreground/45 px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-primary-foreground/10"
+              className={buttonStyles({ variant: "onDark", size: "lg" })}
             >
               {content?.secondary_label || "Visiter l'école"}
             </Link>
@@ -204,49 +235,53 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
                   </p>
                   <p className="truncate text-xs text-primary-foreground/75">{current.title}</p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    aria-label={playing ? "Mettre en pause" : "Lire"}
-                    onClick={() => {
-                      reveal();
-                      const video = videoRefs.current[index];
-                      if (!video) return;
-                      if (playing) video.pause();
-                      else void video.play().catch(() => undefined);
-                      setPlaying(!playing);
-                    }}
-                    className="grid size-10 place-items-center rounded-full bg-primary-foreground/15"
-                  >
-                    {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
-                  </button>
-                  <button
-                    type="button"
-                    aria-label={muted ? "Activer le son" : "Couper le son"}
-                    onClick={() => {
-                      reveal();
-                      setMuted((value) => !value);
-                    }}
-                    className="grid size-10 place-items-center rounded-full bg-primary-foreground/15"
-                  >
-                    {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Plein écran"
-                    onClick={() =>
-                      void videoRefs.current[index]?.requestFullscreen?.().catch(() => undefined)
-                    }
-                    className="hidden size-10 place-items-center rounded-full bg-primary-foreground/15 sm:grid"
-                  >
-                    <Maximize2 className="size-4" />
-                  </button>
-                </div>
+                {allowVideo && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      aria-label={playing ? "Mettre en pause" : "Lire"}
+                      onClick={() => {
+                        reveal();
+                        const video = videoRefs.current[index];
+                        if (!video) return;
+                        if (playing) video.pause();
+                        else void video.play().catch(() => undefined);
+                        setPlaying(!playing);
+                      }}
+                      className="grid size-10 place-items-center rounded-full bg-primary-foreground/15"
+                    >
+                      {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={muted ? "Activer le son" : "Couper le son"}
+                      onClick={() => {
+                        reveal();
+                        setMuted((value) => !value);
+                      }}
+                      className="grid size-10 place-items-center rounded-full bg-primary-foreground/15"
+                    >
+                      {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Plein écran"
+                      onClick={() =>
+                        void videoRefs.current[index]?.requestFullscreen?.().catch(() => undefined)
+                      }
+                      className="hidden size-10 place-items-center rounded-full bg-primary-foreground/15 sm:grid"
+                    >
+                      <Maximize2 className="size-4" />
+                    </button>
+                  </div>
+                )}
               </div>
               <div className="mt-3 flex items-center gap-3 text-xs tabular-nums">
-                <span className="shrink-0 font-mono opacity-80">
-                  {fmt(time)} / {fmt(duration || current.duration)}
-                </span>
+                {allowVideo && (
+                  <span className="shrink-0 font-mono opacity-80">
+                    {fmt(time)} / {fmt(duration || current.duration)}
+                  </span>
+                )}
                 <div className="flex flex-wrap gap-1.5">
                   {slides.map((slide, i) => (
                     <motion.button
