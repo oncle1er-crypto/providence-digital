@@ -15,27 +15,56 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ScrollToTop } from "../components/ScrollToTop";
 import { RouteProgress } from "../components/RouteProgress";
 import { PageTransition } from "../components/PageTransition";
+import { CookieConsent } from "../components/CookieConsent";
+import { Footer } from "../components/Footer";
+import { Header } from "../components/Header";
+import { nav } from "../data/site";
 import { DEFAULT_OG_IMAGE } from "../lib/seo";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page introuvable</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          La page demandée n'existe pas ou a été déplacée.
+    <>
+      <Header />
+      <main className="container-page flex min-h-[70vh] flex-col items-center justify-center py-32 text-center">
+        <p className="font-display text-7xl font-semibold text-gold">404</p>
+        <h1 className="mt-4 font-display text-3xl font-semibold sm:text-4xl">Page introuvable</h1>
+        <p className="mt-4 max-w-md text-sm text-muted-foreground">
+          La page demandée n'existe pas ou a été déplacée. Vous pouvez revenir à l'accueil ou
+          découvrir l'une des rubriques du site.
         </p>
-        <div className="mt-6">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="btn-glow btn-press inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground"
           >
             Retour à l'accueil
           </Link>
+          <Link
+            to="/contact"
+            className="btn-press inline-flex items-center justify-center rounded-full border border-border px-6 py-3 text-sm font-semibold transition-colors hover:bg-secondary"
+          >
+            Nous contacter
+          </Link>
         </div>
-      </div>
-    </div>
+        <nav
+          aria-label="Rubriques du site"
+          className="mt-10 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm"
+        >
+          {nav
+            .filter((item) => item.to !== "/")
+            .map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className="text-muted-foreground underline-offset-4 transition-colors hover:text-primary hover:underline"
+              >
+                {item.label}
+              </Link>
+            ))}
+        </nav>
+      </main>
+      <Footer />
+    </>
   );
 }
 
@@ -138,12 +167,18 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <a href="#contenu" className="skip-link">
+        Aller au contenu principal
+      </a>
       <RouteProgress />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <PageTransition routeKey={pathname}>
-        <Outlet />
+        <div id="contenu" tabIndex={-1}>
+          <Outlet />
+        </div>
       </PageTransition>
       <ScrollToTop />
+      <CookieConsent />
     </QueryClientProvider>
   );
 }

@@ -9,7 +9,9 @@ export const Route = createFileRoute("/robots.txt")({
           "User-agent: *",
           "Allow: /",
           "Disallow: /admin",
+          "Disallow: /admin-contenu",
           "Disallow: /api/admin",
+          "",
           `Sitemap: ${SITE_URL}/sitemap.xml`,
           "",
         ].join("\n");

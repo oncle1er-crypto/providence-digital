@@ -9,6 +9,12 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 const isVercel = process.env["VERCEL"] === "1";
 
 export default defineConfig({
+  // Le serveur de développement est parfois ouvert via un domaine de
+  // prévisualisation (sandbox, e2b, Lovable) : on accepte ces hôtes en dev.
+  // Sans incidence sur la production (option valable uniquement pour `vite dev`).
+  vite: {
+    server: { allowedHosts: true },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

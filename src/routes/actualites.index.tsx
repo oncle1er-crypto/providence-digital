@@ -2,11 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { NewsCarousel } from "@/components/NewsCarousel";
 import { getPublicNews } from "@/lib/cms";
 import { absoluteUrl } from "@/lib/seo";
 
-export const Route = createFileRoute("/actualites")({
+export const Route = createFileRoute("/actualites/")({
   loader: () => getPublicNews(24).catch(() => []),
   head: () => ({
     meta: [
@@ -34,6 +35,8 @@ function ActualitesPage() {
     <>
       <Header />
       <main className="pt-20">
+        <Breadcrumbs items={[{ label: "Actualités" }]} />
+
         <Section
           eyebrow="Actualités"
           as="h1"

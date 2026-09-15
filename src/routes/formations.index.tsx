@@ -2,11 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SchoolLevels } from "@/components/SchoolLevels";
 import { AdmissionsCTA } from "@/components/AdmissionsCTA";
 import { absoluteUrl } from "@/lib/seo";
 
-export const Route = createFileRoute("/formations")({
+export const Route = createFileRoute("/formations/")({
   head: () => ({
     meta: [
       { title: "Formations : Maternelle, Primaire, Collège, Lycée | La Providence" },
@@ -31,6 +32,8 @@ function FormationsPage() {
     <>
       <Header />
       <main className="pt-20">
+        <Breadcrumbs items={[{ label: "Formations" }]} />
+
         <Section
           eyebrow="Formations"
           as="h1"

@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { SchoolLevels } from "@/components/SchoolLevels";
 import { CampusGallery } from "@/components/CampusGallery";
 import { values } from "@/data/site";
@@ -37,6 +38,8 @@ function Page() {
     <>
       <Header />
       <main className="pt-20">
+        <Breadcrumbs items={[{ label: "Notre école" }]} />
+
         <Section
           eyebrow="Notre école"
           as="h1"

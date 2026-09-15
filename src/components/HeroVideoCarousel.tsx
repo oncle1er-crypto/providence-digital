@@ -23,7 +23,7 @@ export type HomeHeroSetting = {
   primary_url?: string;
   secondary_label?: string;
   secondary_url?: string;
-  slides?: HeroSlideContent[];
+  slides?: HeroSlideContent[] | undefined;
 };
 
 function fmt(t: number) {
@@ -31,7 +31,7 @@ function fmt(t: number) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 }
 
-export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | null }) {
+export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | null | undefined }) {
   const configured = content?.slides?.filter((slide) => slide.src && slide.title) ?? [];
   const slides: HeroSlideContent[] = configured.length
     ? configured
@@ -161,7 +161,8 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
             </span>
           </h1>
           <p className="hero-anim hero-desc mt-5 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
-            {content?.description || "École catholique à Bonoua-Château — de la maternelle à la terminale."}
+            {content?.description ||
+              "École catholique à Bonoua-Château — de la maternelle à la terminale."}
           </p>
           <div className="hero-anim hero-cta mt-9 flex flex-wrap gap-3">
             <Link
@@ -192,43 +193,78 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
               style={{ width: `${Math.min(100, (time / (duration || current.duration)) * 100)}%` }}
             />
           </div>
-          <div className={`overflow-hidden transition-all duration-500 ${showControls ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}>
+          <div
+            className={`overflow-hidden transition-all duration-500 ${showControls ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}
+          >
             <div className="mt-3 rounded-2xl border border-primary-foreground/15 bg-ink/60 p-4 backdrop-blur-md sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold">Vidéo {String(index + 1).padStart(2, "0")} • {current.duration} sec</p>
+                  <p className="truncate text-sm font-semibold">
+                    Vidéo {String(index + 1).padStart(2, "0")} • {current.duration} sec
+                  </p>
                   <p className="truncate text-xs text-primary-foreground/75">{current.title}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button type="button" aria-label={playing ? "Mettre en pause" : "Lire"} onClick={() => {
-                    reveal();
-                    const video = videoRefs.current[index];
-                    if (!video) return;
-                    if (playing) video.pause(); else void video.play().catch(() => undefined);
-                    setPlaying(!playing);
-                  }} className="grid size-10 place-items-center rounded-full bg-primary-foreground/15">
+                  <button
+                    type="button"
+                    aria-label={playing ? "Mettre en pause" : "Lire"}
+                    onClick={() => {
+                      reveal();
+                      const video = videoRefs.current[index];
+                      if (!video) return;
+                      if (playing) video.pause();
+                      else void video.play().catch(() => undefined);
+                      setPlaying(!playing);
+                    }}
+                    className="grid size-10 place-items-center rounded-full bg-primary-foreground/15"
+                  >
                     {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
                   </button>
-                  <button type="button" aria-label={muted ? "Activer le son" : "Couper le son"} onClick={() => { reveal(); setMuted((value) => !value); }} className="grid size-10 place-items-center rounded-full bg-primary-foreground/15">
+                  <button
+                    type="button"
+                    aria-label={muted ? "Activer le son" : "Couper le son"}
+                    onClick={() => {
+                      reveal();
+                      setMuted((value) => !value);
+                    }}
+                    className="grid size-10 place-items-center rounded-full bg-primary-foreground/15"
+                  >
                     {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
                   </button>
-                  <button type="button" aria-label="Plein écran" onClick={() => void videoRefs.current[index]?.requestFullscreen?.().catch(() => undefined)} className="hidden size-10 place-items-center rounded-full bg-primary-foreground/15 sm:grid">
+                  <button
+                    type="button"
+                    aria-label="Plein écran"
+                    onClick={() =>
+                      void videoRefs.current[index]?.requestFullscreen?.().catch(() => undefined)
+                    }
+                    className="hidden size-10 place-items-center rounded-full bg-primary-foreground/15 sm:grid"
+                  >
                     <Maximize2 className="size-4" />
                   </button>
                 </div>
               </div>
               <div className="mt-3 flex items-center gap-3 text-xs tabular-nums">
-                <span className="shrink-0 font-mono opacity-80">{fmt(time)} / {fmt(duration || current.duration)}</span>
+                <span className="shrink-0 font-mono opacity-80">
+                  {fmt(time)} / {fmt(duration || current.duration)}
+                </span>
                 <div className="flex flex-wrap gap-1.5">
                   {slides.map((slide, i) => (
                     <motion.button
                       key={slide.id}
                       type="button"
-                      onClick={() => { reveal(); goTo(i); }}
+                      onClick={() => {
+                        reveal();
+                        goTo(i);
+                      }}
                       aria-label={`Afficher ${slide.title}`}
                       className={`relative grid size-8 place-items-center rounded-full text-xs font-semibold ${i === index ? "text-gold-foreground" : "bg-primary-foreground/10"}`}
                     >
-                      {i === index && <motion.span layoutId="hero-dot-active" className="absolute inset-0 rounded-full bg-gold" />}
+                      {i === index && (
+                        <motion.span
+                          layoutId="hero-dot-active"
+                          className="absolute inset-0 rounded-full bg-gold"
+                        />
+                      )}
                       <span className="relative">{String(i + 1).padStart(2, "0")}</span>
                     </motion.button>
                   ))}

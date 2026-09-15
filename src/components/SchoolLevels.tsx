@@ -13,11 +13,11 @@ export type SchoolLevelContent = {
 };
 
 export type SchoolLevelsSetting = {
-  levels?: SchoolLevelContent[];
+  levels?: SchoolLevelContent[] | undefined;
 };
 
 // Le contenu CMS reste optionnel : si aucun réglage n'est enregistré, les valeurs historiques sont conservées.
-export function SchoolLevels({ content }: { content?: SchoolLevelsSetting | null }) {
+export function SchoolLevels({ content }: { content?: SchoolLevelsSetting | null | undefined }) {
   const reduced = useReducedMotion();
   const cmsLevels = content?.levels?.filter((level) => level.title && level.slug) ?? [];
   const levels: SchoolLevelContent[] = cmsLevels.length
@@ -57,10 +57,11 @@ export function SchoolLevels({ content }: { content?: SchoolLevelsSetting | null
                 ))}
               </ul>
               <Link
-                to="/formations"
+                to="/formations/$slug"
+                params={{ slug: level.slug }}
                 className="mt-5 inline-block text-sm font-semibold text-primary underline-offset-4 hover:underline"
               >
-                En savoir plus
+                Découvrir le cycle →
               </Link>
             </div>
           </motion.div>

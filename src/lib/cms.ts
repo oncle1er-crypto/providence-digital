@@ -1,3 +1,5 @@
+// Les identifiants Supabase sont publics côté navigateur : la sécurité repose
+// sur les policies RLS. Ils restent configurables par environnement (voir .env.example).
 const SUPABASE_URL = (
   import.meta.env["VITE_SUPABASE_URL"] || "https://laujoixondbpzdsmdfko.supabase.co"
 ).replace(/\/$/, "");
@@ -78,6 +80,14 @@ export type AdmissionsSetting = {
 
 type Json = Record<string, unknown> | unknown[] | string | number | boolean | null;
 
+export type ContactMessageInput = {
+  name: string;
+  email: string;
+  phone: string | null;
+  subject: string;
+  message: string;
+};
+
 export type PreRegistrationInput = {
   guardian_name: string;
   email: string;
@@ -117,6 +127,20 @@ async function parseResponse<T>(response: Response): Promise<T> {
   }
 
   return payload as T;
+}
+
+/** Envoie un message depuis la page Contact (table `contact_messages`). */
+export async function submitContactMessage(input: ContactMessageInput): Promise<void> {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/contact_messages`, {
+    method: "POST",
+    headers: {
+      ...authHeaders(undefined),
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!response.ok) await parseResponse<Json>(response);
 }
 
 export async function submitPreRegistration(input: PreRegistrationInput): Promise<void> {
@@ -261,6 +285,17 @@ export async function getPublicNews(limit = 12): Promise<NewsPost[]> {
     { headers: authHeaders(undefined, false) },
   );
   return parseResponse<NewsPost[]>(response);
+}
+
+/** Récupère une actualité publiée par son slug (pour la page de détail). */
+export async function getPublicNewsBySlug(slug: string): Promise<NewsPost | null> {
+  const now = encodeURIComponent(new Date().toISOString());
+  const response = await fetch(
+    `${SUPABASE_URL}/rest/v1/news_posts?select=*&slug=eq.${encodeURIComponent(slug)}&status=eq.published&published_at=lte.${now}&limit=1`,
+    { headers: authHeaders(undefined, false) },
+  );
+  const rows = await parseResponse<NewsPost[]>(response);
+  return rows[0] || null;
 }
 
 export async function getAdminNews(session: CmsSession): Promise<NewsPost[]> {

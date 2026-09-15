@@ -1,3 +1,4 @@
+import { SITE_HOST } from "@/lib/seo";
 import posterCour from "@/assets/posters/cour.jpg";
 import posterClasse from "@/assets/posters/classe.jpg";
 import posterSport from "@/assets/posters/sport.jpg";
@@ -44,15 +45,42 @@ export const PHOTO = {
 
 /** Galerie du campus — photos réelles de l'établissement. */
 export const campusGallery = [
-  { src: PHOTO.administration, title: "Administration", text: "Le bâtiment administratif et la place du drapeau, à l'entrée du campus." },
-  { src: PHOTO.secondaire, title: "Bâtiment du primaire", text: "Le bâtiment à étage qui accueille les classes du primaire." },
-  { src: PHOTO.salleClasse, title: "Salles de classe", text: "Des salles neuves, lumineuses et équipées de mobilier individuel." },
-  { src: PHOTO.salleIrmaRicci, title: "Salle Irma Ricci", text: "Les salles du primaire, ouvertes sur le préau et bien ventilées." },
-  { src: PHOTO.infirmerie, title: "Infirmerie scolaire", text: "Une infirmerie équipée pour la prise en charge immédiate des élèves." },
-  { src: PHOTO.courPreau, title: "Préau & cour", text: "Le préau du primaire et la cour centrale, cœur de la vie de l'école." },
-  { src: PHOTO.campus, title: "Vue du complexe", text: "Un site spacieux et verdoyant sur les hauteurs de Bonoua-Château." },
+  {
+    src: PHOTO.administration,
+    title: "Administration",
+    text: "Le bâtiment administratif et la place du drapeau, à l'entrée du campus.",
+  },
+  {
+    src: PHOTO.secondaire,
+    title: "Bâtiment du primaire",
+    text: "Le bâtiment à étage qui accueille les classes du primaire.",
+  },
+  {
+    src: PHOTO.salleClasse,
+    title: "Salles de classe",
+    text: "Des salles neuves, lumineuses et équipées de mobilier individuel.",
+  },
+  {
+    src: PHOTO.salleIrmaRicci,
+    title: "Salle Irma Ricci",
+    text: "Les salles du primaire, ouvertes sur le préau et bien ventilées.",
+  },
+  {
+    src: PHOTO.infirmerie,
+    title: "Infirmerie scolaire",
+    text: "Une infirmerie équipée pour la prise en charge immédiate des élèves.",
+  },
+  {
+    src: PHOTO.courPreau,
+    title: "Préau & cour",
+    text: "Le préau du primaire et la cour centrale, cœur de la vie de l'école.",
+  },
+  {
+    src: PHOTO.campus,
+    title: "Vue du complexe",
+    text: "Un site spacieux et verdoyant sur les hauteurs de Bonoua-Château.",
+  },
 ] as const;
-
 
 export const site = {
   name: "Complexe Scolaire Catholique La Providence de Don Orione",
@@ -63,7 +91,21 @@ export const site = {
   intro:
     "De la maternelle à la terminale, un établissement catholique dirigé par la Congrégation Petite Œuvre de la Divine Providence — Don Orione, où chaque élève est accompagné avec discipline, charité et excellence.",
   logo: "/logo-gsp.png",
-  website: "www.cslaprodorione.org",
+  /** Domaine canonique, dérivé de l'URL publique pour éviter toute divergence. */
+  website: SITE_HOST,
+  /** Informations légales (mentions légales, politique de confidentialité). */
+  legal: {
+    entity: "Complexe Scolaire Catholique La Providence de Don Orione",
+    congregation: "Congrégation Petite Œuvre de la Divine Providence — Don Orione (Orionins)",
+    publicationDirector: "Le Directeur du Complexe Scolaire La Providence de Don Orione",
+    /** Numéro d'agrément / d'autorisation d'ouverture délivré par le Ministère (à renseigner dès réception). */
+    approval: null as string | null,
+    host: {
+      name: "Vercel Inc.",
+      address: "440 N Barranca Ave #4133, Covina, CA 91723, États-Unis",
+      website: "vercel.com",
+    },
+  },
   contact: {
     address:
       "Bonoua, Quartier Château — à proximité de la Paroisse Marie Mère de la Divine Providence",
@@ -89,7 +131,7 @@ export const site = {
   social: [
     { label: "Facebook", href: "#", note: "CS LA PROVIDENCE DE DON ORIONE" },
     { label: "Instagram", href: "#", note: "@cs_laprodorione" },
-    { label: "Site web", href: "#", note: "www.cslaprodorione.org" },
+    { label: "Site web", href: "#", note: SITE_HOST },
   ],
 };
 
@@ -132,7 +174,6 @@ export const VIDEO_POSTER = {
   excellence: posterExcellence,
   espaces: posterEspaces,
 } as const;
-
 
 /** HERO — 8 clips : vidéos officielles intercalées avec les clips de démonstration. */
 export const heroSlides: VideoSlide[] = [
@@ -202,7 +243,6 @@ export const heroSlides: VideoSlide[] = [
   },
 ];
 
-
 /** VIE SCOLAIRE — mini-vidéos (démo, remplaçables). */
 export const schoolLifeClips: VideoSlide[] = [
   {
@@ -248,9 +288,18 @@ export const schoolLifeClips: VideoSlide[] = [
 ];
 
 export const welcomeBadges = [
-  { title: "Discipline", text: "Une rigueur nécessaire associée à une écoute paternelle, selon la pédagogie de saint Louis Orione." },
-  { title: "Charité", text: "La charité concrète au cœur de la mission : accueillir, servir, faire grandir chaque enfant." },
-  { title: "Excellence", text: "Un parcours complet de la maternelle à la terminale, jusqu'au baccalauréat." },
+  {
+    title: "Discipline",
+    text: "Une rigueur nécessaire associée à une écoute paternelle, selon la pédagogie de saint Louis Orione.",
+  },
+  {
+    title: "Charité",
+    text: "La charité concrète au cœur de la mission : accueillir, servir, faire grandir chaque enfant.",
+  },
+  {
+    title: "Excellence",
+    text: "Un parcours complet de la maternelle à la terminale, jusqu'au baccalauréat.",
+  },
 ];
 
 export const levels = [
@@ -268,7 +317,11 @@ export const levels = [
     image: PHOTO.primaireEleves,
     summary:
       "Les fondamentaux solidement posés : lire, écrire, compter, raisonner, avec un suivi individualisé.",
-    points: ["Lecture et expression écrite", "Mathématiques et raisonnement", "Effectifs maîtrisés"],
+    points: [
+      "Lecture et expression écrite",
+      "Mathématiques et raisonnement",
+      "Effectifs maîtrisés",
+    ],
   },
   {
     slug: "college",
@@ -284,33 +337,80 @@ export const levels = [
     image: PHOTO.primaireGroupe,
     summary:
       "Enseignement général jusqu'en terminale, avec une exigence académique orientée vers le baccalauréat.",
-    points: ["Enseignement général", "Préparation au baccalauréat", "Orientation et projet d'avenir"],
+    points: [
+      "Enseignement général",
+      "Préparation au baccalauréat",
+      "Orientation et projet d'avenir",
+    ],
   },
 ] as const;
 
 export const values = welcomeBadges;
 
 export const whyProvidence = [
-  { title: "Foi & valeurs", text: "Messes régulières, catéchèse et éducation aux valeurs morales." },
+  {
+    title: "Foi & valeurs",
+    text: "Messes régulières, catéchèse et éducation aux valeurs morales.",
+  },
   { title: "Résultats", text: "100 % de réussite aux examens nationaux." },
-  { title: "Effectifs maîtrisés", text: "Des classes suivies, pour un accompagnement réellement personnalisé." },
-  { title: "Infrastructures adaptées", text: "Salles spacieuses, salle informatique, infirmerie et terrains de sport." },
-  { title: "Réseau international", text: "Un établissement de la Petite Œuvre de la Divine Providence — Don Orione." },
+  {
+    title: "Effectifs maîtrisés",
+    text: "Des classes suivies, pour un accompagnement réellement personnalisé.",
+  },
+  {
+    title: "Infrastructures adaptées",
+    text: "Salles spacieuses, salle informatique, infirmerie et terrains de sport.",
+  },
+  {
+    title: "Réseau international",
+    text: "Un établissement de la Petite Œuvre de la Divine Providence — Don Orione.",
+  },
 ];
 
 export const infrastructures = [
-  { title: "Salles de classe spacieuses", text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés.", image: PHOTO.salleClasse },
-  { title: "Un campus à taille humaine", text: "Bâtiments neufs, préau et espaces verts sur les hauteurs de Bonoua-Château.", image: PHOTO.courPreau },
-  { title: "Infirmerie scolaire", text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves.", image: PHOTO.infirmerie },
-  { title: "Bâtiment du secondaire", text: "Collège et lycée réunis dans un bâtiment à étage dédié.", image: PHOTO.secondaire },
+  {
+    title: "Salles de classe spacieuses",
+    text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés.",
+    image: PHOTO.salleClasse,
+  },
+  {
+    title: "Un campus à taille humaine",
+    text: "Bâtiments neufs, préau et espaces verts sur les hauteurs de Bonoua-Château.",
+    image: PHOTO.courPreau,
+  },
+  {
+    title: "Infirmerie scolaire",
+    text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves.",
+    image: PHOTO.infirmerie,
+  },
+  {
+    title: "Bâtiment du secondaire",
+    text: "Collège et lycée réunis dans un bâtiment à étage dédié.",
+    image: PHOTO.secondaire,
+  },
 ];
 
-
 export const admissionSteps = [
-  { step: "01", title: "Prise de contact", text: "Contactez la direction pour connaître les places disponibles par niveau." },
-  { step: "02", title: "Dossier de candidature", text: "Dépôt du dossier avec les pièces demandées selon le cycle visé." },
-  { step: "03", title: "Test d'entrée", text: "Le test d'entrée est obligatoire ; les places sont limitées." },
-  { step: "04", title: "Inscription", text: "Confirmation de l'admission et finalisation à l'administration." },
+  {
+    step: "01",
+    title: "Prise de contact",
+    text: "Contactez la direction pour connaître les places disponibles par niveau.",
+  },
+  {
+    step: "02",
+    title: "Dossier de candidature",
+    text: "Dépôt du dossier avec les pièces demandées selon le cycle visé.",
+  },
+  {
+    step: "03",
+    title: "Test d'entrée",
+    text: "Le test d'entrée est obligatoire ; les places sont limitées.",
+  },
+  {
+    step: "04",
+    title: "Inscription",
+    text: "Confirmation de l'admission et finalisation à l'administration.",
+  },
 ];
 
 export const admissionDocs = [
@@ -339,24 +439,51 @@ export const admissionDocs = [
 ];
 
 export const uniforms = [
-  { level: "Maternelle", text: "Tissu carrelé marron et blanc (garçons et filles). Tenues disponibles à l'école." },
-  { level: "Primaire", text: "Garçons : culotte marron et chemise blanche. Filles : jupe marron et chemise blanche." },
-  { level: "Collège & Lycée", text: "Garçons : pantalon et chemise kaki. Filles : jupe bleue et chemise blanche." },
+  {
+    level: "Maternelle",
+    text: "Tissu carrelé marron et blanc (garçons et filles). Tenues disponibles à l'école.",
+  },
+  {
+    level: "Primaire",
+    text: "Garçons : culotte marron et chemise blanche. Filles : jupe marron et chemise blanche.",
+  },
+  {
+    level: "Collège & Lycée",
+    text: "Garçons : pantalon et chemise kaki. Filles : jupe bleue et chemise blanche.",
+  },
 ];
 
 export const schoolLife = [
-  { title: "Vie de classe", text: "Des effectifs maîtrisés, des enseignants disponibles, un climat propice au travail." },
-  { title: "Sport & clubs", text: "Football, handball, basket-ball, clubs de lecture, théâtre et chorale." },
-  { title: "Pastorale et valeurs", text: "Messes régulières, catéchèse et mouvements d'action catholique." },
-  { title: "Encadrement", text: "Une équipe éducative attentive à la présence, au comportement et aux progrès." },
+  {
+    title: "Vie de classe",
+    text: "Des effectifs maîtrisés, des enseignants disponibles, un climat propice au travail.",
+  },
+  {
+    title: "Sport & clubs",
+    text: "Football, handball, basket-ball, clubs de lecture, théâtre et chorale.",
+  },
+  {
+    title: "Pastorale et valeurs",
+    text: "Messes régulières, catéchèse et mouvements d'action catholique.",
+  },
+  {
+    title: "Encadrement",
+    text: "Une équipe éducative attentive à la présence, au comportement et aux progrès.",
+  },
 ];
 
 export type NewsItem = {
   id: string;
+  /** Identifiant d'URL de l'article (page /actualites/$slug). */
+  slug: string;
   kind: "article" | "photo" | "video";
   category: string;
   title: string;
   excerpt: string;
+  /** Date de publication au format ISO (AAAA-MM-JJ). */
+  date: string;
+  /** Paragraphes du corps de l'article. */
+  body: string[];
   image?: string;
   video?: string;
 };
@@ -364,51 +491,88 @@ export type NewsItem = {
 export const news: NewsItem[] = [
   {
     id: "rentree",
+    slug: "rentree-scolaire-2026-2027",
     kind: "article",
     category: "Vie de l'école",
     title: "Rentrée scolaire 2026–2027",
     excerpt: "Accueil des élèves et des familles pour le lancement de la nouvelle année.",
+    date: "2026-09-07",
+    body: [
+      "La communauté éducative a accueilli les élèves et leurs familles pour le lancement de l'année scolaire 2026–2027, sur le site de Bonoua-Château.",
+      "Les équipes pédagogiques ont présenté le fonctionnement de l'année : rythme des évaluations, suivi individualisé, activités pastorales et sportives, et modalités de contact avec les enseignants.",
+      "Les familles qui n'ont pas encore finalisé leur dossier sont invitées à se rapprocher du secrétariat, aux horaires d'ouverture de l'établissement.",
+    ],
     image: PHOTO.batiment,
   },
   {
     id: "merite",
+    slug: "eleves-du-mois",
     kind: "photo",
     category: "Excellence",
     title: "Élèves du mois",
     excerpt: "Les élèves distingués reçoivent leur écharpe et leur attestation.",
+    date: "2026-06-12",
+    body: [
+      "Chaque mois, les élèves qui se sont distingués par leurs efforts, leur régularité et leur comportement reçoivent une écharpe et une attestation.",
+      "Cette distinction valorise autant les progrès scolaires que les qualités humaines : entraide, respect et sens du service, au cœur de la pédagogie de saint Louis Orione.",
+    ],
     image: PHOTO.merite,
   },
   {
     id: "excellence",
+    slug: "journee-de-lexcellence",
     kind: "article",
     category: "Pédagogie",
     title: "Journée de l'excellence",
     excerpt: "Mise à l'honneur du travail et des progrès des élèves du primaire.",
+    date: "2026-05-22",
+    body: [
+      "La journée de l'excellence met à l'honneur le travail régulier et les progrès réalisés par les élèves du primaire tout au long de l'année.",
+      "Au programme : remise d'attestations, exposition de travaux d'élèves et temps d'échange entre enseignants et familles sur les méthodes de travail.",
+    ],
     image: PHOTO.primaireGroupe,
   },
   {
     id: "sortie",
+    slug: "sortie-pedagogique",
     kind: "video",
     category: "Pédagogie",
     title: "Sortie pédagogique",
     excerpt: "Une découverte hors les murs pour apprendre autrement.",
+    date: "2026-04-03",
+    body: [
+      "Les sorties pédagogiques prolongent les apprentissages de la classe par une découverte concrète du milieu qui entoure les élèves.",
+      "Encadrées par l'équipe éducative, elles sont préparées en amont en classe et font l'objet d'un retour d'expérience avec les élèves.",
+    ],
     image: posterCour,
     video: VIDEO.cour,
   },
   {
     id: "taekwondo",
+    slug: "arts-martiaux-a-lecole",
     kind: "photo",
     category: "Sport",
     title: "Arts martiaux à l'école",
     excerpt: "Discipline, maîtrise de soi et esprit d'équipe dès la maternelle.",
+    date: "2026-03-18",
+    body: [
+      "Les arts martiaux sont proposés comme activité d'éveil corporel et de maîtrise de soi, y compris chez les plus jeunes.",
+      "Au-delà de la technique, les séances travaillent la concentration, le respect des règles et la confiance en soi.",
+    ],
     image: PHOTO.sport,
   },
   {
     id: "etoile",
+    slug: "etoiles-du-mois",
     kind: "photo",
     category: "Vie de l'école",
     title: "Étoiles du mois",
     excerpt: "Un temps fort mensuel qui encourage l'effort et la régularité.",
+    date: "2026-02-13",
+    body: [
+      "Le temps fort mensuel des « étoiles » encourage l'effort et la régularité dans le travail comme dans la vie de la classe.",
+      "Chaque étoile est attribuée en présence des camarades, afin de valoriser l'exemple donné au quotidien.",
+    ],
     image: PHOTO.etoile,
   },
 ];
@@ -441,5 +605,199 @@ export const testimonials = [
     quote:
       "Notre mission reste celle de Don Orione : instruire l'esprit et former le cœur, au service des familles.",
     author: "Témoignage de la communauté",
+  },
+];
+
+/** Détail d'un cycle : alimente les pages /formations/$slug. */
+export type LevelDetail = {
+  slug: string;
+  title: string;
+  /** Tranche d'âges indicatifs. */
+  ages: string;
+  /** Classes concernées. */
+  classes: string;
+  schedule: string;
+  /** Examen préparé (null si aucun examen national). */
+  exam: string | null;
+  intro: string;
+  /** Blocs du programme. */
+  programme: { title: string; items: string[] }[];
+  /** Points forts affichés en encadré. */
+  highlights: string[];
+  image: string;
+};
+
+export const levelDetails: LevelDetail[] = [
+  {
+    slug: "maternelle",
+    title: "Maternelle",
+    ages: "De 3 à 5 ans",
+    classes: "Petite, Moyenne et Grande section",
+    schedule: "Lundi — Vendredi · 07h45 – 16h30",
+    exam: null,
+    intro:
+      "Un premier pas serein vers l'école : éveil, langage, motricité et vie en groupe dans un cadre protecteur, où chaque enfant est accueilli par une équipe formée à la petite enfance.",
+    programme: [
+      {
+        title: "Éveil et langage",
+        items: [
+          "Comptines, histoires et jeux de vocabulaire",
+          "Développement du langage oral et de l'écoute",
+          "Premiers repères sur les nombres et les formes",
+        ],
+      },
+      {
+        title: "Motricité et expression",
+        items: [
+          "Jeux moteurs encadrés et psychomotricité",
+          "Dessin, peinture, chant et jeux de rôle",
+          "Découverte du corps et de l'espace",
+        ],
+      },
+      {
+        title: "Autonomie et vie en groupe",
+        items: [
+          "Apprentissage des règles de vie collective",
+          "Gestes du quotidien : rangement, hygiène, repas",
+          "Temps de calme et sieste pour les plus jeunes",
+        ],
+      },
+    ],
+    highlights: [
+      "Encadrement rapproché et locaux adaptés aux jeunes enfants",
+      "Éveil religieux adapté à l'âge, dans l'esprit de Don Orione",
+      "Activités ludiques qui préparent aux apprentissages du CP",
+      "Accueil progressif en début d'année, en lien avec les familles",
+    ],
+    image: PHOTO.etoile,
+  },
+  {
+    slug: "primaire",
+    title: "Primaire",
+    ages: "De 6 à 11 ans",
+    classes: "CP1, CP2, CE1, CE2, CM1, CM2",
+    schedule: "Lundi — Vendredi · 07h30 – 16h30",
+    exam: "CEPE",
+    intro:
+      "Les fondamentaux solidement posés : lire, écrire, compter, raisonner. Les effectifs maîtrisés permettent un suivi individualisé et un dialogue régulier avec les familles.",
+    programme: [
+      {
+        title: "Français et communication",
+        items: [
+          "Lecture fluide et compréhension de textes",
+          "Expression écrite : phrase, rédaction, orthographe",
+          "Récitation et expression orale",
+        ],
+      },
+      {
+        title: "Mathématiques et raisonnement",
+        items: [
+          "Numération et opérations",
+          "Géométrie, mesures et résolution de problèmes",
+          "Initiation au raisonnement logique",
+        ],
+      },
+      {
+        title: "Découverte du monde et éducation",
+        items: [
+          "Sciences et observation du milieu",
+          "Histoire, géographie et éducation à la citoyenneté",
+          "Éducation artistique, sportive et formation humaine",
+        ],
+      },
+    ],
+    highlights: [
+      "Effectifs maîtrisés pour un accompagnement individualisé",
+      "Évaluations régulières et liaison continue avec les parents",
+      "Préparation progressive aux exigences du collège",
+      "Vie spirituelle et éducation aux valeurs orionines",
+    ],
+    image: PHOTO.primaireEleves,
+  },
+  {
+    slug: "college",
+    title: "Collège",
+    ages: "De 11 à 15 ans",
+    classes: "6ᵉ, 5ᵉ, 4ᵉ et 3ᵉ",
+    schedule: "Lundi — Vendredi · 07h30 – 17h30",
+    exam: "BEPC",
+    intro:
+      "Méthode de travail, culture générale et préparation aux examens dans un climat de discipline bienveillante : le collège consolide les fondamentaux et installe une vraie autonomie.",
+    programme: [
+      {
+        title: "Disciplines fondamentales",
+        items: [
+          "Français, mathématiques et langues vivantes",
+          "Histoire-géographie et éducation à la citoyenneté",
+          "Sciences de la vie et de la Terre, sciences physiques",
+        ],
+      },
+      {
+        title: "Méthodologie",
+        items: [
+          "Organisation du travail personnel et gestion du temps",
+          "Prise de notes, recherche documentaire, exposés",
+          "Préparation aux épreuves écrites et orales du BEPC",
+        ],
+      },
+      {
+        title: "Formation humaine",
+        items: [
+          "Suivi individualisé et entretiens réguliers",
+          "Vie spirituelle, catéchèse et actions solidaires",
+          "Sport, clubs et engagement dans la vie de l'établissement",
+        ],
+      },
+    ],
+    highlights: [
+      "Suivi personnalisé : points réguliers sur les résultats",
+      "Préparation structurée au BEPC, avec examens blancs",
+      "Discipline bienveillante, dans l'esprit de saint Louis Orione",
+      "Bâtiment dédié au second cycle, salles équipées",
+    ],
+    image: PHOTO.merite,
+  },
+  {
+    slug: "lycee",
+    title: "Lycée",
+    ages: "De 15 à 18 ans",
+    classes: "2ᵉ, 1ʳᵉ et Terminale",
+    schedule: "Lundi — Vendredi · 07h30 – 17h30",
+    exam: "Baccalauréat",
+    intro:
+      "Enseignement général jusqu'en terminale, avec une exigence académique orientée vers le baccalauréat et vers la construction du projet d'orientation de chaque élève.",
+    programme: [
+      {
+        title: "Enseignement général",
+        items: [
+          "Français, philosophie, langues vivantes",
+          "Mathématiques, sciences physiques, SVT",
+          "Histoire-géographie et sciences économiques et sociales",
+        ],
+      },
+      {
+        title: "Préparation au baccalauréat",
+        items: [
+          "Entraînement aux épreuves et examens blancs",
+          "Méthodologie des dissertations et commentaires",
+          "Accompagnement au contrôle continu",
+        ],
+      },
+      {
+        title: "Orientation et projet d'avenir",
+        items: [
+          "Information sur les filières post-bac et métiers",
+          "Aide à la constitution des dossiers et à Parcoursup",
+          "Rencontres avec des professionnels et anciens élèves",
+        ],
+      },
+    ],
+    highlights: [
+      "Accompagnement individualisé vers la réussite au baccalauréat",
+      "Conseil en orientation dès la classe de première",
+      "Exigence académique et respect de la personne",
+      "Une école catholique qui forme le cœur autant que l'esprit",
+    ],
+    image: PHOTO.primaireGroupe,
   },
 ];

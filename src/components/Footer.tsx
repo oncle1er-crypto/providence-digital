@@ -1,49 +1,63 @@
 import { Link } from "@tanstack/react-router";
 import { Facebook, Globe, Instagram, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
+import { CookieSettingsLink } from "@/components/CookieConsent";
 import { site } from "@/data/site";
-import {
-  getPublicSetting,
-  type ContactSetting,
-  type IdentitySetting,
-} from "@/lib/cms";
+import { getPublicSetting, type ContactSetting, type IdentitySetting } from "@/lib/cms";
 import { SITE_URL } from "@/lib/seo";
 
 const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/JTjt5MgkMjqtNFCB9";
 
-const columns = [
+type FooterLink = {
+  label: string;
+  to:
+    | "/formations/$slug"
+    | "/notre-ecole"
+    | "/vie-scolaire"
+    | "/actualites"
+    | "/admissions"
+    | "/contact";
+  params?: { slug: string };
+};
+
+const columns: { title: string; links: FooterLink[] }[] = [
+  {
+    title: "Formations",
+    links: [
+      { to: "/formations/$slug", params: { slug: "maternelle" }, label: "Maternelle" },
+      { to: "/formations/$slug", params: { slug: "primaire" }, label: "Primaire" },
+      { to: "/formations/$slug", params: { slug: "college" }, label: "Collège" },
+      { to: "/formations/$slug", params: { slug: "lycee" }, label: "Lycée" },
+    ],
+  },
   {
     title: "Notre école",
     links: [
       { to: "/notre-ecole", label: "Présentation" },
-      { to: "/notre-ecole", label: "Projet éducatif" },
+      { to: "/vie-scolaire", label: "Vie scolaire" },
       { to: "/actualites", label: "Actualités" },
     ],
   },
   {
-    title: "Formations",
-    links: [
-      { to: "/formations", label: "Maternelle" },
-      { to: "/formations", label: "Primaire" },
-      { to: "/formations", label: "Collège & Lycée" },
-    ],
-  },
-  {
-    title: "Vie scolaire",
-    links: [
-      { to: "/vie-scolaire", label: "Au quotidien" },
-      { to: "/vie-scolaire", label: "Sports & arts" },
-      { to: "/vie-scolaire", label: "Vie spirituelle" },
-    ],
-  },
-  {
-    title: "Informations",
+    title: "Familles",
     links: [
       { to: "/admissions", label: "Admissions" },
-      { to: "/contact", label: "Contact" },
+      { to: "/contact", label: "Nous contacter" },
     ],
   },
-] as const;
+];
+
+/**
+ * Alias de <Link> : les routes dynamiques (`/formations/$slug`) imposent des
+ * paramètres différents d'une entrée à l'autre, ce que l'inférence stricte ne
+ * peut pas unifier ici.
+ */
+const FooterNavLink = Link as unknown as (props: {
+  to: string;
+  params?: Record<string, string> | undefined;
+  className?: string;
+  children: React.ReactNode;
+}) => React.ReactElement;
 
 const socialIcons = {
   Facebook,
@@ -124,7 +138,7 @@ export function Footer() {
 
           <nav
             aria-label="Pied de page"
-            className="grid min-w-0 grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-5"
+            className="grid min-w-0 grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5"
           >
             {columns.map((col) => (
               <div key={col.title} className="min-w-0">
@@ -134,12 +148,13 @@ export function Footer() {
                 <ul className="mt-4 space-y-2.5 text-sm text-primary-foreground/75">
                   {col.links.map((l) => (
                     <li key={`${col.title}-${l.label}`}>
-                      <Link
+                      <FooterNavLink
                         to={l.to}
+                        params={l.params}
                         className="transition-colors hover:text-gold focus-visible:text-gold focus-visible:outline-none"
                       >
                         {l.label}
-                      </Link>
+                      </FooterNavLink>
                     </li>
                   ))}
                 </ul>
@@ -194,13 +209,26 @@ export function Footer() {
       </div>
 
       <div className="relative border-t border-primary-foreground/12">
-        <div className="container-page flex flex-col gap-2 py-5 text-xs text-primary-foreground/55 sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-page flex flex-col gap-3 py-5 text-xs text-primary-foreground/55 sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {schoolName}
           </p>
-          <p>
-            {site.city} · {publicWebsite}
-          </p>
+          <p>{site.city}</p>
+          <nav aria-label="Liens légaux" className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <Link
+              to="/mentions-legales"
+              className="transition-colors hover:text-gold focus-visible:text-gold focus-visible:outline-none"
+            >
+              Mentions légales
+            </Link>
+            <Link
+              to="/politique-confidentialite"
+              className="transition-colors hover:text-gold focus-visible:text-gold focus-visible:outline-none"
+            >
+              Confidentialité
+            </Link>
+            <CookieSettingsLink className="text-primary-foreground/55" />
+          </nav>
         </div>
       </div>
     </footer>

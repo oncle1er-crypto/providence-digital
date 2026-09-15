@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { admissionSteps, admissionDocs, uniforms } from "@/data/site";
 import { absoluteUrl } from "@/lib/seo";
 import { AdmissionsFaq } from "@/components/AdmissionsFaq";
@@ -34,6 +35,8 @@ function Page() {
     <>
       <Header />
       <main className="pt-20">
+        <Breadcrumbs items={[{ label: "Admissions" }]} />
+
         <Section
           eyebrow="Admissions"
           as="h1"

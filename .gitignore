@@ -30,3 +30,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Fichiers générés (route tree TanStack, sorties de build)
+src/routeTree.gen.ts
+.vercel
+
+# npm (le dépôt utilise bun.lock)
+package-lock.json
