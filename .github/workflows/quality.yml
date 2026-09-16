@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Tests unitaires
+        run: bun run test
+
       - name: ESLint
         run: |
           bunx eslint . --rule 'prettier/prettier: off'

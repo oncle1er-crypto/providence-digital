@@ -65,6 +65,11 @@ contact ; elle doit être appliquée pour que le formulaire fonctionne.
 
 ```sh
 npm run lint      # ESLint
+npm run test      # tests unitaires (vitest : src/lib/*.test.ts)
 npx tsc --noEmit  # types (après un build, qui génère src/routeTree.gen.ts)
 npm run build     # build de production
 ```
+
+> `vitest` a été ajouté aux dépendances de dev : après avoir récupéré ce commit, lance
+> `bun install` une fois pour régénérer `bun.lock`. Sans ça, la CI échoue sur
+> `bun install --frozen-lockfile` (lockfile désynchronisé).
