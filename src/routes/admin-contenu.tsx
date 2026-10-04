@@ -29,6 +29,8 @@ export const Route = createFileRoute("/admin-contenu")({
   component: AdminContentPage,
 });
 
+const defaultSlides = heroSlides.map((slide) => ({ ...slide }));
+
 const defaultHero: HomeHeroSetting = {
   eyebrow: "Site officiel • Bonoua",
   title: "Complexe Scolaire La Providence de Don Orione",
@@ -38,11 +40,13 @@ const defaultHero: HomeHeroSetting = {
   primary_url: "/admissions",
   secondary_label: "Visiter l'école",
   secondary_url: "/contact",
-  slides: heroSlides.map((slide) => ({ ...slide })),
+  slides: defaultSlides,
 };
 
+const defaultLevelsList = defaultLevels.map((level) => ({ ...level, points: [...level.points] }));
+
 const defaultSchoolLevels: SchoolLevelsSetting = {
-  levels: defaultLevels.map((level) => ({ ...level, points: [...level.points] })),
+  levels: defaultLevelsList,
 };
 
 function AdminContentPage() {
@@ -147,8 +151,10 @@ function ContentEditor({ session, onLogout }: { session: CmsSession; onLogout: (
       setMedia(mediaRows);
       const heroSetting = settingRows.find((row) => row.key === "home_hero") as SiteSetting<HomeHeroSetting> | undefined;
       const levelSetting = settingRows.find((row) => row.key === "school_levels") as SiteSetting<SchoolLevelsSetting> | undefined;
-      setHero({ ...defaultHero, ...(heroSetting?.value || {}), slides: heroSetting?.value?.slides?.length ? heroSetting.value.slides : defaultHero.slides });
-      setSchoolLevels({ levels: levelSetting?.value?.levels?.length ? levelSetting.value.levels : defaultSchoolLevels.levels });
+      const savedSlides = heroSetting?.value?.slides;
+      const savedLevels = levelSetting?.value?.levels;
+      setHero({ ...defaultHero, ...(heroSetting?.value || {}), slides: savedSlides?.length ? savedSlides : defaultSlides });
+      setSchoolLevels({ levels: savedLevels?.length ? savedLevels : defaultLevelsList });
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "Impossible de charger le contenu.");
     } finally {
