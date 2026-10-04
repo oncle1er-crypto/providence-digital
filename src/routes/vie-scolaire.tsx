@@ -16,7 +16,10 @@ export const Route = createFileRoute("/vie-scolaire")({
           "Encadrement, activités, sport et formation humaine : la vie quotidienne des élèves à La Providence de Don Orione.",
       },
       { property: "og:title", content: "Vie scolaire — La Providence de Don Orione" },
-      { property: "og:description", content: "Encadrement, activités et formation humaine au quotidien." },
+      {
+        property: "og:description",
+        content: "Encadrement, activités et formation humaine au quotidien.",
+      },
       { property: "og:type", content: "article" },
       { property: "og:url", content: absoluteUrl("/vie-scolaire") },
     ],

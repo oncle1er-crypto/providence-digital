@@ -4,9 +4,18 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { nav, site } from "@/data/site";
 
 const BAR_STATES = [
-  { closed: { top: 1, rotate: 0, opacity: 1, scaleX: 1 }, open: { top: 7, rotate: 45, opacity: 1, scaleX: 1 } },
-  { closed: { top: 7, rotate: 0, opacity: 1, scaleX: 1 }, open: { top: 7, rotate: 0, opacity: 0, scaleX: 0.4 } },
-  { closed: { top: 13, rotate: 0, opacity: 1, scaleX: 1 }, open: { top: 7, rotate: -45, opacity: 1, scaleX: 1 } },
+  {
+    closed: { top: 1, rotate: 0, opacity: 1, scaleX: 1 },
+    open: { top: 7, rotate: 45, opacity: 1, scaleX: 1 },
+  },
+  {
+    closed: { top: 7, rotate: 0, opacity: 1, scaleX: 1 },
+    open: { top: 7, rotate: 0, opacity: 0, scaleX: 0.4 },
+  },
+  {
+    closed: { top: 13, rotate: 0, opacity: 1, scaleX: 1 },
+    open: { top: 7, rotate: -45, opacity: 1, scaleX: 1 },
+  },
 ];
 
 export function Header() {
@@ -51,10 +60,14 @@ export function Header() {
           />
           <span className="hidden min-w-0 font-display text-base leading-tight font-semibold sm:block">
             Complexe Scolaire
-            <span className={`block truncate text-xs font-normal tracking-wide ${solid ? "text-muted-foreground" : "text-primary-foreground/75"}`}>
+            <span
+              className={`block truncate text-xs font-normal tracking-wide ${solid ? "text-muted-foreground" : "text-primary-foreground/75"}`}
+            >
               La Providence
             </span>
-            <span className={`block truncate text-xs font-normal tracking-wide ${solid ? "text-muted-foreground" : "text-primary-foreground/75"}`}>
+            <span
+              className={`block truncate text-xs font-normal tracking-wide ${solid ? "text-muted-foreground" : "text-primary-foreground/75"}`}
+            >
               de Don Orione
             </span>
           </span>
@@ -66,7 +79,11 @@ export function Header() {
               key={item.to}
               to={item.to}
               className={`nav-link text-sm font-medium transition-colors ${solid ? "text-muted-foreground hover:text-foreground" : "text-primary-foreground/80 hover:text-primary-foreground"}`}
-              activeProps={{ className: solid ? "text-foreground is-active" : "text-primary-foreground is-active" }}
+              activeProps={{
+                className: solid
+                  ? "text-foreground is-active"
+                  : "text-primary-foreground is-active",
+              }}
               activeOptions={{ exact: item.to === "/" }}
             >
               {item.label}
@@ -78,7 +95,9 @@ export function Header() {
           <Link
             to="/contact"
             className={`btn-press rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors ${
-              solid ? "border-border hover:bg-secondary" : "border-primary-foreground/40 hover:bg-primary-foreground/10"
+              solid
+                ? "border-border hover:bg-secondary"
+                : "border-primary-foreground/40 hover:bg-primary-foreground/10"
             }`}
           >
             Visiter l'école
@@ -112,7 +131,6 @@ export function Header() {
               />
             ))}
           </span>
-
         </button>
       </motion.div>
 
@@ -130,7 +148,10 @@ export function Header() {
             <motion.div
               initial="hidden"
               animate="shown"
-              variants={{ hidden: {}, shown: { transition: { staggerChildren: 0.05, delayChildren: 0.08 } } }}
+              variants={{
+                hidden: {},
+                shown: { transition: { staggerChildren: 0.05, delayChildren: 0.08 } },
+              }}
               className="container-page flex flex-col py-3"
             >
               {nav.map((item) => (
@@ -138,7 +159,11 @@ export function Header() {
                   key={item.to}
                   variants={{
                     hidden: { opacity: 0, x: reduced ? 0 : -18 },
-                    shown: { opacity: 1, x: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
+                    shown: {
+                      opacity: 1,
+                      x: 0,
+                      transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                    },
                   }}
                 >
                   <Link
@@ -153,7 +178,11 @@ export function Header() {
               <motion.div
                 variants={{
                   hidden: { opacity: 0, y: reduced ? 0 : 12 },
-                  shown: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] } },
+                  shown: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                  },
                 }}
                 className="mt-4 flex flex-col gap-3"
               >

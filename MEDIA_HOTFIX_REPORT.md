@@ -14,13 +14,13 @@ Les 25 sources encore disponibles ont été récupérées depuis la prévisualis
 
 ## Inventaire exhaustif
 
-| Type | Fichiers migrés | Destination stable |
-|---|---|---|
-| Vidéos du carrousel | `hero-cour.mp4`, `hero-classe.mp4`, `hero-sport.mp4`, `hero-groupe.mp4` | `/media/<fichier>` |
-| Vidéos officielles | `la-providence-01-institutionnel.mp4`, `la-providence-02-vie-scolaire.mp4`, `la-providence-03-excellence.mp4`, `la-providence-04-espaces.mp4` | `/media/<fichier>` |
-| Posters officiels | `poster-01-institutionnel.jpg`, `poster-02-vie-scolaire.jpg`, `poster-03-excellence.jpg`, `poster-04-espaces.jpg` | bundle Vite versionné |
-| Images WebP | `primaire-groupe.webp`, `primaire-eleves.webp`, `sport-taekwondo.webp`, `ecole-batiment.webp`, `eleves-merite.webp`, `eleves-etoile.webp` | bundle Vite versionné |
-| Images JPEG | `administration.jpg`, `salle-irma-ricci.jpg`, `infirmerie.jpg`, `salle-classe.jpg`, `cour-preau.jpg`, `campus-vue.jpg`, `batiment-secondaire.jpg` | bundle Vite versionné |
+| Type                | Fichiers migrés                                                                                                                                   | Destination stable    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| Vidéos du carrousel | `hero-cour.mp4`, `hero-classe.mp4`, `hero-sport.mp4`, `hero-groupe.mp4`                                                                           | `/media/<fichier>`    |
+| Vidéos officielles  | `la-providence-01-institutionnel.mp4`, `la-providence-02-vie-scolaire.mp4`, `la-providence-03-excellence.mp4`, `la-providence-04-espaces.mp4`     | `/media/<fichier>`    |
+| Posters officiels   | `poster-01-institutionnel.jpg`, `poster-02-vie-scolaire.jpg`, `poster-03-excellence.jpg`, `poster-04-espaces.jpg`                                 | bundle Vite versionné |
+| Images WebP         | `primaire-groupe.webp`, `primaire-eleves.webp`, `sport-taekwondo.webp`, `ecole-batiment.webp`, `eleves-merite.webp`, `eleves-etoile.webp`         | bundle Vite versionné |
+| Images JPEG         | `administration.jpg`, `salle-irma-ricci.jpg`, `infirmerie.jpg`, `salle-classe.jpg`, `cour-preau.jpg`, `campus-vue.jpg`, `batiment-secondaire.jpg` | bundle Vite versionné |
 
 Les quatre posters locaux préexistants (`cour.jpg`, `classe.jpg`, `sport.jpg`, `groupe.jpg`) sont conservés comme fallbacks des quatre clips de démonstration.
 
