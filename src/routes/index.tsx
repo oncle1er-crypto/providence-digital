@@ -82,7 +82,7 @@ function Index() {
     <>
       <Header />
       <main>
-        <HeroVideoCarousel content={homeHero} />
+        <HeroVideoCarousel content={homeHero ?? null} />
 
         <Section
           eyebrow="Bienvenue"
@@ -112,7 +112,7 @@ function Index() {
         <AdmissionsCTA content={admissions} />
 
         <Section eyebrow="Formations" title="Nos niveaux d'enseignement" description="De la maternelle à la terminale, un parcours cohérent et accompagné.">
-          <SchoolLevels content={schoolLevels} />
+          <SchoolLevels content={schoolLevels ?? null} />
         </Section>
 
         <Section eyebrow="Vie scolaire" title="Le quotidien de nos élèves" description="Classe, vie spirituelle, sport, arts et vie étudiante — en vidéo.">
