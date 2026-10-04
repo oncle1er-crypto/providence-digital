@@ -2,11 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Globe, Instagram, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { site } from "@/data/site";
-import {
-  getPublicSetting,
-  type ContactSetting,
-  type IdentitySetting,
-} from "@/lib/cms";
+import { getPublicSetting, type ContactSetting, type IdentitySetting } from "@/lib/cms";
 import { SITE_URL } from "@/lib/seo";
 
 const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/JTjt5MgkMjqtNFCB9";

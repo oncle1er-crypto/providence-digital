@@ -26,10 +26,7 @@ export function Parallax({
 
   return (
     <div ref={ref} className={cn("overflow-hidden", className)}>
-      <motion.div
-        style={reduced ? {} : { y, scale }}
-        className="size-full will-change-transform"
-      >
+      <motion.div style={reduced ? {} : { y, scale }} className="size-full will-change-transform">
         {children}
       </motion.div>
     </div>

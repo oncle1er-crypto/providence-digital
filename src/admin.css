@@ -10,7 +10,10 @@
   font-size: 0.875rem;
   line-height: 1.4;
   outline: none;
-  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
 }
 
 .input-admin::placeholder {

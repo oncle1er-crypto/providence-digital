@@ -41,7 +41,9 @@ function Page() {
           className="pb-24"
         >
           <div className="rounded-xl border border-border bg-card p-6">
-            <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Adresse</p>
+            <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
+              Adresse
+            </p>
             <p className="mt-2 text-sm">{site.contact.address}</p>
             <a
               href={GOOGLE_MAPS_URL}
@@ -58,10 +60,15 @@ function Page() {
           <div className="mt-6 overflow-hidden rounded-xl border border-border bg-card">
             <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">Localisation</p>
-                <h2 className="mt-2 font-display text-xl font-semibold">Retrouvez-nous facilement sur Google Maps</h2>
+                <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground">
+                  Localisation
+                </p>
+                <h2 className="mt-2 font-display text-xl font-semibold">
+                  Retrouvez-nous facilement sur Google Maps
+                </h2>
                 <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                  Ouvrez notre position officielle pour lancer la navigation depuis votre téléphone ou votre ordinateur.
+                  Ouvrez notre position officielle pour lancer la navigation depuis votre téléphone
+                  ou votre ordinateur.
                 </p>
               </div>
               <a
@@ -81,10 +88,14 @@ function Page() {
               <div key={d.label} className="rounded-xl border border-border bg-card p-6">
                 <h3 className="font-display text-lg font-semibold">{d.label}</h3>
                 <p className="mt-3 text-sm">
-                  <a href={`tel:${d.phone.replace(/[^+\d]/g, "")}`} className="hover:underline">{d.phone}</a>
+                  <a href={`tel:${d.phone.replace(/[^+\d]/g, "")}`} className="hover:underline">
+                    {d.phone}
+                  </a>
                 </p>
                 <p className="mt-1 text-sm break-words">
-                  <a href={`mailto:${d.email}`} className="hover:underline">{d.email}</a>
+                  <a href={`mailto:${d.email}`} className="hover:underline">
+                    {d.email}
+                  </a>
                 </p>
               </div>
             ))}

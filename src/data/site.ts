@@ -44,15 +44,42 @@ export const PHOTO = {
 
 /** Galerie du campus — photos réelles de l'établissement. */
 export const campusGallery = [
-  { src: PHOTO.administration, title: "Administration", text: "Le bâtiment administratif et la place du drapeau, à l'entrée du campus." },
-  { src: PHOTO.secondaire, title: "Bâtiment du primaire", text: "Le bâtiment à étage qui accueille les classes du primaire." },
-  { src: PHOTO.salleClasse, title: "Salles de classe", text: "Des salles neuves, lumineuses et équipées de mobilier individuel." },
-  { src: PHOTO.salleIrmaRicci, title: "Salle Irma Ricci", text: "Les salles du primaire, ouvertes sur le préau et bien ventilées." },
-  { src: PHOTO.infirmerie, title: "Infirmerie scolaire", text: "Une infirmerie équipée pour la prise en charge immédiate des élèves." },
-  { src: PHOTO.courPreau, title: "Préau & cour", text: "Le préau du primaire et la cour centrale, cœur de la vie de l'école." },
-  { src: PHOTO.campus, title: "Vue du complexe", text: "Un site spacieux et verdoyant sur les hauteurs de Bonoua-Château." },
+  {
+    src: PHOTO.administration,
+    title: "Administration",
+    text: "Le bâtiment administratif et la place du drapeau, à l'entrée du campus.",
+  },
+  {
+    src: PHOTO.secondaire,
+    title: "Bâtiment du primaire",
+    text: "Le bâtiment à étage qui accueille les classes du primaire.",
+  },
+  {
+    src: PHOTO.salleClasse,
+    title: "Salles de classe",
+    text: "Des salles neuves, lumineuses et équipées de mobilier individuel.",
+  },
+  {
+    src: PHOTO.salleIrmaRicci,
+    title: "Salle Irma Ricci",
+    text: "Les salles du primaire, ouvertes sur le préau et bien ventilées.",
+  },
+  {
+    src: PHOTO.infirmerie,
+    title: "Infirmerie scolaire",
+    text: "Une infirmerie équipée pour la prise en charge immédiate des élèves.",
+  },
+  {
+    src: PHOTO.courPreau,
+    title: "Préau & cour",
+    text: "Le préau du primaire et la cour centrale, cœur de la vie de l'école.",
+  },
+  {
+    src: PHOTO.campus,
+    title: "Vue du complexe",
+    text: "Un site spacieux et verdoyant sur les hauteurs de Bonoua-Château.",
+  },
 ] as const;
-
 
 export const site = {
   name: "Complexe Scolaire Catholique La Providence de Don Orione",
@@ -133,7 +160,6 @@ export const VIDEO_POSTER = {
   espaces: posterEspaces,
 } as const;
 
-
 /** HERO — 8 clips : vidéos officielles intercalées avec les clips de démonstration. */
 export const heroSlides: VideoSlide[] = [
   {
@@ -202,7 +228,6 @@ export const heroSlides: VideoSlide[] = [
   },
 ];
 
-
 /** VIE SCOLAIRE — mini-vidéos (démo, remplaçables). */
 export const schoolLifeClips: VideoSlide[] = [
   {
@@ -248,9 +273,18 @@ export const schoolLifeClips: VideoSlide[] = [
 ];
 
 export const welcomeBadges = [
-  { title: "Discipline", text: "Une rigueur nécessaire associée à une écoute paternelle, selon la pédagogie de saint Louis Orione." },
-  { title: "Charité", text: "La charité concrète au cœur de la mission : accueillir, servir, faire grandir chaque enfant." },
-  { title: "Excellence", text: "Un parcours complet de la maternelle à la terminale, jusqu'au baccalauréat." },
+  {
+    title: "Discipline",
+    text: "Une rigueur nécessaire associée à une écoute paternelle, selon la pédagogie de saint Louis Orione.",
+  },
+  {
+    title: "Charité",
+    text: "La charité concrète au cœur de la mission : accueillir, servir, faire grandir chaque enfant.",
+  },
+  {
+    title: "Excellence",
+    text: "Un parcours complet de la maternelle à la terminale, jusqu'au baccalauréat.",
+  },
 ];
 
 export const levels = [
@@ -268,7 +302,11 @@ export const levels = [
     image: PHOTO.primaireEleves,
     summary:
       "Les fondamentaux solidement posés : lire, écrire, compter, raisonner, avec un suivi individualisé.",
-    points: ["Lecture et expression écrite", "Mathématiques et raisonnement", "Effectifs maîtrisés"],
+    points: [
+      "Lecture et expression écrite",
+      "Mathématiques et raisonnement",
+      "Effectifs maîtrisés",
+    ],
   },
   {
     slug: "college",
@@ -284,33 +322,80 @@ export const levels = [
     image: PHOTO.primaireGroupe,
     summary:
       "Enseignement général jusqu'en terminale, avec une exigence académique orientée vers le baccalauréat.",
-    points: ["Enseignement général", "Préparation au baccalauréat", "Orientation et projet d'avenir"],
+    points: [
+      "Enseignement général",
+      "Préparation au baccalauréat",
+      "Orientation et projet d'avenir",
+    ],
   },
 ] as const;
 
 export const values = welcomeBadges;
 
 export const whyProvidence = [
-  { title: "Foi & valeurs", text: "Messes régulières, catéchèse et éducation aux valeurs morales." },
+  {
+    title: "Foi & valeurs",
+    text: "Messes régulières, catéchèse et éducation aux valeurs morales.",
+  },
   { title: "Résultats", text: "100 % de réussite aux examens nationaux." },
-  { title: "Effectifs maîtrisés", text: "Des classes suivies, pour un accompagnement réellement personnalisé." },
-  { title: "Infrastructures adaptées", text: "Salles spacieuses, salle informatique, infirmerie et terrains de sport." },
-  { title: "Réseau international", text: "Un établissement de la Petite Œuvre de la Divine Providence — Don Orione." },
+  {
+    title: "Effectifs maîtrisés",
+    text: "Des classes suivies, pour un accompagnement réellement personnalisé.",
+  },
+  {
+    title: "Infrastructures adaptées",
+    text: "Salles spacieuses, salle informatique, infirmerie et terrains de sport.",
+  },
+  {
+    title: "Réseau international",
+    text: "Un établissement de la Petite Œuvre de la Divine Providence — Don Orione.",
+  },
 ];
 
 export const infrastructures = [
-  { title: "Salles de classe spacieuses", text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés.", image: PHOTO.salleClasse },
-  { title: "Un campus à taille humaine", text: "Bâtiments neufs, préau et espaces verts sur les hauteurs de Bonoua-Château.", image: PHOTO.courPreau },
-  { title: "Infirmerie scolaire", text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves.", image: PHOTO.infirmerie },
-  { title: "Bâtiment du secondaire", text: "Collège et lycée réunis dans un bâtiment à étage dédié.", image: PHOTO.secondaire },
+  {
+    title: "Salles de classe spacieuses",
+    text: "Aérées et conformes aux normes du Ministère, avec des effectifs maîtrisés.",
+    image: PHOTO.salleClasse,
+  },
+  {
+    title: "Un campus à taille humaine",
+    text: "Bâtiments neufs, préau et espaces verts sur les hauteurs de Bonoua-Château.",
+    image: PHOTO.courPreau,
+  },
+  {
+    title: "Infirmerie scolaire",
+    text: "Une prise en charge immédiate sur place pour la santé et la sécurité des élèves.",
+    image: PHOTO.infirmerie,
+  },
+  {
+    title: "Bâtiment du secondaire",
+    text: "Collège et lycée réunis dans un bâtiment à étage dédié.",
+    image: PHOTO.secondaire,
+  },
 ];
 
-
 export const admissionSteps = [
-  { step: "01", title: "Prise de contact", text: "Contactez la direction pour connaître les places disponibles par niveau." },
-  { step: "02", title: "Dossier de candidature", text: "Dépôt du dossier avec les pièces demandées selon le cycle visé." },
-  { step: "03", title: "Test d'entrée", text: "Le test d'entrée est obligatoire ; les places sont limitées." },
-  { step: "04", title: "Inscription", text: "Confirmation de l'admission et finalisation à l'administration." },
+  {
+    step: "01",
+    title: "Prise de contact",
+    text: "Contactez la direction pour connaître les places disponibles par niveau.",
+  },
+  {
+    step: "02",
+    title: "Dossier de candidature",
+    text: "Dépôt du dossier avec les pièces demandées selon le cycle visé.",
+  },
+  {
+    step: "03",
+    title: "Test d'entrée",
+    text: "Le test d'entrée est obligatoire ; les places sont limitées.",
+  },
+  {
+    step: "04",
+    title: "Inscription",
+    text: "Confirmation de l'admission et finalisation à l'administration.",
+  },
 ];
 
 export const admissionDocs = [
@@ -339,16 +424,37 @@ export const admissionDocs = [
 ];
 
 export const uniforms = [
-  { level: "Maternelle", text: "Tissu carrelé marron et blanc (garçons et filles). Tenues disponibles à l'école." },
-  { level: "Primaire", text: "Garçons : culotte marron et chemise blanche. Filles : jupe marron et chemise blanche." },
-  { level: "Collège & Lycée", text: "Garçons : pantalon et chemise kaki. Filles : jupe bleue et chemise blanche." },
+  {
+    level: "Maternelle",
+    text: "Tissu carrelé marron et blanc (garçons et filles). Tenues disponibles à l'école.",
+  },
+  {
+    level: "Primaire",
+    text: "Garçons : culotte marron et chemise blanche. Filles : jupe marron et chemise blanche.",
+  },
+  {
+    level: "Collège & Lycée",
+    text: "Garçons : pantalon et chemise kaki. Filles : jupe bleue et chemise blanche.",
+  },
 ];
 
 export const schoolLife = [
-  { title: "Vie de classe", text: "Des effectifs maîtrisés, des enseignants disponibles, un climat propice au travail." },
-  { title: "Sport & clubs", text: "Football, handball, basket-ball, clubs de lecture, théâtre et chorale." },
-  { title: "Pastorale et valeurs", text: "Messes régulières, catéchèse et mouvements d'action catholique." },
-  { title: "Encadrement", text: "Une équipe éducative attentive à la présence, au comportement et aux progrès." },
+  {
+    title: "Vie de classe",
+    text: "Des effectifs maîtrisés, des enseignants disponibles, un climat propice au travail.",
+  },
+  {
+    title: "Sport & clubs",
+    text: "Football, handball, basket-ball, clubs de lecture, théâtre et chorale.",
+  },
+  {
+    title: "Pastorale et valeurs",
+    text: "Messes régulières, catéchèse et mouvements d'action catholique.",
+  },
+  {
+    title: "Encadrement",
+    text: "Une équipe éducative attentive à la présence, au comportement et aux progrès.",
+  },
 ];
 
 export type NewsItem = {
