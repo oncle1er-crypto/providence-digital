@@ -1,5 +1,6 @@
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { useRef, type ReactNode } from "react";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
@@ -18,7 +19,7 @@ export function Parallax({
   zoom?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const smooth = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 });
   const y = useTransform(smooth, [0, 1], [-distance / 2, distance / 2]);

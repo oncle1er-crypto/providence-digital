@@ -21,6 +21,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact — La Providence de Don Orione" },
       { property: "og:description", content: "Coordonnées du secrétariat de l'établissement." },
       { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: absoluteUrl("/contact") },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/contact") }],

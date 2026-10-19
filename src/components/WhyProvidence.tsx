@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useMotionPreference } from "@/hooks/use-motion-preference";
+import { motion } from "framer-motion";
 import { whyProvidence } from "@/data/site";
 import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 import { Counter } from "@/components/Counter";
@@ -14,7 +15,7 @@ const safeWhyProvidence = whyProvidence.map((item) =>
 );
 
 export function WhyProvidence() {
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
 
   return (
     <section className="mt-16 overflow-hidden bg-primary py-16 text-primary-foreground sm:py-20">

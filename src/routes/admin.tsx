@@ -43,6 +43,11 @@ export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
       { title: "Administration | La Providence" },
+      { name: "description", content: "Espace d’administration du site de La Providence." },
+      { property: "og:title", content: "Administration | La Providence" },
+      { property: "og:description", content: "Espace d’administration du site de La Providence." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex, nofollow, noarchive" },
       { name: "googlebot", content: "noindex, nofollow, noarchive" },
     ],

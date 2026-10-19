@@ -1,6 +1,7 @@
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { nav, site } from "@/data/site";
 
 const BAR_STATES = [
@@ -23,7 +24,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const overlay = pathname === "/";
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);

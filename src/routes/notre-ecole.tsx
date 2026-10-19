@@ -1,5 +1,6 @@
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { createFileRoute } from "@tanstack/react-router";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
@@ -23,6 +24,7 @@ export const Route = createFileRoute("/notre-ecole")({
         content: "Projet éducatif, valeurs et niveaux d'enseignement de l'établissement.",
       },
       { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: absoluteUrl("/notre-ecole") },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/notre-ecole") }],
@@ -31,7 +33,7 @@ export const Route = createFileRoute("/notre-ecole")({
 });
 
 function Page() {
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
 
   return (
     <>

@@ -1,5 +1,6 @@
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { HeroVideoCarousel, type HomeHeroSetting } from "@/components/HeroVideoCarousel";
@@ -41,7 +42,6 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: absoluteUrl("/") },
-      { property: "og:image", content: DEFAULT_OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/") }],
@@ -76,7 +76,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { cmsNews, admissions, homeHero, schoolLevels } = Route.useLoaderData();
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
 
   return (
     <>

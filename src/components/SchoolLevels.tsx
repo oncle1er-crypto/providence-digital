@@ -1,5 +1,6 @@
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { Link } from "@tanstack/react-router";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { levels as defaultLevels } from "@/data/site";
 import { mediaPublicUrl } from "@/lib/cms";
 import { RevealGroup, RevealItem } from "@/components/Reveal";
@@ -18,7 +19,7 @@ export type SchoolLevelsSetting = {
 
 // Le contenu CMS reste optionnel : si aucun réglage n'est enregistré, les valeurs historiques sont conservées.
 export function SchoolLevels({ content }: { content?: SchoolLevelsSetting | null }) {
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
   const cmsLevels = content?.levels?.filter((level) => level.title && level.slug) ?? [];
   const levels: SchoolLevelContent[] = cmsLevels.length
     ? cmsLevels

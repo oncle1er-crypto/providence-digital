@@ -1,5 +1,6 @@
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 import type { ReactNode } from "react";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type RevealVariant = "up" | "left" | "right" | "zoom" | "fade";
@@ -34,11 +35,11 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
   const MotionTag = motionElements[as];
 
   const variants: Variants = reduced
-    ? { hidden: { opacity: 0 }, shown: { opacity: 1, transition: { duration: 0.2 } } }
+    ? { hidden: { opacity: 1 }, shown: { opacity: 1, transition: { duration: 0 } } }
     : {
         hidden: { opacity: 0, x: 0, y: 0, scale: 1, ...offsets[variant] },
         shown: {
@@ -110,10 +111,10 @@ export function RevealItem({
   variant?: RevealVariant;
   as?: RevealElement;
 }) {
-  const reduced = useReducedMotion();
+  const reduced = useMotionPreference();
   const MotionTag = motionElements[as];
   const variants: Variants = reduced
-    ? { hidden: { opacity: 0 }, shown: { opacity: 1, transition: { duration: 0.2 } } }
+    ? { hidden: { opacity: 1 }, shown: { opacity: 1, transition: { duration: 0 } } }
     : {
         hidden: { opacity: 0, ...offsets[variant] },
         shown: {
