@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Maximize2, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { motion } from "framer-motion";
 import { heroSlides as defaultSlides } from "@/data/site";
 import { mediaPublicUrl } from "@/lib/cms";
+import { heroCompatibleVideos } from "@/lib/hero-video-compatibility";
+import { Button } from "@/components/ui/button";
 
 export type HeroSlideContent = {
   id: string;
@@ -32,10 +34,17 @@ function fmt(t: number) {
 }
 
 export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | null }) {
-  const configured = content?.slides?.filter((slide) => slide.src && slide.title) ?? [];
-  const slides: HeroSlideContent[] = configured.length
-    ? configured
-    : defaultSlides.map((slide) => ({ ...slide }));
+  const slides = useMemo<HeroSlideContent[]>(() => {
+    const configured = content?.slides?.filter((slide) => slide.src && slide.title) ?? [];
+    return (configured.length ? configured : defaultSlides).map((slide) => {
+      const original = defaultSlides.find((item) => item.src === slide.src);
+      return {
+        ...slide,
+        // Historical bundled URLs are not durable CMS media addresses.
+        poster: slide.poster?.startsWith("/assets/") && original ? original.poster : slide.poster,
+      };
+    });
+  }, [content?.slides]);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [muted, setMuted] = useState(true);
@@ -44,8 +53,43 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
   const [reduced, setReduced] = useState(false);
   const [loaded, setLoaded] = useState<number[]>([0]);
   const [showControls, setShowControls] = useState(false);
+  const [compatible, setCompatible] = useState(false);
+  const [sequence, setSequence] = useState(0);
+  const textRef = useRef<HTMLDivElement>(null);
   const hideTimerRef = useRef<number | null>(null);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+
+  useEffect(() => {
+    const probe = document.createElement("video");
+    setCompatible(!probe.canPlayType('video/mp4; codecs="avc1.640028"'));
+    return () => {
+      if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
+    };
+  }, []);
+
+  const current = slides[index] ?? slides[0];
+
+  useEffect(() => {
+    const container = textRef.current;
+    if (!container) return;
+    let cancelled = false;
+    let cleanup: (() => void) | undefined;
+    // Browser-only loading keeps GSAP outside SSR and other page bundles.
+    void import("gsap").then(({ gsap }) => {
+      if (cancelled) return;
+      const media = gsap.matchMedia();
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const targets = container.querySelectorAll("[data-hero-part]");
+        gsap.timeline().fromTo(targets,
+          { opacity: 0, y: 22, willChange: "transform, opacity" },
+          { opacity: 1, y: 0, duration: 0.65, stagger: 0.16, ease: "power3.out",
+            clearProps: "opacity,transform,willChange" },
+        );
+      }, container);
+      cleanup = () => media.revert();
+    }).catch(() => undefined); // Plain text and links remain visible if loading fails.
+    return () => { cancelled = true; cleanup?.(); };
+  }, [current?.id, sequence]);
 
   useEffect(() => {
     if (index < slides.length) return;
@@ -75,32 +119,39 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
     (nextIndex: number) => {
       if (!slides.length) return;
       setIndex(((nextIndex % slides.length) + slides.length) % slides.length);
+      setSequence((value) => value + 1);
       setTime(0);
     },
     [slides.length],
   );
 
   useEffect(() => {
+    const video = videoRefs.current[index];
+    if (video) video.currentTime = 0;
+    setDuration(slides[index]?.duration ?? 8);
+  }, [index, sequence, slides]);
+
+  useEffect(() => {
     videoRefs.current.forEach((video, i) => {
       if (!video) return;
       if (i === index) {
         video.muted = muted;
-        video.currentTime = 0;
         if (playing && !reduced) void video.play().catch(() => undefined);
+        else video.pause();
       } else {
         video.pause();
       }
     });
-  }, [index, playing, muted, reduced]);
+  }, [index, sequence, playing, muted, reduced, compatible]);
 
   useEffect(() => {
     if (!playing || reduced || !slides.length) return;
-    const ms = (slides[index]?.duration ?? 8) * 1000;
+    const elapsed = videoRefs.current[index]?.currentTime ?? 0;
+    const ms = Math.max(0.1, (slides[index]?.duration ?? 8) - elapsed) * 1000;
     const timer = window.setTimeout(() => goTo(index + 1), ms);
     return () => window.clearTimeout(timer);
   }, [index, playing, reduced, goTo, slides]);
 
-  const current = slides[index] ?? slides[0];
   if (!current) return null;
 
   const reveal = () => {
@@ -116,15 +167,22 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
     <section className="relative isolate min-h-[88svh] overflow-hidden bg-primary text-primary-foreground">
       <div className="absolute inset-0 -z-10">
         {slides.map((slide, i) => (
+          <div key={slide.id} className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${i === index ? "opacity-100" : "opacity-0"}`}>
+          <img
+            src={mediaPublicUrl(slide.poster) || slide.poster}
+            alt=""
+            aria-hidden="true"
+            fetchPriority={i === 0 ? "high" : "auto"}
+            loading={i === 0 ? "eager" : "lazy"}
+            className="absolute inset-0 size-full object-cover object-center"
+          />
           <video
             key={slide.id}
             ref={(el) => {
               videoRefs.current[i] = el;
             }}
-            className={`absolute inset-0 size-full object-cover object-center transition-opacity duration-1000 ease-in-out ${
-              i === index ? "opacity-100" : "opacity-0"
-            }`}
-            src={loaded.includes(i) ? mediaPublicUrl(slide.src) || slide.src : undefined}
+            className="absolute inset-0 size-full object-cover object-center"
+            src={loaded.includes(i) ? (compatible && heroCompatibleVideos[slide.src]) || mediaPublicUrl(slide.src) || slide.src : undefined}
             poster={mediaPublicUrl(slide.poster) || slide.poster}
             autoPlay={i === 0 && !reduced}
             muted={muted}
@@ -140,43 +198,42 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
               void event.currentTarget.play().catch(() => setPlaying(false));
             }}
             onLoadedMetadata={(event) =>
-              i === index && setDuration(event.currentTarget.duration || slide.duration)
+              i === index && setDuration(Math.min(event.currentTarget.duration || slide.duration, slide.duration))
             }
             onTimeUpdate={(event) => i === index && setTime(event.currentTarget.currentTime)}
           />
+          </div>
         ))}
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,oklch(0.16_0.02_25/0.72)_0%,oklch(0.16_0.02_25/0.42)_45%,oklch(0.16_0.02_25/0.08)_100%)]" />
+        <div className="hero-shade absolute inset-0" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-ink/25" />
       </div>
 
       <div className="container-page flex min-h-[88svh] flex-col justify-center gap-10 py-28">
-        <div key={`${current.id}-${index}`} className="max-w-3xl">
-          <span className="hero-anim hero-eyebrow inline-flex w-fit rounded-full border border-gold/60 px-4 py-1 text-xs tracking-[0.2em] uppercase">
+        <div ref={textRef} data-hero-sequence={sequence} className="max-w-3xl">
+          <span data-hero-part="eyebrow" className="inline-flex w-fit rounded-full border border-gold/60 px-4 py-1 text-xs tracking-[0.2em] uppercase">
             {content?.eyebrow || "Site officiel • Bonoua"}
           </span>
-          <h1 className="hero-anim hero-title mt-6 font-display leading-[1.02] font-semibold text-balance [font-size:clamp(2.25rem,6vw,5rem)]">
+          <h1 data-hero-part="title" className="mt-6 font-display text-4xl leading-[1.02] font-semibold text-balance sm:text-6xl lg:text-7xl">
             {content?.title || "Complexe Scolaire La Providence de Don Orione"}
-            <span className="mt-3 block text-primary-foreground/85 [font-size:clamp(1.1rem,2.4vw,1.9rem)]">
+            <span className="mt-3 block text-lg text-primary-foreground/85 sm:text-2xl lg:text-3xl">
               {content?.subtitle || "Bonoua — Instruire l'esprit, former le cœur."}
             </span>
           </h1>
-          <p className="hero-anim hero-desc mt-5 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
+          <p data-hero-part="description" className="mt-5 max-w-xl text-base text-primary-foreground/85 sm:text-lg">
             {content?.description ||
               "École catholique à Bonoua-Château — de la maternelle à la terminale."}
           </p>
-          <div className="hero-anim hero-cta mt-9 flex flex-wrap gap-3">
-            <Link
+          <div data-hero-part="cta" className="mt-9 flex flex-wrap gap-3">
+            <Button asChild className="h-auto rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground hover:bg-gold/90"><Link
               to={primaryUrl as "/admissions"}
-              className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-gold-foreground transition-transform hover:-translate-y-0.5"
             >
               {content?.primary_label || "Demander une inscription"}
-            </Link>
-            <Link
+            </Link></Button>
+            <Button asChild variant="outline" className="h-auto rounded-full border-primary-foreground/45 bg-transparent px-7 py-3.5 text-sm font-semibold hover:bg-primary-foreground/10 hover:text-primary-foreground"><Link
               to={secondaryUrl as "/contact"}
-              className="rounded-full border border-primary-foreground/45 px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-primary-foreground/10"
             >
               {content?.secondary_label || "Visiter l'école"}
-            </Link>
+            </Link></Button>
           </div>
         </div>
 
@@ -194,7 +251,7 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
             />
           </div>
           <div
-            className={`overflow-hidden transition-all duration-500 ${showControls ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}
+            className={`overflow-hidden transition-all duration-500 focus-within:max-h-72 focus-within:opacity-100 ${showControls ? "max-h-72 opacity-100" : "max-h-0 opacity-0"}`}
           >
             <div className="mt-3 rounded-2xl border border-primary-foreground/15 bg-ink/60 p-4 backdrop-blur-md sm:p-5">
               <div className="flex flex-wrap items-center justify-between gap-4">
@@ -205,7 +262,7 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
                   <p className="truncate text-xs text-primary-foreground/75">{current.title}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button
+                  <Button variant="ghost" size="icon"
                     type="button"
                     aria-label={playing ? "Mettre en pause" : "Lire"}
                     onClick={() => {
@@ -213,14 +270,14 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
                       const video = videoRefs.current[index];
                       if (!video) return;
                       if (playing) video.pause();
-                      else void video.play().catch(() => undefined);
+                      else void video.play().catch(() => setPlaying(false));
                       setPlaying(!playing);
                     }}
                     className="grid size-10 place-items-center rounded-full bg-primary-foreground/15"
                   >
                     {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
-                  </button>
-                  <button
+                  </Button>
+                  <Button variant="ghost" size="icon"
                     type="button"
                     aria-label={muted ? "Activer le son" : "Couper le son"}
                     onClick={() => {
@@ -230,8 +287,8 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
                     className="grid size-10 place-items-center rounded-full bg-primary-foreground/15"
                   >
                     {muted ? <VolumeX className="size-4" /> : <Volume2 className="size-4" />}
-                  </button>
-                  <button
+                  </Button>
+                  <Button variant="ghost" size="icon"
                     type="button"
                     aria-label="Plein écran"
                     onClick={() =>
@@ -240,7 +297,7 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
                     className="hidden size-10 place-items-center rounded-full bg-primary-foreground/15 sm:grid"
                   >
                     <Maximize2 className="size-4" />
-                  </button>
+                  </Button>
                 </div>
               </div>
               <div className="mt-3 flex items-center gap-3 text-xs tabular-nums">
