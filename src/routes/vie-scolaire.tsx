@@ -21,6 +21,7 @@ export const Route = createFileRoute("/vie-scolaire")({
         content: "Encadrement, activités et formation humaine au quotidien.",
       },
       { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: absoluteUrl("/vie-scolaire") },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/vie-scolaire") }],

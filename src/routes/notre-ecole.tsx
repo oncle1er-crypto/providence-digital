@@ -24,6 +24,7 @@ export const Route = createFileRoute("/notre-ecole")({
         content: "Projet éducatif, valeurs et niveaux d'enseignement de l'établissement.",
       },
       { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: absoluteUrl("/notre-ecole") },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/notre-ecole") }],

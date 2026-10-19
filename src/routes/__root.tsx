@@ -7,6 +7,7 @@ import {
   useRouterState,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -15,7 +16,6 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { ScrollToTop } from "../components/ScrollToTop";
 import { RouteProgress } from "../components/RouteProgress";
 import { PageTransition } from "../components/PageTransition";
-import { DEFAULT_OG_IMAGE } from "../lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -39,7 +39,8 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error: cause, reset }: ErrorComponentProps) {
+  const error = cause instanceof Error ? cause : new Error(String(cause));
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -95,9 +96,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "La Providence de Don Orione" },
       { property: "og:locale", content: "fr_CI" },
-      { property: "og:image", content: DEFAULT_OG_IMAGE },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: DEFAULT_OG_IMAGE },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

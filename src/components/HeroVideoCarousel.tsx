@@ -150,7 +150,7 @@ export function HeroVideoCarousel({ content }: { content?: HomeHeroSetting | nul
     const ms = Math.max(0.1, (slides[index]?.duration ?? 8) - elapsed) * 1000;
     const timer = window.setTimeout(() => goTo(index + 1), ms);
     return () => window.clearTimeout(timer);
-  }, [index, playing, reduced, goTo, slides]);
+  }, [index, sequence, playing, reduced, goTo, slides]);
 
   if (!current) return null;
 

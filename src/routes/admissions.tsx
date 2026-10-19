@@ -22,6 +22,7 @@ export const Route = createFileRoute("/admissions")({
         content: "Les étapes pour inscrire votre enfant à La Providence de Don Orione.",
       },
       { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: absoluteUrl("/admissions") },
     ],
     links: [{ rel: "canonical", href: absoluteUrl("/admissions") }],
