@@ -1,5 +1,6 @@
+import { useMotionPreference } from "@/hooks/use-motion-preference";
 import { useEffect, useRef, useState } from "react";
-import { useInView, useReducedMotion } from "framer-motion";
+import { useInView } from "framer-motion";
 
 /** Compteur animé au scroll (nombre déjà connu, jamais inventé par le composant). */
 export function Counter({
@@ -17,8 +18,8 @@ export function Counter({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
-  const reduced = useReducedMotion();
-  const [display, setDisplay] = useState(reduced ? value : 0);
+  const reduced = useMotionPreference();
+  const [display, setDisplay] = useState(0);
 
   useEffect(() => {
     if (!inView || reduced) return;
@@ -36,7 +37,7 @@ export function Counter({
 
   return (
     <span ref={ref} className={className}>
-      {String(display).padStart(pad, "0")}
+      {String(reduced ? value : display).padStart(pad, "0")}
       {suffix}
     </span>
   );
